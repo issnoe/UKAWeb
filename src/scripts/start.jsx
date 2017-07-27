@@ -1,25 +1,32 @@
 moment.locale('es');
 
-var App = React.createClass({
-    getInitialState: function () {
-        return {routerPath: "NAR"};
-    },
-
-    hangleHome: function () {
-        this.setState({routerPath: "NAR"})
-    },
-    componentDidMount: function () {
-        //agregar modulos
+class App extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            routerPath: "NAR"
+        }
+    }
+    componentDidMount() {
         var router = Router({'/NAR': this.hangleHome});
         router.init('/');
-    },
-    render: function () {
+    }
+
+    hangleHome = () => {
+        // getChildrends("", function(response){
+        //     debugger;
+        //     this;
+        // }.bind(this));
+        this.setState({routerPath: "NAR"})
+    }
+
+    render() {
         var renderConteiner;
         switch (this.state.routerPath) {
 
             case "NAR":
                 renderConteiner = (
-                    <h1>Esto es nar</h1>
+                    <Childrens/>
                 );
                 break;
             default:
@@ -31,13 +38,13 @@ var App = React.createClass({
         }
 
         return (
+
             <NavigationState>
                 {renderConteiner}
             </NavigationState>
         )
 
     }
-});
-
+}
 ReactDOM.render(
     <App/>, document.getElementById('appUnkiloDeAyuda'));

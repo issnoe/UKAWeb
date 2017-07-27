@@ -1,5 +1,4 @@
 class NavigationState extends React.Component {
-    
     render() {
         return (
               <div>

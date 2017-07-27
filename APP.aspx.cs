@@ -16,7 +16,7 @@ namespace InfoKilo.WebApp.Miembros.WS
 
         }
         [System.Web.Services.WebMethod]
-        public static List<Somatometria> getSomatometria()
+        public static List<Somatometria> getSomatometria(string idGrupo)
         {
             Repository<Somatometria> handle = new Repository<Somatometria>();
             handle.GetAll();
