@@ -17,6 +17,45 @@ namespace InfoKilo.WebApp.Miembros.WS
 
         }
         [System.Web.Services.WebMethod]
+        public static dymanicUser getUser(string id)
+        {
+            dymanicUser user = new dymanicUser();
+            Repository<Usuarios> getUser = new Repository<Usuarios>();
+            var usuario = getUser.Retrieve(u => u.IdUsuario.ToString() == id, 1, new List<string> { "Roles" });
+            user.id = usuario.IdUsuario;
+            user.name = usuario.ApMaterno + " " + usuario.ApPaterno + " " + usuario.Nombre;
+            user.email = usuario.Email;
+            user.rolname = usuario.Roles.Nombre;
+            user.username = usuario.NombreUsuario;
+
+            return user;
+        }
+        [System.Web.Services.WebMethod]
+        public static dymanicLocation getlocation(string idEstado, string idMunicipio, string idComunidad, string idGrupo)
+        {
+            Repository<Estados> obtenerEstado = new Repository<Estados>();
+            Repository<Municipios> obtenerMunicipio = new Repository<Municipios>();
+            Repository<Comunidades> obtenerComunidad = new Repository<Comunidades>();
+            Repository<GruposComunidad> obtenerGrupo = new Repository<GruposComunidad>();
+
+            Estados estadoActual = new Estados();
+            Municipios municipioActual = new Municipios();
+            Comunidades comunidadActual = new Comunidades();
+            GruposComunidad GrupoActual = new GruposComunidad();
+            estadoActual = obtenerEstado.Retrieve(es => es.IdEstado.ToString() == idEstado);
+            municipioActual = obtenerMunicipio.Retrieve(mu => mu.IdMunicipios.ToString() == idMunicipio);
+            comunidadActual = obtenerComunidad.Retrieve(co => co.IdComunidad.ToString() == idComunidad);
+            GrupoActual = obtenerGrupo.Retrieve(gu => gu.IdGrupo.ToString() == idGrupo);
+
+            dymanicLocation location = new dymanicLocation();
+            location.estado = estadoActual.NombreEstado;
+            location.municipio = municipioActual.NombreMunicipio;
+            location.comunidad = comunidadActual.NombreComunidad;
+            location.grupo = GrupoActual.NombreGrupo;
+
+            return location;
+        }
+        [System.Web.Services.WebMethod]
         public static IQueryable<dynamic> getSomatometria(string idGrupo, string textoBusqueda, string orden, string fichaseguimiento)
         {
             Repository<NinioEnPrograma> handle = new Repository<NinioEnPrograma>();
@@ -28,26 +67,9 @@ namespace InfoKilo.WebApp.Miembros.WS
                 "Somatometria"
             };
             var lista = new List<NinioEnPrograma>();
-
-            string[] paramsFS = new string[3];
-
-            switch (fichaseguimiento)
-            {
-                case ("NAR"):
-                     paramsFS[0] = "MODERADO";
-                     paramsFS[1] = "GRAVE";
-                    break;
-                default:
-                    break;
-            }
-
-
             if (textoBusqueda == "")
             {
                 lista = handle.Filter(n => n.Familias.IdGrupo.ToString() == idGrupo && n.Borrado == false , listaTablas.Count, listaTablas);
-
-               // var serializer = new JavaScriptSerializer();
-               // string json = serializer.Serialize(lista);
             }
             else
             {
@@ -77,31 +99,23 @@ namespace InfoKilo.WebApp.Miembros.WS
                     listaNinio = lista.OrderBy(c => c.Familias.NumFamilia).ToList();
                     break;
             }
-           
-           // var i = items.Where().
             List<dynamic> listRequest = new List<dynamic>();
-            
             foreach (var item in listaNinio)
 	            {
-                //Query para hitorial
-                var listaSomaCandidato = item.Somatometria.Where(a => a.DiagnosticoPesoEdad =="MODERADO" || a.DiagnosticoPesoEdad=="GRAVE").OrderByDescending(z=>z.FechaDeCreacion);
-                if (listaSomaCandidato != null)
-                {
                     try
                     {
-                        if (listaSomaCandidato.Count() > 0)
+                        if (item.Somatometria.Count() > 0)
                         {
                             dymanicChild child = new dymanicChild();
                             child.id = item.IdNinio;
                             child.ninoNombreCompleto = item.Nombre + " " + item.ApMaterno + " " + item.ApPaterno;
                             child.cuidadorNombreCompleto = item.Familias.Cuidador.Nombre + " " + item.Familias.Cuidador.ApMaterno + " " + item.Familias.Cuidador.ApPaterno;
-                            child.fechaNacimineto = (item.FechaNacimiento.ToString() != "") ? item.FechaNacimiento.ToString() : "--/--/--";
+                            child.fechaNacimineto = (item.FechaNacimiento.ToString() != "") ? (Convert.ToDateTime(item.FechaNacimiento)).ToString("dd/MM/yyyy") : "--/--/--";
                             child.sexo = (item.Genero == true) ? "M" : "F";
                             child.clave = item.ClaveNinio;
-                            child.numeroFamilia = Convert.ToInt32(item.NumeroNinioEnFamilia);
-                            child.somatometriaCount = listaSomaCandidato.Count();
+                            child.edadMeses = Calcular.EdadEnMeses(DateTime.Now, item.FechaNacimiento);
+                            child.numeroFamilia = Convert.ToInt32(item.Familias.NumFamilia);
                             child.listaSomatometrias = new List<dymanicSomatometria>();
-
                             foreach (var soma in item.Somatometria.OrderByDescending(z => z.FechaDeCreacion))
                             {
                                 try
@@ -116,28 +130,42 @@ namespace InfoKilo.WebApp.Miembros.WS
                                     somatometria.dxTE = soma.DiagnosticoTallaEdad;
                                     somatometria.dxPT = soma.DiagnosticoPesoTalla;
                                     child.listaSomatometrias.Add(somatometria);
-
                                 }
                                 catch (Exception)
                                 {
-
-
                                 }
                             }
                             listRequest.Add(child);
                         }
                     }
+
                     catch (Exception)
                     {
-                        
-                        
+
+
                     }
                    
                 }
-	            }
+	            
                       
 
             return listRequest.AsQueryable();
+        }
+        public class dymanicUser
+        {
+            public string name { get; set; }
+            public string email { get; set; }
+            public Guid id { get; set; }
+            public string rolname { get; set; }
+            public string username { get; set; }
+        }
+        public class dymanicLocation
+        {
+            public string cedit { get; set; }
+            public string estado { get; set; }
+            public string municipio { get; set; }
+            public string comunidad { get; set; }
+            public string grupo { get; set; }
         }
 
         public class dymanicChild
@@ -146,11 +174,14 @@ namespace InfoKilo.WebApp.Miembros.WS
             public string cuidadorNombreCompleto { get; set; }
             public int numeroFamilia { get; set; }
             public int clave { get; set; }
+            public string edadMeses { get; set; }
             public string fechaNacimineto { get; set; }
             public string sexo { get; set; }
             public Guid id { get; set; }
             public int somatometriaCount { get; set; }
             public List<dymanicSomatometria> listaSomatometrias { get; set; }
+
+            
         }
         public class dymanicSomatometria
         {

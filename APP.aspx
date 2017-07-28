@@ -18,21 +18,9 @@
         <script src="../../Scripts/react-bootstrap.min.js"></script>
 
 
-    <header>
-        <div class="container-fullwidth">
-            <div class="container">
-                <div class="col-md-6 col-sm-6 col-xs-5">
-                    <div class="logo">
-                        <a><img src="../../images/login-logo.png" alt="UKA" class=""/></a>
-                    </div>
-                </div>
-                <div class="col-md-6 col-sm-6 col-xs-7  text-right">
-                </div>
-            </div>
-        </div>
-    </header>
+    
 
-    <body>
+ 
         <div id="appUnkiloDeAyuda"></div>
         <link rel="stylesheet" type="text/css" href="../../css/bootstrap.min.css" />
         <link rel="stylesheet" type="text/css" href="../../css/style.css" />
@@ -44,15 +32,15 @@
        
 
 
-    </body>
-    <footer>
-        &nbsp;
-    </footer>
+   
 
+    <script type="text/babel" src="./src/scripts/components/ManagerFilters.jsx"></script>
     <script type="text/babel" src="./src/scripts/components/NavigationState.jsx"></script>
-    <script type="text/babel" src="./src/scripts/components/Childrens.jsx"></script>
+    <script type="text/babel" src="./src/scripts/components/FSRowChildren.jsx"></script>
+    <script type="text/babel" src="./src/scripts/components/FSListChildrens.jsx"></script>
+    
 
-    <script type="text/babel" src="./src/scripts/containers/childrenNAR.jsx"></script>
+    <script type="text/babel" src="./src/scripts/containers/EndPointConector.jsx"></script>
 
 
     <script type="text/babel" src="./src/scripts/start.jsx"></script>

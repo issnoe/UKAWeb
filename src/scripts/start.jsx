@@ -4,29 +4,40 @@ class App extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            routerPath: "NAR"
+            routerPath: "nar"
         }
+        getLocation("", function (response) {
+            if (response && response.data && response.data.d) {
+                this.setState({location: response.data.d})
+            }
+        }.bind(this));
+        getUser("", function (response) {
+            if (response && response.data && response.data.d) {
+                this.setState({user: response.data.d})
+            }
+        }.bind(this));
+
     }
     componentDidMount() {
-        var router = Router({'/NAR': this.hangleHome});
+        var router = Router({'/nar': this.hangleHome});
         router.init('/');
     }
 
     hangleHome = () => {
-        // getChildrends("", function(response){
-        //     debugger;
-        //     this;
-        // }.bind(this));
-        this.setState({routerPath: "NAR"})
+        this.setState({routerPath: "nar"})
     }
 
     render() {
         var renderConteiner;
         switch (this.state.routerPath) {
 
-            case "NAR":
+            case "nar":
                 renderConteiner = (
-                    <Childrens/>
+                    <div>
+                        <FSManagerFilters/>
+                        <FSListChildrens/>
+                    </div>
+
                 );
                 break;
             default:
@@ -39,7 +50,7 @@ class App extends React.Component {
 
         return (
 
-            <NavigationState>
+            <NavigationState location={this.state.location} user={this.state.user}>
                 {renderConteiner}
             </NavigationState>
         )
