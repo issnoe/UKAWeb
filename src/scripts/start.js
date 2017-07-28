@@ -1,3 +1,15 @@
+var Modal = ReactBootstrap.Modal;
+const OverlayTrigger = ReactBootstrap.OverlayTrigger;
+const Popover = ReactBootstrap.Popover;
+const Panel = ReactBootstrap.Panel;
+const Button = ReactBootstrap.Button;
+const Fade = ReactBootstrap.Fade;
+var DropdownButton = ReactBootstrap.DropdownButton;
+var MenuItem = ReactBootstrap.MenuItem;
+var Tab = ReactBootstrap.Tab;
+var Tabs = ReactBootstrap.Tabs;
+const Collapse = ReactCollapse.Collapse;
+
 moment.locale('es');
 
 class App extends React.Component {
@@ -19,10 +31,9 @@ class App extends React.Component {
         }.bind(this));
 
     }
+    
     componentDidMount() {
         var router = Router({'/nar': this.hangleHome, '/fichanar/:id': this.routerFichaNAR});
-        debugger;
-        this;
         router.init('/');
     }
     routerFichaNAR = (id) => {

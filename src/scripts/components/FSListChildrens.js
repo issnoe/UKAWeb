@@ -21,7 +21,6 @@ class FSListChildrens extends React.Component {
                 var lastSomatometria = child.listaSomatometrias[0];
                 if (lastSomatometria.dxPE == "MODERADO" || lastSomatometria.dxPE == "GRAVE") {
                     countList++;
-                    debugger;
                     var nar = {}
                     nar.lastSomatometriaDate = lastSomatometria.date;
                     nar.dxPE = lastSomatometria.dxPE;
@@ -32,7 +31,6 @@ class FSListChildrens extends React.Component {
                     }else{
                         nar.difPeso =0;
                     }
-                    // debugger;
                     renderList.push(<FSRowChildren key={"chillistnar" + index} child={child} nar={nar}/>)
                 }
             })

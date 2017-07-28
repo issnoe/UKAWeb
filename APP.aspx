@@ -2,7 +2,19 @@
 
     <!DOCTYPE html>
 
-    <html xmlns="http://www.w3.org/1999/xhtml">
+    <html>
+    <link rel="stylesheet" type="text/css" href="../../css/bootstrap.min.css" />
+    <link rel="stylesheet" href="../../css/bootstrap-theme.min.css">
+    <link rel="stylesheet" href="../../css/bootstrap-datetimepicker.min.css">
+   
+    <link rel="stylesheet" type="text/css" href="../../css/icons.css" />
+    <link rel="stylesheet" type="text/css" href="../../css/flexslider.css" />
+    <link rel="stylesheet" type="text/css" href="../../css/style.css" />
+     <link rel="stylesheet" type="text/css" href="../../css/form.css" />
+    <link rel="stylesheet" type="text/css" href="../../css/xt.css" />
+    <link rel="stylesheet" type="text/css" href="./src/styles/zdev.css" />
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+
     <script src="../../Scripts/jquery.min.js"></script>
     <script src="../../Scripts/jquery-ui.min.js"></script>
     <script src="../../Scripts/bootstrap.min.js"></script>
@@ -16,34 +28,24 @@
     <link href="https://file.myfontastic.com/CrszDy9EX5PKEPWYeoAXdg/icons.css" rel="stylesheet" />
     <script src="https://rawgit.com/flatiron/director/master/build/director.min.js"></script>
     <script src="../../Scripts/react-bootstrap.min.js"></script>
+    <script src="../../../Scripts/src-react/react-motion.js"></script>
+    <script src="../../Scripts/src-react/react-collapse.min.js"></script>
+    <script src="../../Scripts/bootstrap-datetimepicker.min.js"></script>
+
+
 
 
 
 
 
     <div id="appUnkiloDeAyuda"></div>
-    <link rel="stylesheet" type="text/css" href="../../css/bootstrap.min.css" />
-    <link rel="stylesheet" type="text/css" href="../../css/style.css" />
-    <link rel="stylesheet" type="text/css" href="../../css/xt.css" />
-    <link rel="stylesheet" type="text/css" href="../../css/form.css" />
-    <link rel="stylesheet" type="text/css" href="../../css/icons.css" />
-    <link rel="stylesheet" type="text/css" href="../../css/flexslider.css" />
-    <link rel="stylesheet" type="text/css" href="./src/styles/zdev.css" />
-
-
-
-
-    <script type="text/babel" src="./src/scripts/components/FSChildrenNar.jsx"></script>
-    <script type="text/babel" src="./src/scripts/components/ManagerFilters.jsx"></script>
-    <script type="text/babel" src="./src/scripts/components/NavigationState.jsx"></script>
-    <script type="text/babel" src="./src/scripts/components/FSRowChildren.jsx"></script>
-    <script type="text/babel" src="./src/scripts/components/FSListChildrens.jsx"></script>
-
-
-    <script type="text/babel" src="./src/scripts/containers/EndPointConector.jsx"></script>
-
-
-    <script type="text/babel" src="./src/scripts/start.jsx"></script>
+    <script type="text/babel" src="./src/scripts/components/FSChildrenNar.js"></script>
+    <script type="text/babel" src="./src/scripts/components/ManagerFilters.js"></script>
+    <script type="text/babel" src="./src/scripts/components/NavigationState.js"></script>
+    <script type="text/babel" src="./src/scripts/components/FSRowChildren.js"></script>
+    <script type="text/babel" src="./src/scripts/components/FSListChildrens.js"></script>
+    <script type="text/babel" src="./src/scripts/containers/EndPointConector.js"></script>
+    <script type="text/babel" src="./src/scripts/start.js"></script>
 
 
     </html>

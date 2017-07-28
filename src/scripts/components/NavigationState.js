@@ -7,13 +7,13 @@ class NavigationState extends React.Component {
             .map((n, i) => {
                 if (i == this.props.navigatorHistory.length - 1) {
                     nav.push(
-                        <li>
+                        <li key={"nav_h"+i}>
                             {n.name}
                         </li>
                     )
                 } else {
                     nav.push(
-                        <li>
+                        <li key={"nav_h"+i}>
                             <a href={n.routing}>{n.name}</a>
                         </li>
                     )
