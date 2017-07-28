@@ -1,5 +1,25 @@
 class NavigationState extends React.Component {
     render() {
+        var nav = []
+        this
+            .props
+            .navigatorHistory
+            .map((n, i) => {
+                if (i == this.props.navigatorHistory.length - 1) {
+                    nav.push(
+                        <li>
+                            {n.name}
+                        </li>
+                    )
+                } else {
+                    nav.push(
+                        <li>
+                            <a href={n.routing}>{n.name}</a>
+                        </li>
+                    )
+                }
+
+            })
         return (
             <div>
                 <header>
@@ -13,18 +33,26 @@ class NavigationState extends React.Component {
                                 </div>
 
                                 <div className="tit-sis no-print">
-                                     <span >MEDIR Y DIAGNOSTICAR</span><br/>
-                                    <span >{(this.props.location)?this.props.location.municipio +", ":""}</span>
+                                    <span >MEDIR Y DIAGNOSTICAR</span><br/>
+                                    <span >{(this.props.location)
+                                            ? this.props.location.municipio + ", "
+                                            : ""}</span>
                                     {/* <span >{(this.props.location)?this.props.location.comunidad +", ":""}</span> */}
-                                    <span >{(this.props.location)?this.props.location.grupo:""}</span><br/>
-                                    <span >{(this.props.location)?this.props.location.estado:""}</span>
+                                    <span >{(this.props.location)
+                                            ? this.props.location.grupo
+                                            : ""}</span><br/>
+                                    <span >{(this.props.location)
+                                            ? this.props.location.estado
+                                            : ""}</span>
                                 </div>
                             </div>
                             <div className="col-md-4 col-sm-4 col-xs-12  text-right no-print">
 
                                 <div className="sesion no-print">
                                     <i className="icon-user"></i>
-                                    <a href="/">{(this.props.user)?this.props.user.username:""}</a>
+                                    <a href="/">{(this.props.user)
+                                            ? this.props.user.username
+                                            : ""}</a>
                                     |
                                     <a href="/">Cerrar Sesión</a>
                                 </div>
@@ -39,16 +67,8 @@ class NavigationState extends React.Component {
                     <div className="row">
                         <div className="col-md-12 col-sm-12">
                             <ol className="breadcrumb">
-                                <li>
-                                    <a href="/Miembros/MenuPrincipal">Inicio</a>
-                                </li>
-                                <li >
-                                    <a href="/Miembros/MD/SubMenu">Medir y Diagnosticar
-                                    </a>
-                                </li>
-                                <li >
-                                    Niños de Alto Riesgo
-                                </li>
+
+                                {nav}
                             </ol>
                         </div>
 
@@ -60,10 +80,10 @@ class NavigationState extends React.Component {
                     </div>
 
                 </div>
-                
-    <footer>
-        &nbsp;
-    </footer>
+
+                <footer>
+                    &nbsp;
+                </footer>
 
             </div>
 

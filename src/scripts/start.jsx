@@ -4,7 +4,8 @@ class App extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            routerPath: "nar"
+            routerPath: "nar",
+            idNinio: undefined
         }
         getLocation("", function (response) {
             if (response && response.data && response.data.d) {
@@ -19,8 +20,13 @@ class App extends React.Component {
 
     }
     componentDidMount() {
-        var router = Router({'/nar': this.hangleHome});
+        var router = Router({'/nar': this.hangleHome, '/fichanar/:id': this.routerFichaNAR});
+        debugger;
+        this;
         router.init('/');
+    }
+    routerFichaNAR = (id) => {
+        this.setState({routerPath: "fichanar"})
     }
 
     hangleHome = () => {
@@ -29,13 +35,41 @@ class App extends React.Component {
 
     render() {
         var renderConteiner;
+        var navigatorState = [
+            {
+                name: "Inicio",
+                routing: "/Miembros/MenuPrincipal"
+            }, {
+                name: "Medir y Diagnosticar",
+                routing: "/Miembros/MD/SubMenu"
+            }, {
+                name: "Niños de Alto Riesgo",
+                routing: "#/nar"
+            }, {
+                name: "Fichas de niños de alto riesgo (NAR)",
+                routing: "#/fichanar"
+            }
+        ]
+        var navigatorHistory=[];
         switch (this.state.routerPath) {
 
             case "nar":
+                navigatorHistory=navigatorState.slice(0,3)
                 renderConteiner = (
                     <div>
                         <FSManagerFilters/>
                         <FSListChildrens/>
+                    </div>
+
+                );
+                break;
+            case "fichanar":
+            navigatorHistory=navigatorState.slice(0,4)
+               
+                renderConteiner = (
+                    <div>
+
+                        <FSChildrenNar idNinio={this.state.idNinio}/>
                     </div>
 
                 );
@@ -50,7 +84,7 @@ class App extends React.Component {
 
         return (
 
-            <NavigationState location={this.state.location} user={this.state.user}>
+            <NavigationState navigatorHistory={navigatorHistory} location={this.state.location} user={this.state.user}>
                 {renderConteiner}
             </NavigationState>
         )

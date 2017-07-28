@@ -21,7 +21,7 @@ class FSRowChildren extends React.Component {
                             <div className="col-md-4 col-sm-4">
                                 <div className="row">
                                     <div className="col-md-12">
-                                        <a id="MainContent_listaNAR_hyperlink2_0" href="../MD/PDF/FichasSeguimiento/NAR/FichaNAR.aspx?id=ba7ee47c-a182-4839-957e-ca91d14543d1">
+                                        <a href={"#/fichanar/"+this.props.child.id}>
                                                          <img src="/images/apply.svg" alt="Capturar ficha" height="18"/>
                                                          <strong> {this.props.child.ninoNombreCompleto}</strong>
                                                     </a>
