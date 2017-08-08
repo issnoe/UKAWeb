@@ -33,9 +33,8 @@
     <script src="../../Scripts/bootstrap-datetimepicker.min.js"></script>
 
 
-
-
-
+     <script type="text/babel" src="./src/scripts/containers/User.js"></script>
+     <script type="text/babel" src="./src/scripts/containers/Instrumentos.js"></script>
 
 
     <div id="appUnkiloDeAyuda"></div>
@@ -44,7 +43,6 @@
     <script type="text/babel" src="./src/scripts/components/NavigationState.js"></script>
     <script type="text/babel" src="./src/scripts/components/FSRowChildren.js"></script>
     <script type="text/babel" src="./src/scripts/components/FSListChildrens.js"></script>
-    <script type="text/babel" src="./src/scripts/containers/EndPointConector.js"></script>
     <script type="text/babel" src="./src/scripts/start.js"></script>
 
 
