@@ -31,29 +31,91 @@ namespace InfoKilo.WebApp.Miembros.WS
             return user;
         }
         [System.Web.Services.WebMethod]
+        public static List<Estados> getEstados(string id)
+        {
+            try
+            {
+                Repository<Estados> handleRepository = new Repository<Estados>();
+                var listaEstados = handleRepository.Filter(n => n.Borrado == false).OrderBy(m =>m.NombreEstado);
+                return listaEstados.ToList();
+            }
+            catch (Exception e) { return null; }
+            
+        }
+        [System.Web.Services.WebMethod]
+        public static List<Municipios> getMunicipios(string id)
+        {
+            try
+            {
+                Repository<Municipios> handleRepository = new Repository<Municipios>();
+                var lista = handleRepository.Filter(n => n.Borrado == false && n.IdEstado.ToString() == id).OrderBy(m => m.NombreMunicipio);
+                return lista.ToList();
+            }
+            catch (Exception e) { return null; }
+
+        }
+
+        [System.Web.Services.WebMethod]
+        public static List<Comunidades> getComunidades(string id)
+        {
+            try
+            {
+                Repository<Comunidades> handleRepository = new Repository<Comunidades>();
+                var lista = handleRepository.Filter(n => n.Borrado == false && n.Municipios_IdMunicipios.ToString() == id).OrderBy(m => m.NombreComunidad);
+                return lista.ToList();
+            }
+            catch (Exception e) { return null; }
+
+        }
+        [System.Web.Services.WebMethod]
+        public static List<GruposComunidad> getGrupos(string id)
+        {
+            try
+            {
+                Repository<GruposComunidad> handleRepository = new Repository<GruposComunidad>();
+                var lista = handleRepository.Filter(n => n.IdComunidad.ToString() == id).OrderBy(m =>m.NombreGrupo);
+                return lista.ToList();
+            }
+            catch (Exception e) { return null; }
+
+        }
+
+
+
+        [System.Web.Services.WebMethod]
         public static dymanicLocation getlocation(string idEstado, string idMunicipio, string idComunidad, string idGrupo)
         {
-            Repository<Estados> obtenerEstado = new Repository<Estados>();
-            Repository<Municipios> obtenerMunicipio = new Repository<Municipios>();
-            Repository<Comunidades> obtenerComunidad = new Repository<Comunidades>();
-            Repository<GruposComunidad> obtenerGrupo = new Repository<GruposComunidad>();
+            try
+            {
+                Repository<Estados> obtenerEstado = new Repository<Estados>();
+                Repository<Municipios> obtenerMunicipio = new Repository<Municipios>();
+                Repository<Comunidades> obtenerComunidad = new Repository<Comunidades>();
+                Repository<GruposComunidad> obtenerGrupo = new Repository<GruposComunidad>();
 
-            Estados estadoActual = new Estados();
-            Municipios municipioActual = new Municipios();
-            Comunidades comunidadActual = new Comunidades();
-            GruposComunidad GrupoActual = new GruposComunidad();
-            estadoActual = obtenerEstado.Retrieve(es => es.IdEstado.ToString() == idEstado);
-            municipioActual = obtenerMunicipio.Retrieve(mu => mu.IdMunicipios.ToString() == idMunicipio);
-            comunidadActual = obtenerComunidad.Retrieve(co => co.IdComunidad.ToString() == idComunidad);
-            GrupoActual = obtenerGrupo.Retrieve(gu => gu.IdGrupo.ToString() == idGrupo);
+                Estados estadoActual = new Estados();
+                Municipios municipioActual = new Municipios();
+                Comunidades comunidadActual = new Comunidades();
+                GruposComunidad GrupoActual = new GruposComunidad();
+                estadoActual = obtenerEstado.Retrieve(es => es.IdEstado.ToString() == idEstado);
+                municipioActual = obtenerMunicipio.Retrieve(mu => mu.IdMunicipios.ToString() == idMunicipio);
+                comunidadActual = obtenerComunidad.Retrieve(co => co.IdComunidad.ToString() == idComunidad);
+                GrupoActual = obtenerGrupo.Retrieve(gu => gu.IdGrupo.ToString() == idGrupo);
 
-            dymanicLocation location = new dymanicLocation();
-            location.estado = estadoActual.NombreEstado;
-            location.municipio = municipioActual.NombreMunicipio;
-            location.comunidad = comunidadActual.NombreComunidad;
-            location.grupo = GrupoActual.NombreGrupo;
+                dymanicLocation location = new dymanicLocation();
+                location.estado = estadoActual.NombreEstado;
+                location.municipio = municipioActual.NombreMunicipio;
+                location.comunidad = comunidadActual.NombreComunidad;
+                location.grupo = GrupoActual.NombreGrupo;
 
-            return location;
+                return location;
+            }
+            catch (Exception)
+            {
+
+                dymanicLocation location = new dymanicLocation();
+                return location;
+            }
+           
         }
         [System.Web.Services.WebMethod]
         public static IQueryable<dynamic> getSomatometria(string idGrupo, string textoBusqueda, string orden, string fichaseguimiento)
@@ -194,6 +256,9 @@ namespace InfoKilo.WebApp.Miembros.WS
             public string dxTE { get; set; }
             public string dxPT { get; set; }
         }
+
+
+
 
 
     }

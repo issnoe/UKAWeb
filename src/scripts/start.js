@@ -18,8 +18,7 @@ class App extends React.Component {
         this.state = {
             routerPath: "/",
             modalInstrumento: false,
-            idNinio: undefined,
-          
+            idNinio: undefined
         }
         getLocation(function (response) {
             if (response && response.data && response.data.d) {
@@ -38,7 +37,7 @@ class App extends React.Component {
                 on: this.validUser,
                 '/instrumentos': {
                     '/nuevo': () => {
-                        this.setState({modalInstrumento: true})
+                        this.setState({modalInstrumento: true,routerPath: "admininstrumentos"})
                     },
                     on: () => {
                         this.setState({routerPath: "admininstrumentos"})
@@ -54,12 +53,31 @@ class App extends React.Component {
             '/instrumentos': {
                 on: this.helloWorld
             },
-            '/nar': {
-                on: () => {
+            '/pdf': {
+                '/fichas': {
+                    '/nar': {
+                        '/:id': this.fichanar,
+                        on: () => {
+                            this.setState({routerPath: "nar"})
+                        }
+                    },
+                    '/obesidad': () => {
+                        this.setState({routerPath: "nar"})
+                    },
+                    '/embarazo': () => {
+                        this.setState({routerPath: "nar"})
+                    }
+                },
+                '/somatometria': () => {
+                    this.setState({routerPath: "nar"})
+                },
+                '/reporte': () => {
+                    this.setState({routerPath: "nar"})
+                },
+                '/grafica': () => {
                     this.setState({routerPath: "nar"})
                 }
-            },
-            '/fichanar/:id': this.fichanar
+            }
         });
 
         router.init('/');
@@ -79,12 +97,14 @@ class App extends React.Component {
         this.setState({routerPath: "fichanar"})
     }
 
-     saveIntrumento(state) {
-         debugger;
-       this.setState({modalInstrumento: false})
-       window.history.back();
+    saveIntrumento(state) {
+        debugger;
+        this.setState({modalInstrumento: false})
+        window
+            .history
+            .back();
     }
- 
+
     render() {
         var renderConteiner;
         var navigatorState = [
@@ -122,10 +142,10 @@ class App extends React.Component {
                 );
                 break;
             case "admininstrumentos":
-                debugger
+                
                 renderConteiner = (
                     <div>
-                         <PopupInstrumento
+                        <ModalInstrumento
                             onChange={this
                             .saveIntrumento
                             .bind(this)}
@@ -136,7 +156,7 @@ class App extends React.Component {
                     </div>
                 );
                 break;
-               
+
                 initModalInstrumento
             default:
 

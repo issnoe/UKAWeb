@@ -76,7 +76,7 @@ class NavigationState extends React.Component {
                 </div>
                 < div className="bg-full padding-top-10">
                     <div className="container">
-                        {this.props.children}
+                        {(this.props && this.props.children)?(this.props.children):(undefined)}
                     </div>
 
                 </div>
@@ -90,3 +90,6 @@ class NavigationState extends React.Component {
         )
     }
 }
+NavigationState.propTypes = {
+  children: React.PropTypes.element.isRequired
+};

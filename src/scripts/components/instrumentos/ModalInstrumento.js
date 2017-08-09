@@ -1,10 +1,29 @@
-class FormMaster extends React.Component {
+class ModalInstrumento extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {}
+        this.state = {
+            nombre: "",
+            prefijo: "",
+            subtitulo: "",
+            estado: 1,
+            orden: 0,
+            aplicado: 0,
+            id: -1,
+            estadoId: "",
+            municipioId: "",
+            comunidadId: "",
+            grupoId: "",
+            listaGruposSelected: []
+        }
+        getEstados("vacio", (response) => {
+
+            if (response && response.data && response.data.d) {
+                this.setState({listaEstados: response.data.d})
+            }
+        })
 
     }
-
+    componentWillUnmount() {}
     renderStatus() {
         return (STATUS.map(function (i) {
             return (
@@ -34,179 +53,6 @@ class FormMaster extends React.Component {
         }))
     }
 
-}
-
-class PopupModulo extends FormMaster {
-    constructor(props) {
-        super(props);
-        debugger
-        this.state = {
-            "id": 0,
-            "modulo": "",
-            "prefijo": "",
-            "leyenda": "",
-            "estado": 1,
-            "orden": 0,
-            "id_instrumento": -1
-        }
-
-    }
-    componentWillReceiveProps(nextProps) {
-
-        if (nextProps.item && nextProps.show) {
-
-            this.setState(nextProps.item)
-        }
-
-    }
-
-    handleInput(e) {
-        e.preventDefault();
-        var valorAux = e.target.value
-        var mask = e.target.name
-        var valor;
-        if (mask == "orden" || mask == "estado") {
-            valor = parseInt(valorAux)
-        } else {
-            valor = valorAux
-        }
-        this.setState({[mask]: valor});
-
-    }
-
-    showModulos(a, e) {
-        e.preventDefault();
-        var g = this.state;
-        g.id_instrumento = this.props.item.id_instrumento;
-
-        if (a) {
-            this
-                .props
-                .onChange(g);
-        } else {
-            this
-                .props
-                .onChange({});
-        }
-
-    }
-
-    render() {
-
-        return (
-            <Modal show={this.props.show} dialogClassName="modal-dialog modal-lg">
-                <div className="modal-content">
-
-                    <div className="modal-header">
-                        <button
-                            type="button"
-                            className="close"
-                            onClick={this
-                            .showModulos
-                            .bind(this, false)}>
-                            <span >×</span>
-                        </button>
-                        <h4 className="modal-title">Agregar {this.props.title}</h4>
-                    </div>
-                    <div className="modal-body">
-
-                        <div className="row">
-                            <div className="col-md-12">
-                                <div className="form-group">
-                                    <label className="label">Nombre módulo</label>
-
-                                    <input
-                                        className="form-control"
-                                        placeholder="Ej. intrumento A"
-                                        type="text"
-                                        name="modulo"
-                                        value={this.state.modulo}
-                                        onChange={this
-                                        .handleInput
-                                        .bind(this)}/>
-                                </div>
-                            </div>
-
-                            <div className="col-md-12">
-                                <div className="form-group">
-                                    <label className="label">Prefijo</label>
-
-                                    <input
-                                        className="form-control"
-                                        placeholder="Ej. IA"
-                                        type="text"
-                                        name="prefijo"
-                                        value={this.state.prefijo}
-                                        onChange={this
-                                        .handleInput
-                                        .bind(this)}/>
-                                </div>
-                            </div>
-
-                            <div className="col-md-12">
-                                <div className="form-group">
-                                    <label className="label">Estado del instrumento:</label>
-                                    <select
-                                        className="form-control"
-                                        value={this.state.estado}
-                                        name="estado"
-                                        onChange={this
-                                        .handleInput
-                                        .bind(this)}>
-
-                                        {this.renderStatus()}
-                                    </select>
-                                </div>
-                            </div>
-
-                        </div>
-
-                    </div>
-
-                    <div className="modal-footer">
-
-                        <button
-                            className="btn btn-default"
-                            onClick={this
-                            .showModulos
-                            .bind(this, false)}>Cancelar</button>
-                        <button
-                            className="btn btn-primary"
-                            onClick={this
-                            .showModulos
-                            .bind(this, true)}>Aceptar</button>
-                    </div>
-
-                </div>
-            </Modal>
-        )
-    }
-}
-class PopupInstrumento extends FormMaster {
-    constructor(props) {
-        super(props);
-        this.state = {
-            "nombre": "",
-            "prefijo": "",
-            "subtitulo": "",
-            "estado": 1,
-            "orden": 0,
-            "aplicado": 0,
-            "id": -1,
-            estadoId: "",
-            municipioId: "",
-            comunidadId: "",
-            grupoId: ""
-        }
-        getEstados("vacio", (response) => {
-
-            if (response && response.data && response.data.d) {
-                this.setState({listaEstados: response.data.d})
-            }
-        })
-
-    }
-
     handleInput(e) {
         e.preventDefault();
         var valorAux = e.target.value
@@ -220,38 +66,55 @@ class PopupInstrumento extends FormMaster {
         this.setState({[mask]: valor});
         switch (mask) {
             case "estadoId":
+                this.setState({municipioId: "", comunidadId: "", grupoId:""});
                 getMunicipios(valor, (response) => {
                     if (response && response.data && response.data.d) {
                         this.setState({listaMunicipios: response.data.d})
                     }
                 });
                 break;
-                case "municipioId":
+            case "municipioId":
                 getComunidades(valor, (response) => {
                     if (response && response.data && response.data.d) {
                         this.setState({listaComunidades: response.data.d})
                     }
                 });
                 break;
-                case "comunidadId":
-                debugger
+            case "comunidadId":
+
                 getGrupos(valor, (response) => {
-                    debugger
+
                     if (response && response.data && response.data.d) {
                         this.setState({listaGrupos: response.data.d})
                     }
                 });
                 break;
+            case "grupoId":
+                
+                break;
 
             default:
                 break;
         }
-        
 
     }
     showModulos(a, e) {
         e.preventDefault();
         var g = this.state;
+        this.setState({
+            nombre: "",
+            prefijo: "",
+            subtitulo: "",
+            estado: 1,
+            orden: 0,
+            aplicado: 0,
+            id: -1,
+            estadoId: "",
+            municipioId: "",
+            comunidadId: "",
+            grupoId: "",
+            listaGruposSelected: []
+        })
         if (a) {
             this
                 .props
@@ -269,14 +132,14 @@ class PopupInstrumento extends FormMaster {
             return lista.map((item, i) => <option key={i + "municiipo_select"} value={item.IdGrupo}>{item.NombreGrupo}</option>)
 
         }
-        return <option value="null">Seleccione</option>;
+        return <option value="">Seleccione</option>;
     }
-     renderComunidades() {
+    renderComunidades() {
         if (this.state && this.state.listaComunidades) {
             const lista = this.state.listaComunidades;
             return lista.map((item, i) => <option key={i + "comunidad_select"} value={item.IdComunidad}>{item.NombreComunidad}</option>)
         }
-        return <option value="null">Seleccione</option>;
+        return <option value="">Seleccione</option>;
     }
     renderMunicipios() {
         if (this.state && this.state.listaMunicipios) {
@@ -284,7 +147,7 @@ class PopupInstrumento extends FormMaster {
             return lista.map((item, i) => <option key={i + "municiipo_select"} value={item.IdMunicipios}>{item.NombreMunicipio}</option>)
 
         }
-        return <option value="null">Seleccione</option>;
+        return <option value="">Seleccione</option>;
     }
     renderEstados() {
         if (this.state && this.state.listaEstados) {
@@ -292,13 +155,45 @@ class PopupInstrumento extends FormMaster {
             return lista.map((item, i) => <option key={i + "estado_select"} value={item.IdEstado}>{item.NombreEstado}</option>)
 
         }
-        return <option value="null">Seleccione</option>;
+        return <option value="">Seleccione</option>;
+    }
+    addGrupo = (e) => {
+        e.preventDefault();
+        var {listaGrupos, grupoId, listaGruposSelected} = this.state;
+        var item = listaGrupos.find(x => x.IdGrupo == grupoId);
+        if (item.IdGrupo && item.NombreGrupo) {
+            if (listaGruposSelected.length != 0) {
+                var exist = listaGruposSelected.findIndex(x => x.IdGrupo == grupoId);
+                if (exist == -1) {
+                    listaGruposSelected.push({IdGrupo: item.IdGrupo, NombreGrupo: item.NombreGrupo});
+                    this.setState({listaGruposSelected: listaGruposSelected, grupoId: ""})
+                }
+
+            } else if (listaGruposSelected.length == 0) {
+                listaGruposSelected.push({IdGrupo: item.IdGrupo, NombreGrupo: item.NombreGrupo});
+                this.setState({listaGruposSelected: listaGruposSelected, grupoId: ""})
+            }
+        }
+
     }
 
     render() {
+        var listagruposRender = [];
+        const {listaGruposSelected} = this.state
+        if (listaGruposSelected && listaGruposSelected.length > 0) {
+            listaGruposSelected.map((item, i) => {
+                listagruposRender.push(
+                    <div className="col-md-12">
+                        <a key={i + "listagrupos_instrumentos"}>{item.NombreGrupo}</a>
+                    </div>
+                )
+
+            })
+
+        }
 
         return (
-            <Modal show={this.props.show} dialogClassName="modal-dialog modal-lg">
+            <Modal show={this.props.show} dialogClassName="modal-dialog modal-md">
                 <div className="modal-content">
 
                     <div className="modal-header">
@@ -369,6 +264,7 @@ class PopupInstrumento extends FormMaster {
                                         onChange={this
                                         .handleInput
                                         .bind(this)}>
+                                        <option key={0 + "init_estado_select"} value={""}>{"Selecciona"}</option>
 
                                         {this.renderEstados()}
                                     </select>
@@ -384,8 +280,8 @@ class PopupInstrumento extends FormMaster {
                                         onChange={this
                                         .handleInput
                                         .bind(this)}>
-
-                                         {this.renderMunicipios()}
+                                        <option key={0 + "init_Muni_select"} value={""}>{"Selecciona "}</option>
+                                        {this.renderMunicipios()}
                                     </select>
                                 </div>
                             </div>
@@ -399,7 +295,7 @@ class PopupInstrumento extends FormMaster {
                                         onChange={this
                                         .handleInput
                                         .bind(this)}>
-
+                                        <option key={0 + "init_comunidad_select"} value={""}>{"Selecciona "}</option>
                                         {this.renderComunidades()}
                                     </select>
                                 </div>
@@ -410,18 +306,31 @@ class PopupInstrumento extends FormMaster {
                                     <select
                                         className="form-control"
                                         value={this.state.grupoId}
-                                        value={this.state.grupoId}
-                                        name="aplicado"
+                                        name="grupoId"
                                         onChange={this
                                         .handleInput
                                         .bind(this)}>
-
+                                        <option key={0 + "init_grupo_select"} value={""}>{"Selecciona "}</option>
                                         {this.renderGrupos()}
                                     </select>
                                 </div>
                             </div>
+                            <div className="col-md-4 col-sm-12">
+                                {(this.state.grupoId != "")
+                                    ? (
+                                        <div claclassNamess="input-group">
+                                            <label
+                                                className="btn btn-primary btn-sm"
+                                                text="Agregar localidad"
+                                                onClick={this.addGrupo}>+ Agregar grupo</label>
+
+                                        </div>
+                                    )
+                                    : (undefined)}
+
+                            </div>
                             <div className="col-md-12">
-                                lista de grupos
+                                lista de grupos {listagruposRender}
                             </div>
 
                             <div className="col-md-4">

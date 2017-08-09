@@ -26,18 +26,24 @@
     <script src="../../Scripts/src-react/babel.min.js"></script>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/latest/css/bootstrap-theme.min.css" />
     <link href="https://file.myfontastic.com/CrszDy9EX5PKEPWYeoAXdg/icons.css" rel="stylesheet" />
-    <script src="https://rawgit.com/flatiron/director/master/build/director.min.js"></script>
+    <script src="../../Scripts/src-react/director.min.js"></script>
     <script src="../../Scripts/react-bootstrap.min.js"></script>
     <script src="../../../Scripts/src-react/react-motion.js"></script>
     <script src="../../Scripts/src-react/react-collapse.min.js"></script>
     <script src="../../Scripts/bootstrap-datetimepicker.min.js"></script>
 
-
-     <script type="text/babel" src="./src/scripts/containers/User.js"></script>
-     <script type="text/babel" src="./src/scripts/containers/Instrumentos.js"></script>
+    <script type="text/babel" src="./src/scripts/containers/const.js"></script>
+     <script type="text/babel" src="./src/scripts/containers/user.js"></script>
+     <script type="text/babel" src="./src/scripts/containers/instrumentos.js"></script>
 
 
     <div id="appUnkiloDeAyuda"></div>
+
+
+    <script type="text/babel" src="./src/scripts/components/instrumentos/ModalInstrumento.js"></script>
+    <script type="text/babel" src="./src/scripts/components/instrumentos/Instrumentos.js"></script>
+     <script type="text/babel" src="./src/scripts/components/instrumentos/Instrumento.js"></script>
+
     <script type="text/babel" src="./src/scripts/components/FSChildrenNar.js"></script>
     <script type="text/babel" src="./src/scripts/components/ManagerFilters.js"></script>
     <script type="text/babel" src="./src/scripts/components/NavigationState.js"></script>
