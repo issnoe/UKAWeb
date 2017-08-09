@@ -1,0 +1,37 @@
+
+#menu li {
+position: relative;
+z-index: 2;
+display: block;
+float: left;
+width: 15%;
+height: 135px;
+line-height: 220px;
+margin-right: 1.42857%;
+white-space: nowrap;
+background-position: 50%;
+}
+.rocket {
+background: url('http://one-div.com/codepen/menu/rocket-large.png')no-repeat;
+margin-left: 1.42857%;
+}
+#menu a{
+  align:center;
+  
+}
+
+#menu ul{
+  position:relative;
+}
+
+
+.rocket:before {
+content: "";
+width: 9.5238%;
+height: 100%;
+position: absolute;
+top: 0;
+left: -9.5238%;
+background: url('http://one-div.com/codepen/menu/menu-bg.png');
+border-radius: 5px 0px 0px 5px;
+}
