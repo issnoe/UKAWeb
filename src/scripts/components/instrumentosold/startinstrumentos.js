@@ -50,7 +50,6 @@ var App = React.createClass({
                     this.setState({routerPath: "msg", mensaje: "No se encuentra ninguna referencia con este prefijo ;", listIdsModulos: undefined})
 
                 } else if (lenghtData == 1) {
-                    debugger
                       var onlyNumber= prefijo.split(/[A-Za-z]+/);
                       var index = onlyNumber[1];
                       if(index){

@@ -13,8 +13,6 @@ class FSManagerFilters extends React.Component {
     
     sendFilters(e){
         e.preventDefault();
-        debugger;
-        this
     }
 
     render() {

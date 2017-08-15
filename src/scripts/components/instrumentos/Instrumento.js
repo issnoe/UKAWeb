@@ -64,17 +64,13 @@ class Instrumento extends React.Component {
                                             Visualizar</a>
                                     </li>
                                     <li>
-
-                                        <a
-                                            onClick={() => {
-                                            this
-                                                .props
-                                                .onChange({action: "update", item: this.props.item})
-                                        }}><img
+                                    <a href={"#/admin/instrumentos/editar/" + this.props.item.id}><img
                                             src="../../../images/edit.svg"
-                                            alt="Editar nombre del instrumento"
+                                            alt="Editar  instrumento"
                                             height="18"/>
                                             Editar</a>
+
+                                       
                                     </li>
                                     <li>
                                         <a

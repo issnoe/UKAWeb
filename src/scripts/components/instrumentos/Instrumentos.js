@@ -11,22 +11,10 @@ class Instrumentos extends React.Component {
         // this.getIntrumentosWS()
 
     }
-    /*Medodos WS */
-  
-    saveIntrumentoWS(item, callback) {
-        var params = `{id:${item.id}, nombre:"${item.nombre}", subtitulo:"${item.subtitulo}",prefijo:"${item.prefijo}", estado:${item.estado}, orden:${item.orden}, aplicado:${item.aplicado}}`;
-        const url = "AdminIN.aspx/saveIntrumento";
-        var xhr = new XMLHttpRequest();
-        xhr.open("POST", url, true);
-        xhr.setRequestHeader("Content-Type", "application/json; charset=utf-8");
-        xhr.onloadend = function () {
-            if (xhr.readyState == 4 && (xhr.status == 200 || xhr.status == 304)) {
-                var dataResp = JSON.parse(xhr.responseText);
-                return callback(dataResp)
-            }
-        }
-        xhr.send(params);
+    componentWillReceiveProps(newProps){
+        getadminInstrumentos(this.setStatePromise.bind(this))
     }
+  
     deleteIntrumentoWS(id, callback) {
         var params = `{id:${id}}`;
         const url = "AdminIN.aspx/deleteIntrumento";
@@ -46,20 +34,8 @@ class Instrumentos extends React.Component {
         var instrumentos = resp.data.d
         this.setState({listaIntrumentos: instrumentos, spinerLoad: false ,showModal: false});
     }
-    /*fin  WS */
     
-    
-    saveIntrumento(state) {
-        if (state.nombre) {
-            this.saveIntrumentoWS(state, function(data){
-                this.getIntrumentosWS(this.setStatePromise.bind(this))
-            }.bind(this))
-        } else {
-            this.setState({showModal: false})
-        }
-    }
     handleState(e) {
-       
         switch (e.action) {
             case "delete":
               

@@ -37,10 +37,13 @@ class App extends React.Component {
                 on: this.validUser,
                 '/instrumentos': {
                     '/nuevo': () => {
-                        this.setState({modalInstrumento: true,routerPath: "admininstrumentos"})
+                        this.setState({modalInstrumento: true, routerPath: "admininstrumentos"})
                     },
+                    '/editar/:id': this.editarInstrumento,
+
                     on: () => {
-                        this.setState({routerPath: "admininstrumentos"})
+
+                        this.setState({routerPath: "admininstrumentos", modalInstrumento: false})
                     },
                     '/modulos': {
                         on: this.helloWorld,
@@ -84,11 +87,13 @@ class App extends React.Component {
     }
     validUser = () => {
         getUser((response) => {
-            if (response && response.data && response.data.d) {
-                debugger;
-
-            }
+            if (response && response.data && response.data.d) {}
         });
+    }
+    editarInstrumento = (id) => {
+        debugger;
+        var i = parseInt(id);
+        this.setState({instrumentoId: i, modalInstrumento: true, routerPath: "admininstrumentos"})
     }
     helloWorld = () => {
         alert("se activa conteiner")
@@ -98,7 +103,6 @@ class App extends React.Component {
     }
 
     saveIntrumento(state) {
-        debugger;
         this.setState({modalInstrumento: false})
         window
             .history
@@ -142,13 +146,11 @@ class App extends React.Component {
                 );
                 break;
             case "admininstrumentos":
-                
+
                 renderConteiner = (
                     <div>
                         <ModalInstrumento
-                            onChange={this
-                            .saveIntrumento
-                            .bind(this)}
+                            id={this.state.instrumentoId}
                             item={this.state.modalInstrumento}
                             show={this.state.modalInstrumento}
                             title="instrumento"/>
