@@ -18,8 +18,9 @@ var getLocation = function (callback) {
 }
 var getUser = function (callback) {
     const url = "APP.aspx/getUser";
+    var idu= localStorage.getItem("UKAidUsuario")
     var params = {
-        id: localStorage.getItem("UKAidUsuario")
+        id: idu
     };
     axios
         .post(url, params)

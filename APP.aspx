@@ -1,8 +1,10 @@
 ﻿<%@ Page Language="C#" AutoEventWireup="false" CodeBehind="APP.aspx.cs" Inherits="InfoKilo.WebApp.Miembros.WS.APP" %>
+<!DOCTYPE html>
+<html>
+<head>
+<title>UKA</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <!DOCTYPE html>
-
-    <html>
     <link rel="stylesheet" type="text/css" href="../../css/bootstrap.min.css" />
     <link rel="stylesheet" href="../../css/bootstrap-theme.min.css">
     <link rel="stylesheet" href="../../css/bootstrap-datetimepicker.min.css">
@@ -34,14 +36,17 @@
 
     <script type="text/babel" src="./src/scripts/containers/const.js"></script>
      <script type="text/babel" src="./src/scripts/containers/user.js"></script>
+     
      <script type="text/babel" src="./src/scripts/containers/instrumentos.js"></script>
-
+</head>
+<body>
 
     <div id="appUnkiloDeAyuda"></div>
 
-
+    <script type="text/babel" src="./src/scripts/components/instrumentos/ModalModulo.js"></script>
     <script type="text/babel" src="./src/scripts/components/instrumentos/ModalInstrumento.js"></script>
     <script type="text/babel" src="./src/scripts/components/instrumentos/Instrumentos.js"></script>
+    <script type="text/babel" src="./src/scripts/components/instrumentos/RowModulo.js"></script>
      <script type="text/babel" src="./src/scripts/components/instrumentos/Instrumento.js"></script>
 
     <script type="text/babel" src="./src/scripts/components/FSChildrenNar.js"></script>
@@ -51,5 +56,9 @@
     <script type="text/babel" src="./src/scripts/components/FSListChildrens.js"></script>
     <script type="text/babel" src="./src/scripts/start.js"></script>
 
-
+    </body>
     </html>
+
+
+
+ 

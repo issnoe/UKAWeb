@@ -5,8 +5,31 @@ class Instrumento extends React.Component {
         this.state = {isOpened:true }
         this.state.showModal = false
         this.state.showModalDelete = false
+        
+        var modulos = []
+        try {
+            modulos = JSON.parse(this.props.item.modulos)
+        } catch (error) {}
+
+        this.state.listaModulos = modulos
 
     
+    }
+    renderModulos() {
+        if (this.state.listaModulos.length > 0) {;
+            var listItems = this
+                .state
+                .listaModulos
+                .map((item) => <ModuloInRow
+                   
+                    key={item.id+"_lista_modulo_"}
+                    item={item}/>);
+            return listItems;
+        }
+        return (
+            <h3>No cuenta con modulos</h3>
+        )
+
     }
 
    
@@ -73,12 +96,7 @@ class Instrumento extends React.Component {
                                        
                                     </li>
                                     <li>
-                                        <a
-                                            onClick={() => {
-                                            {/*var itemM = {} itemM.id_instrumento:this.props.item.id;*/
-                                            }
-                                           
-                                        }}><img src="../../../images/add.svg" alt="Agregar módulo" height="18"/>
+                                        <a  href={"#/admin/instrumentos/modulos/nuevo/" + this.props.item.id}><img src="../../../images/add.svg" alt="Agregar módulo" height="18"/>
                                             Agregar módulo</a>
                                     </li>
 
@@ -106,7 +124,7 @@ class Instrumento extends React.Component {
 
                         <div className="panel-body">
 
-                            <div className="col-md-8 modulos">
+                            <div className="col-md-10 col-sm-10 modulos">
                                 <div className="row header-modulos">
                                     <div className="col-md-4 col-sm-4">
                                         Nombre del módulo
@@ -114,10 +132,11 @@ class Instrumento extends React.Component {
                                     <div className="col-md-2 col-sm-2 text-center">
                                         Prefijo
                                     </div>
-                                    <div className="col-md-1 col-sm-1 text-center">
+                                    <div className="col-md-2 col-sm-2 text-center">
                                         Estado
                                     </div>
                                 </div>
+                                {this.renderModulos()}
                               
                             </div>
 

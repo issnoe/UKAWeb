@@ -1,21 +1,20 @@
-class ModalInstrumento extends React.Component {
+class ModalModulo extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            nombre: "",
+            id: -1,
+            modulo: "",
             prefijo: "",
-            subtitulo: "",
+            leyenda: "",
             estado: 1,
             orden: 0,
-            aplicado: 0,
-            id: -1,
+            id_instrumento: -1,
             estadoId: "",
             municipioId: "",
             comunidadId: "",
             grupoId: "",
             listaGruposSelected: [],
-            loading:false,
-          
+            loading: false
         }
         getEstados("vacio", (response) => {
 
@@ -25,44 +24,67 @@ class ModalInstrumento extends React.Component {
         })
 
     }
-    componentWillReceiveProps(nexProps){
+    componentWillReceiveProps(nexProps) {
         var props = nexProps
-        if(props.id && props.show==true){
+        if (props.id && props.show == true) {
             var state = {
-                nombre: "",
+                id: -1,
+                modulo: "",
                 prefijo: "",
-                subtitulo: "",
+                leyenda: "",
                 estado: 1,
                 orden: 0,
-                aplicado: 0,
-                id: -1,
+                id_instrumento: -1,
                 estadoId: "",
                 municipioId: "",
                 comunidadId: "",
                 grupoId: "",
                 listaGruposSelected: [],
-                loading:false,
-              
+                loading: false
             }
             this.setState(state)
-            getInstrumentoById(props.id,(response)=>{
+            /*
+            getInstrumentoById(props.id, (response) => {
                 if (response && response.data && response.data.d[0]) {
-                    var {nombre,prefijo,subtitulo,estado,orden,aplicado,id,estadoId,municipioId,comunidadId,grupoId} = response.data.d[0];
+                    var {
+                        nombre,
+                        prefijo,
+                        subtitulo,
+                        estado,
+                        orden,
+                        aplicado,
+                        id,
+                        estadoId,
+                        municipioId,
+                        comunidadId,
+                        grupoId
+                    } = response.data.d[0];
                     var listaGruposSelected = []
-                    this.setState({nombre,prefijo,subtitulo,estado,orden,aplicado,id,estadoId,municipioId,comunidadId,grupoId})
+                    this.setState({
+                        nombre,
+                        prefijo,
+                        subtitulo,
+                        estado,
+                        orden,
+                        aplicado,
+                        id,
+                        estadoId,
+                        municipioId,
+                        comunidadId,
+                        grupoId
+                    })
                     try {
-                        if(response.data.d[0].grupos!="" ){
-                            listaGruposSelected=  JSON.parse(response.data.d[0].grupos);
+                        if (response.data.d[0].grupos != "") {
+                            listaGruposSelected = JSON.parse(response.data.d[0].grupos);
                             this.setState({listaGruposSelected})
                         }
-                    } catch (error) {
-                    }
+                    } catch (error) {}
                 }
-            })
+            })*/
         }
 
     }
-  
+
     renderStatus() {
         return (STATUS.map(function (i) {
             return (
@@ -77,6 +99,20 @@ class ModalInstrumento extends React.Component {
             );
         }))
     }
+    renderTipoPregunta() {
+        return (TIPOPREGUNTAS.map(function (i) {
+            return (
+                <option key={i.id + "_pregunta_option_"} value={i.id}>{i.data}</option>
+            );
+        }))
+    }
+    renderTipoReativo() {
+        return (TIPOREACTIVO.map(function (i) {
+            return (
+                <option key={i.id + "_pregunta_option_"} value={i.id}>{i.data}</option>
+            );
+        }))
+    }
 
     handleInput(e) {
         e.preventDefault();
@@ -88,7 +124,9 @@ class ModalInstrumento extends React.Component {
         } else {
             valor = valorAux
         }
-        this.setState({[mask]: valor}, ()=>{
+        this.setState({
+            [mask]: valor
+        }, () => {
             this.validar(this.state)
         });
         switch (mask) {
@@ -125,7 +163,7 @@ class ModalInstrumento extends React.Component {
         }
 
     }
-   
+
     renderGrupos() {
         if (this.state && this.state.listaGrupos) {
             const lista = this.state.listaGrupos;
@@ -176,30 +214,30 @@ class ModalInstrumento extends React.Component {
         }
 
     }
-    validar(state){
+    validar(state) {
         var errors = {}
         var isValid = true
-        if(state.nombre==""){
-            errors.nombre ="Falta por poner el nombre del instrumento";
+        if (state.nombre == "") {
+            errors.nombre = "Falta por poner el nombre del instrumento";
             isValid = false
         }
-        this.setState({loading:false, errors:errors})
-       return isValid
+        this.setState({loading: false, errors: errors})
+        return isValid
     }
     save = (e) => {
         e.preventDefault();
-        this.setState({loading:true})
+        this.setState({loading: true})
         var state = this.state
-        state.grupos = state.listaGruposSelected.map(g => g.IdGrupo);
-        if(this.validar(state)){
-            saveInstrumentos(state, (response)=> {
+        state.grupos = state
+            .listaGruposSelected
+            .map(g => g.IdGrupo);
+        if (this.validar(state)) {
+            saveInstrumentos(state, (response) => {
                 this.setState(this.state.init)
                 window.location.href = "#/admin/instrumentos";
-                
+
             })
         }
-
-      
 
     }
     goInstrumentos = (e) => {
@@ -222,23 +260,72 @@ class ModalInstrumento extends React.Component {
             })
 
         }
-        const {errors}= this.state;
+        const {errors} = this.state;
         return (
             <Modal show={this.props.show} dialogClassName="modal-dialog modal-md">
 
                 <div className="modal-content">
 
                     <div className="modal-header">
-                        <button
-                            type="button"
-                            className="close"
-                            onClick={this.goInstrumentos}
-                            >
+                        <button type="button" className="close" onClick={this.goInstrumentos}>
                             <span >×</span>
                         </button>
                         <h4 className="modal-title">Agregar {this.props.title}</h4>
                     </div>
                     <Modal.Body>
+                    <div className="row">
+                            <div className="col-md-12">
+                                <div className="form-group">
+                                    <label className="label">Nombre módulo</label>
+
+                                    <input
+                                        className="form-control"
+                                        placeholder="Ej. intrumento A"
+                                        type="text"
+                                        name="modulo"
+                                        value={this.state.modulo}
+                                        onChange={this
+                                        .handleInput
+                                        .bind(this)}/>
+                                </div>
+                            </div>
+
+                            <div className="col-md-12">
+                                <div className="form-group">
+                                    <label className="label">Prefijo</label>
+
+                                    <input
+                                        className="form-control"
+                                        placeholder="Ej. IA"
+                                        type="text"
+                                        name="prefijo"
+                                        value={this.state.prefijo}
+                                        onChange={this
+                                        .handleInput
+                                        .bind(this)}/>
+                                </div>
+                            </div>
+
+                            <div className="col-md-12">
+                                <div className="form-group">
+                                    <label className="label">Estado del instrumento:</label>
+                                    <select
+                                        className="form-control"
+                                        value={this.state.estado}
+                                        name="estado"
+                                        onChange={this
+                                        .handleInput
+                                        .bind(this)}>
+
+                                        {this.renderStatus()}
+                                    </select>
+                                </div>
+                            </div>
+
+                        </div>
+
+
+                        
                         <div className="row">
                             <div className="col-md-4">
                                 <div className="form-group">
@@ -252,8 +339,11 @@ class ModalInstrumento extends React.Component {
                                         value={this.state.nombre}
                                         onChange={this
                                         .handleInput
-                                        .bind(this)}/>
-                                        {(errors && errors.nombre!="")?(<span className="errorMsg">{errors.nombre}</span>):("")}
+                                        .bind(this)}/> {(errors && errors.nombre != "")
+                                        ? (
+                                            <span className="errorMsg">{errors.nombre}</span>
+                                        )
+                                        : ("")}
                                 </div>
                             </div>
 
@@ -351,8 +441,8 @@ class ModalInstrumento extends React.Component {
                                 {(this.state.grupoId != "")
                                     ? (
                                         <div >
-                                           
-                                                <Button bsSize="xsmall" onClick={this.addGrupo}>+ Agregar grupo</Button>
+
+                                            <Button bsSize="xsmall" onClick={this.addGrupo}>+ Agregar grupo</Button>
 
                                         </div>
                                     )
@@ -380,14 +470,20 @@ class ModalInstrumento extends React.Component {
                             </div>
 
                         </div>
-                        </Modal.Body>
+                    </Modal.Body>
                     <Modal.Footer>
-                                            {(this.state.loading)?( <div className="spinnerFixed" key={"spinnerInstrumentomodal_"}></div>):(<div><button className="btn btn-default" onClick={this.goInstrumentos}>Cancelar</button >
-                        <button className="btn btn-primary" onClick={this.save}>Aceptar</button></div>)}
-                   
+                        {(this.state.loading)
+                            ? (
+                                <div className="spinnerFixed" key={"spinnerInstrumentomodal_"}></div>
+                            )
+                            : (
+                                <div>
+                                    <button className="btn btn-default" onClick={this.goInstrumentos}>Cancelar</button >
+                                    <button className="btn btn-primary" onClick={this.save}>Aceptar</button>
+                                </div>
+                            )}
 
-                        
-                        </Modal.Footer>
+                    </Modal.Footer>
 
                 </div>
 
