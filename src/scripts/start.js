@@ -91,7 +91,6 @@ class App extends React.Component {
         });
     }
     editarInstrumento = (id) => {
-        debugger;
         var i = parseInt(id);
         this.setState({instrumentoId: i, modalInstrumento: true, routerPath: "admininstrumentos"})
     }

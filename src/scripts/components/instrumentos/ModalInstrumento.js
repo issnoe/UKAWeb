@@ -33,9 +33,22 @@ class ModalInstrumento extends React.Component {
                 debugger
                 if (response && response.data && response.data.d[0]) {
                     debugger
-                    const {nombre,prefijo,subtitulo,estado,orden,aplicado,id,estadoId,municipioId,comunidadId,grupoId} = response.data.d[0];
-                    var grupos = JSON.parse(response.data.d[0].grupos);
-                    this.setState({listaGruposSelected: grupos,nombre,prefijo,subtitulo,estado,orden,aplicado,id,estadoId,municipioId,comunidadId,grupoId})
+                    var {nombre,prefijo,subtitulo,estado,orden,aplicado,id,estadoId,municipioId,comunidadId,grupoId} = response.data.d[0];
+                    var listaGruposSelected = []
+                    try {
+                        if(response.data.d[0].grupos){
+                            
+                            listaGruposSelected=  JSON.parse(response.data.d[0].grupos);
+                            this.setState({listaGruposSelected})
+                        }
+                        
+                    } catch (error) {
+                        
+                    }
+                   
+                   
+                    
+                    this.setState({nombre,prefijo,subtitulo,estado,orden,aplicado,id,estadoId,municipioId,comunidadId,grupoId})
                 }
             })
         }
@@ -233,7 +246,7 @@ class ModalInstrumento extends React.Component {
                         </button>
                         <h4 className="modal-title">Agregar {this.props.title}</h4>
                     </div>
-                    < div className="modal-body">
+                    <Modal.Body>
                         <div className="row">
                             <div className="col-md-4">
                                 <div className="form-group">
@@ -345,11 +358,9 @@ class ModalInstrumento extends React.Component {
                             <div className="col-md-4 col-sm-12">
                                 {(this.state.grupoId != "")
                                     ? (
-                                        <div claclassNamess="input-group">
-                                            <label
-                                                className="btn btn-primary btn-sm"
-                                                text="Agregar localidad"
-                                                onClick={this.addGrupo}>+ Agregar grupo</label>
+                                        <div >
+                                           
+                                                <Button bsSize="xsmall" onClick={this.addGrupo}>+ Agregar grupo</Button>
 
                                         </div>
                                     )
@@ -377,14 +388,14 @@ class ModalInstrumento extends React.Component {
                             </div>
 
                         </div>
-                    </div>
-                    <div className="modal-footer">
+                        </Modal.Body>
+                    <Modal.Footer>
                                             {(this.state.loading)?( <div className="spinnerFixed" key={"spinnerInstrumentomodal_"}></div>):(<div><button className="btn btn-default" onClick={this.goInstrumentos}>Cancelar</button >
                         <button className="btn btn-primary" onClick={this.save}>Aceptar</button></div>)}
                    
 
                         
-                    </div>
+                        </Modal.Footer>
 
                 </div>
 

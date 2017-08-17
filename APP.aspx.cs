@@ -10,7 +10,7 @@ using System.Web.UI.WebControls;
 
 namespace InfoKilo.WebApp.Miembros.WS
 {
-    public partial class APP : System.Web.UI.Page
+    public partial class APP : Page
     {
         protected void Page_Load(object sender, EventArgs e)
         {

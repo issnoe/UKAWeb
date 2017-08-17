@@ -16,9 +16,7 @@ var getadminInstrumentos = function (callback) {
 }
 
 var getInstrumentoById = function (id,callback) {
-    debugger
     var url = URLUKA + "/Miembros/IN/Admin/AdminIN.aspx/getInstrumentoId";
-    
     var params = {
         id: id
     };
@@ -30,7 +28,6 @@ var getInstrumentoById = function (id,callback) {
         .catch(function (error) {
             // alert("No se pudo obtener datos de somatometria")
         });
-
 }
 
 
