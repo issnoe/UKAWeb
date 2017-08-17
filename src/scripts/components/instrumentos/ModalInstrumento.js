@@ -192,7 +192,7 @@ class ModalInstrumento extends React.Component {
         var state = this.state
         state.grupos = state.listaGruposSelected.map(g => g.IdGrupo);
         if(this.validar(state)){
-            saveInstrumentos(state, (response)=> {
+            saveInstrumento (state, (response)=> {
                 this.setState(this.state.init)
                 window.location.href = "#/admin/instrumentos";
                 

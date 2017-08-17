@@ -32,7 +32,7 @@ var getInstrumentoById = function (id,callback) {
 
 
 
-var saveInstrumentos = function (state, callback) {
+var saveInstrumento = function (state, callback) {
     var url = URLUKA + "/Miembros/IN/Admin/AdminIN.aspx/saveIntrumento";
     var params = {
         id: state.id,
@@ -43,6 +43,32 @@ var saveInstrumentos = function (state, callback) {
         orden: state.orden,
         aplicado: state.aplicado,
         grupos:state.grupos
+    }
+    axios
+        .post(url, params)
+        .then(function (response) {
+            callback(response)
+        })
+        .catch(function (error) {
+            // alert("No se pudo obtener datos de somatometria")
+        });
+
+}
+
+//int id, int id_instrumento, string modulo, string prefijo, string leyenda, int estado, int orden, List<string> grupos
+var saveModulo = function (state, callback) {
+  
+    var url = URLUKA + "/Miembros/IN/Admin/AdminIN.aspx/saveModulo";
+    var params = {
+        id: state.id,
+        id_instrumento:state.id_instrumento,
+        modulo:state.modulo,
+        prefijo:state.prefijo,
+        leyenda:state.leyenda,
+        estado:state.estado,
+        orden:0,
+        grupos:state.grupos
+        
     }
     axios
         .post(url, params)

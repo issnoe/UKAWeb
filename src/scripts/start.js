@@ -38,19 +38,17 @@ class App extends React.Component {
             '/admin': {
                 on: this.validUser,
                 '/instrumentos': {
+                    on: () => {
+                        this.setState({routerPath: "admininstrumentos", instrumentoId:undefined, modalInstrumento: false,modalModulo: false})
+                    },
                     '/nuevo': () => {
                         this.setState({modalInstrumento: true, routerPath: "admininstrumentos"})
                     },
-                    
                     '/editar/:id': this.editarInstrumento,
-
-                    on: () => {
-
-                        this.setState({routerPath: "admininstrumentos", modalInstrumento: false,modalModulo: false})
-                    },
                     '/modulos': {
                         '/nuevo/:id': (id) => {
-                            this.setState({modalModulo: true,instrumentoId:parseInt(id), routerPath: "admininstrumentos"})
+                            var i = parseInt(id)
+                            this.setState({modalModulo: true,instrumentoId:i, routerPath: "admininstrumentos"})
                         },
                         on: this.helloWorld,
                         'reactivos/': {
@@ -151,7 +149,7 @@ class App extends React.Component {
                 );
                 break;
             case "admininstrumentos":
-
+                
                 renderConteiner = (
                     <div>
                         <ModalInstrumento

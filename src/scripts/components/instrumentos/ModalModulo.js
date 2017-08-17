@@ -8,7 +8,7 @@ class ModalModulo extends React.Component {
             leyenda: "",
             estado: 1,
             orden: 0,
-            id_instrumento: -1,
+            id_instrumento: this.props.instrumentoId,
             estadoId: "",
             municipioId: "",
             comunidadId: "",
@@ -25,8 +25,9 @@ class ModalModulo extends React.Component {
 
     }
     componentWillReceiveProps(nexProps) {
+       /*
         var props = nexProps
-        if (props.id && props.show == true) {
+        if (props.id && props.show == true && nexProps.id_instrumento) {
             var state = {
                 id: -1,
                 modulo: "",
@@ -34,7 +35,7 @@ class ModalModulo extends React.Component {
                 leyenda: "",
                 estado: 1,
                 orden: 0,
-                id_instrumento: -1,
+                id_instrumento: nexProps.instrumentoId,
                 estadoId: "",
                 municipioId: "",
                 comunidadId: "",
@@ -43,7 +44,7 @@ class ModalModulo extends React.Component {
                 loading: false
             }
             this.setState(state)
-            /*
+           
             getInstrumentoById(props.id, (response) => {
                 if (response && response.data && response.data.d[0]) {
                     var {
@@ -80,8 +81,9 @@ class ModalModulo extends React.Component {
                         }
                     } catch (error) {}
                 }
-            })*/
+            })
         }
+        */
 
     }
 
@@ -221,7 +223,7 @@ class ModalModulo extends React.Component {
             errors.nombre = "Falta por poner el nombre del instrumento";
             isValid = false
         }
-        this.setState({loading: false, errors: errors})
+        this.setState({loading: false, errors: errors, id_instrumento:this.props.instrumentoId})
         return isValid
     }
     save = (e) => {
@@ -232,8 +234,9 @@ class ModalModulo extends React.Component {
             .listaGruposSelected
             .map(g => g.IdGrupo);
         if (this.validar(state)) {
-            saveInstrumentos(state, (response) => {
-                this.setState(this.state.init)
+            
+            saveModulo(state, (response) => {
+                //this.setState(this.state.init)   
                 window.location.href = "#/admin/instrumentos";
 
             })
@@ -274,26 +277,28 @@ class ModalModulo extends React.Component {
                     </div>
                     <Modal.Body>
                     <div className="row">
-                            <div className="col-md-12">
+                            <div className="col-md-4">
                                 <div className="form-group">
-                                    <label className="label">Nombre módulo</label>
-
+                                    <label className="label">Nombre del  módulo</label>
                                     <input
                                         className="form-control"
-                                        placeholder="Ej. intrumento A"
+                                        placeholder="Ej. módulo A"
                                         type="text"
                                         name="modulo"
-                                        value={this.state.modulo}
+                                        value={this.state.nombre}
                                         onChange={this
                                         .handleInput
-                                        .bind(this)}/>
+                                        .bind(this)}/> {(errors && errors.nombre != "")
+                                        ? (
+                                            <span className="errorMsg">{errors.nombre}</span>
+                                        )
+                                        : ("")}
                                 </div>
                             </div>
 
-                            <div className="col-md-12">
+                            <div className="col-md-4">
                                 <div className="form-group">
                                     <label className="label">Prefijo</label>
-
                                     <input
                                         className="form-control"
                                         placeholder="Ej. IA"
@@ -308,76 +313,6 @@ class ModalModulo extends React.Component {
 
                             <div className="col-md-12">
                                 <div className="form-group">
-                                    <label className="label">Estado del instrumento:</label>
-                                    <select
-                                        className="form-control"
-                                        value={this.state.estado}
-                                        name="estado"
-                                        onChange={this
-                                        .handleInput
-                                        .bind(this)}>
-
-                                        {this.renderStatus()}
-                                    </select>
-                                </div>
-                            </div>
-
-                        </div>
-
-
-                        
-                        <div className="row">
-                            <div className="col-md-4">
-                                <div className="form-group">
-                                    <label className="label">Nombre</label>
-
-                                    <input
-                                        className="form-control"
-                                        placeholder="Ej. intrumento A"
-                                        type="text"
-                                        name="nombre"
-                                        value={this.state.nombre}
-                                        onChange={this
-                                        .handleInput
-                                        .bind(this)}/> {(errors && errors.nombre != "")
-                                        ? (
-                                            <span className="errorMsg">{errors.nombre}</span>
-                                        )
-                                        : ("")}
-                                </div>
-                            </div>
-
-                            <div className="col-md-4">
-                                <div className="form-group">
-                                    <label className="label">Subtítulo</label>
-
-                                    <input
-                                        className="form-control"
-                                        type="text"
-                                        value={this.state.subtitulo}
-                                        placeholder="Ej. Niños con sobrepeso"
-                                        name="subtitulo"
-                                        onChange={this
-                                        .handleInput
-                                        .bind(this)}/>
-                                </div>
-                            </div>
-                            <div className="col-md-4">
-                                <div className="form-group">
-                                    <label className="label">Aplica a:</label>
-                                    <select
-                                        className="form-control"
-                                        value={this.state.aplicado}
-                                        name="aplicado"
-                                        onChange={this
-                                        .handleInput
-                                        .bind(this)}>
-                                        {this.renderPersonas()}
-                                    </select>
-                                </div>
-                            </div>
-                            <div className="col-md-12">
-                                <div className="form-group">
                                     <label className="label">Estado</label>
                                     <select
                                         className="form-control"
@@ -387,11 +322,11 @@ class ModalModulo extends React.Component {
                                         .handleInput
                                         .bind(this)}>
                                         <option key={0 + "init_estado_select"} value={""}>{"Selecciona"}</option>
-
                                         {this.renderEstados()}
                                     </select>
                                 </div>
                             </div>
+
                             <div className="col-md-4">
                                 <div className="form-group">
                                     <label className="label">Municipio</label>
@@ -407,6 +342,8 @@ class ModalModulo extends React.Component {
                                     </select>
                                 </div>
                             </div>
+
+
                             <div className="col-md-4">
                                 <div className="form-group">
                                     <label className="label">Comunidad</label>
@@ -422,6 +359,7 @@ class ModalModulo extends React.Component {
                                     </select>
                                 </div>
                             </div>
+
                             <div className="col-md-4">
                                 <div className="form-group">
                                     <label className="label">Grupo</label>
@@ -441,9 +379,7 @@ class ModalModulo extends React.Component {
                                 {(this.state.grupoId != "")
                                     ? (
                                         <div >
-
                                             <Button bsSize="xsmall" onClick={this.addGrupo}>+ Agregar grupo</Button>
-
                                         </div>
                                     )
                                     : (undefined)}
