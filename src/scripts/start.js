@@ -1,4 +1,5 @@
 var Modal = ReactBootstrap.Modal;
+
 const OverlayTrigger = ReactBootstrap.OverlayTrigger;
 const Popover = ReactBootstrap.Popover;
 const Panel = ReactBootstrap.Panel;
@@ -18,6 +19,7 @@ class App extends React.Component {
         this.state = {
             routerPath: "/",
             modalInstrumento: false,
+            modalModulo: false,
             idNinio: undefined
         }
         getLocation(function (response) {
@@ -36,16 +38,18 @@ class App extends React.Component {
             '/admin': {
                 on: this.validUser,
                 '/instrumentos': {
+                    on: () => {
+                        this.setState({routerPath: "admininstrumentos", instrumentoId:undefined, modalInstrumento: false,modalModulo: false})
+                    },
                     '/nuevo': () => {
                         this.setState({modalInstrumento: true, routerPath: "admininstrumentos"})
                     },
                     '/editar/:id': this.editarInstrumento,
-
-                    on: () => {
-
-                        this.setState({routerPath: "admininstrumentos", modalInstrumento: false})
-                    },
                     '/modulos': {
+                        '/nuevo/:id': (id) => {
+                            var i = parseInt(id)
+                            this.setState({modalModulo: true,instrumentoId:i, routerPath: "admininstrumentos"})
+                        },
                         on: this.helloWorld,
                         'reactivos/': {
                             on: this.helloWorld
@@ -145,14 +149,17 @@ class App extends React.Component {
                 );
                 break;
             case "admininstrumentos":
-
+                
                 renderConteiner = (
                     <div>
                         <ModalInstrumento
                             id={this.state.instrumentoId}
-                            item={this.state.modalInstrumento}
                             show={this.state.modalInstrumento}
                             title="instrumento"/>
+                        <ModalModulo
+                            instrumentoId={this.state.instrumentoId}
+                            show={this.state.modalModulo}
+                            title="modulo"/>
                         <Instrumentos/>
                     </div>
                 );

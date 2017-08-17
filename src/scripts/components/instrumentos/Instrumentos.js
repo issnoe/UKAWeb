@@ -30,7 +30,7 @@ class Instrumentos extends React.Component {
         xhr.send(params);
     }
     setStatePromise(resp) {
-       
+       debugger
         var instrumentos = resp.data.d
         this.setState({listaIntrumentos: instrumentos, spinerLoad: false ,showModal: false});
     }

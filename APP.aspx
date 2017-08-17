@@ -36,15 +36,17 @@
 
     <script type="text/babel" src="./src/scripts/containers/const.js"></script>
      <script type="text/babel" src="./src/scripts/containers/user.js"></script>
+     
      <script type="text/babel" src="./src/scripts/containers/instrumentos.js"></script>
 </head>
 <body>
 
     <div id="appUnkiloDeAyuda"></div>
 
-
+    <script type="text/babel" src="./src/scripts/components/instrumentos/ModalModulo.js"></script>
     <script type="text/babel" src="./src/scripts/components/instrumentos/ModalInstrumento.js"></script>
     <script type="text/babel" src="./src/scripts/components/instrumentos/Instrumentos.js"></script>
+    <script type="text/babel" src="./src/scripts/components/instrumentos/RowModulo.js"></script>
      <script type="text/babel" src="./src/scripts/components/instrumentos/Instrumento.js"></script>
 
     <script type="text/babel" src="./src/scripts/components/FSChildrenNar.js"></script>

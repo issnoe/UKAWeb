@@ -36,11 +36,11 @@ namespace InfoKilo.WebApp.Miembros.WS
             try
             {
                 Repository<Estados> handleRepository = new Repository<Estados>();
-                var listaEstados = handleRepository.Filter(n => n.Borrado == false).OrderBy(m =>m.NombreEstado);
+                var listaEstados = handleRepository.Filter(n => n.Borrado == false).OrderBy(m => m.NombreEstado);
                 return listaEstados.ToList();
             }
             catch (Exception e) { return null; }
-            
+
         }
         [System.Web.Services.WebMethod]
         public static List<Municipios> getMunicipios(string id)
@@ -73,7 +73,7 @@ namespace InfoKilo.WebApp.Miembros.WS
             try
             {
                 Repository<GruposComunidad> handleRepository = new Repository<GruposComunidad>();
-                var lista = handleRepository.Filter(n => n.IdComunidad.ToString() == id).OrderBy(m =>m.NombreGrupo);
+                var lista = handleRepository.Filter(n => n.IdComunidad.ToString() == id).OrderBy(m => m.NombreGrupo);
                 return lista.ToList();
             }
             catch (Exception e) { return null; }
@@ -115,7 +115,7 @@ namespace InfoKilo.WebApp.Miembros.WS
                 dymanicLocation location = new dymanicLocation();
                 return location;
             }
-           
+
         }
         [System.Web.Services.WebMethod]
         public static IQueryable<dynamic> getSomatometria(string idGrupo, string textoBusqueda, string orden, string fichaseguimiento)
@@ -131,7 +131,7 @@ namespace InfoKilo.WebApp.Miembros.WS
             var lista = new List<NinioEnPrograma>();
             if (textoBusqueda == "")
             {
-                lista = handle.Filter(n => n.Familias.IdGrupo.ToString() == idGrupo && n.Borrado == false , listaTablas.Count, listaTablas);
+                lista = handle.Filter(n => n.Familias.IdGrupo.ToString() == idGrupo && n.Borrado == false, listaTablas.Count, listaTablas);
             }
             else
             {
@@ -163,53 +163,53 @@ namespace InfoKilo.WebApp.Miembros.WS
             }
             List<dynamic> listRequest = new List<dynamic>();
             foreach (var item in listaNinio)
-	            {
-                    try
+            {
+                try
+                {
+                    if (item.Somatometria.Count() > 0)
                     {
-                        if (item.Somatometria.Count() > 0)
+                        dymanicChild child = new dymanicChild();
+                        child.id = item.IdNinio;
+                        child.ninoNombreCompleto = item.Nombre + " " + item.ApMaterno + " " + item.ApPaterno;
+                        child.cuidadorNombreCompleto = item.Familias.Cuidador.Nombre + " " + item.Familias.Cuidador.ApMaterno + " " + item.Familias.Cuidador.ApPaterno;
+                        child.fechaNacimineto = (item.FechaNacimiento.ToString() != "") ? (Convert.ToDateTime(item.FechaNacimiento)).ToString("dd/MM/yyyy") : "--/--/--";
+                        child.sexo = (item.Genero == true) ? "M" : "F";
+                        child.clave = item.ClaveNinio;
+                        child.edadMeses = Calcular.EdadEnMeses(DateTime.Now, item.FechaNacimiento);
+                        child.numeroFamilia = Convert.ToInt32(item.Familias.NumFamilia);
+                        child.listaSomatometrias = new List<dymanicSomatometria>();
+                        foreach (var soma in item.Somatometria.OrderByDescending(z => z.FechaDeCreacion))
                         {
-                            dymanicChild child = new dymanicChild();
-                            child.id = item.IdNinio;
-                            child.ninoNombreCompleto = item.Nombre + " " + item.ApMaterno + " " + item.ApPaterno;
-                            child.cuidadorNombreCompleto = item.Familias.Cuidador.Nombre + " " + item.Familias.Cuidador.ApMaterno + " " + item.Familias.Cuidador.ApPaterno;
-                            child.fechaNacimineto = (item.FechaNacimiento.ToString() != "") ? (Convert.ToDateTime(item.FechaNacimiento)).ToString("dd/MM/yyyy") : "--/--/--";
-                            child.sexo = (item.Genero == true) ? "M" : "F";
-                            child.clave = item.ClaveNinio;
-                            child.edadMeses = Calcular.EdadEnMeses(DateTime.Now, item.FechaNacimiento);
-                            child.numeroFamilia = Convert.ToInt32(item.Familias.NumFamilia);
-                            child.listaSomatometrias = new List<dymanicSomatometria>();
-                            foreach (var soma in item.Somatometria.OrderByDescending(z => z.FechaDeCreacion))
+                            try
                             {
-                                try
-                                {
-                                    dymanicSomatometria somatometria = new dymanicSomatometria();
-                                    somatometria.id = soma.IdSomatometria;
-                                    somatometria.peso = Convert.ToDecimal(soma.Peso);
-                                    somatometria.talla = Convert.ToDecimal(soma.Talla);
-                                    somatometria.hb = Convert.ToDecimal(soma.HB);
-                                    somatometria.date = soma.FechaDeCreacion.ToString("dd/MM/yyyy");
-                                    somatometria.dxPE = soma.DiagnosticoPesoEdad;
-                                    somatometria.dxTE = soma.DiagnosticoTallaEdad;
-                                    somatometria.dxPT = soma.DiagnosticoPesoTalla;
-                                    child.listaSomatometrias.Add(somatometria);
-                                }
-                                catch (Exception)
-                                {
-                                }
+                                dymanicSomatometria somatometria = new dymanicSomatometria();
+                                somatometria.id = soma.IdSomatometria;
+                                somatometria.peso = Convert.ToDecimal(soma.Peso);
+                                somatometria.talla = Convert.ToDecimal(soma.Talla);
+                                somatometria.hb = Convert.ToDecimal(soma.HB);
+                                somatometria.date = soma.FechaDeCreacion.ToString("dd/MM/yyyy");
+                                somatometria.dxPE = soma.DiagnosticoPesoEdad;
+                                somatometria.dxTE = soma.DiagnosticoTallaEdad;
+                                somatometria.dxPT = soma.DiagnosticoPesoTalla;
+                                child.listaSomatometrias.Add(somatometria);
                             }
-                            listRequest.Add(child);
+                            catch (Exception)
+                            {
+                            }
                         }
+                        listRequest.Add(child);
                     }
-
-                    catch (Exception)
-                    {
-
-
-                    }
-                   
                 }
-	            
-                      
+
+                catch (Exception)
+                {
+
+
+                }
+
+            }
+
+
 
             return listRequest.AsQueryable();
         }
@@ -243,7 +243,7 @@ namespace InfoKilo.WebApp.Miembros.WS
             public int somatometriaCount { get; set; }
             public List<dymanicSomatometria> listaSomatometrias { get; set; }
 
-            
+
         }
         public class dymanicSomatometria
         {
