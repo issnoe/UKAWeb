@@ -236,7 +236,7 @@ class ModalInstrumento extends React.Component {
                             >
                             <span >×</span>
                         </button>
-                        <h4 className="modal-title">Agregar {this.props.title}</h4>
+                        <h4 className="modal-title"> {this.props.title}</h4>
                     </div>
                     <Modal.Body>
                         <div className="row">

@@ -8,7 +8,7 @@ class ModalModulo extends React.Component {
             leyenda: "",
             estado: 1,
             orden: 0,
-            id_instrumento: this.props.instrumentoId,
+            id_instrumento: (this.props.instrumentoId)?this.props.instrumentoId:0,
             estadoId: "",
             municipioId: "",
             comunidadId: "",
@@ -25,6 +25,23 @@ class ModalModulo extends React.Component {
 
     }
     componentWillReceiveProps(nexProps) {
+        var id = nexProps.moduloId;
+        if(id!=undefined && nexProps.show==true && nexProps.instrumentoId==undefined){
+           
+            getModuloById(id, (response)=>{
+                if (id && response.data.d[0]) {
+                    const {modulo,id, id_instrumento,state,orden,prefijo,grupos} = response.data.d[0]
+
+                    this.setState( {modulo,id, id_instrumento,state,orden,prefijo,grupos},()=>{
+                        debugger;
+                        this
+                    })
+                }
+
+            })
+        }
+
+        
        /*
         var props = nexProps
         if (props.id && props.show == true && nexProps.id_instrumento) {
@@ -208,13 +225,11 @@ class ModalModulo extends React.Component {
                     listaGruposSelected.push({IdGrupo: item.IdGrupo, NombreGrupo: item.NombreGrupo});
                     this.setState({listaGruposSelected: listaGruposSelected, grupoId: ""})
                 }
-
             } else if (listaGruposSelected.length == 0) {
                 listaGruposSelected.push({IdGrupo: item.IdGrupo, NombreGrupo: item.NombreGrupo});
                 this.setState({listaGruposSelected: listaGruposSelected, grupoId: ""})
             }
         }
-
     }
     validar(state) {
         var errors = {}
@@ -228,27 +243,24 @@ class ModalModulo extends React.Component {
     }
     save = (e) => {
         e.preventDefault();
+        debugger
         this.setState({loading: true})
         var state = this.state
         state.grupos = state
             .listaGruposSelected
             .map(g => g.IdGrupo);
         if (this.validar(state)) {
-            
             saveModulo(state, (response) => {
-                //this.setState(this.state.init)   
+                debugger
                 window.location.href = "#/admin/instrumentos";
-
             })
         }
-
     }
     goInstrumentos = (e) => {
         e.preventDefault();
         this.setState(this.state.init)
         window.location.href = "#/admin/instrumentos";
     }
-
     render() {
         var listagruposRender = [];
         const {listaGruposSelected} = this.state
@@ -259,21 +271,17 @@ class ModalModulo extends React.Component {
                         <a key={i + "listagrupos_instrumentos"}>{item.NombreGrupo}</a>
                     </div>
                 )
-
             })
-
         }
         const {errors} = this.state;
         return (
             <Modal show={this.props.show} dialogClassName="modal-dialog modal-md">
-
                 <div className="modal-content">
-
                     <div className="modal-header">
                         <button type="button" className="close" onClick={this.goInstrumentos}>
                             <span >×</span>
                         </button>
-                        <h4 className="modal-title">Agregar {this.props.title}</h4>
+                        <h4 className="modal-title">{this.props.title}</h4>
                     </div>
                     <Modal.Body>
                     <div className="row">
@@ -285,7 +293,7 @@ class ModalModulo extends React.Component {
                                         placeholder="Ej. módulo A"
                                         type="text"
                                         name="modulo"
-                                        value={this.state.nombre}
+                                        value={this.state.modulo}
                                         onChange={this
                                         .handleInput
                                         .bind(this)}/> {(errors && errors.nombre != "")
@@ -295,7 +303,6 @@ class ModalModulo extends React.Component {
                                         : ("")}
                                 </div>
                             </div>
-
                             <div className="col-md-4">
                                 <div className="form-group">
                                     <label className="label">Prefijo</label>
@@ -310,7 +317,6 @@ class ModalModulo extends React.Component {
                                         .bind(this)}/>
                                 </div>
                             </div>
-
                             <div className="col-md-12">
                                 <div className="form-group">
                                     <label className="label">Estado</label>
@@ -326,7 +332,6 @@ class ModalModulo extends React.Component {
                                     </select>
                                 </div>
                             </div>
-
                             <div className="col-md-4">
                                 <div className="form-group">
                                     <label className="label">Municipio</label>
@@ -342,8 +347,6 @@ class ModalModulo extends React.Component {
                                     </select>
                                 </div>
                             </div>
-
-
                             <div className="col-md-4">
                                 <div className="form-group">
                                     <label className="label">Comunidad</label>
@@ -359,7 +362,6 @@ class ModalModulo extends React.Component {
                                     </select>
                                 </div>
                             </div>
-
                             <div className="col-md-4">
                                 <div className="form-group">
                                     <label className="label">Grupo</label>
@@ -383,12 +385,10 @@ class ModalModulo extends React.Component {
                                         </div>
                                     )
                                     : (undefined)}
-
                             </div>
                             <div className="col-md-12">
                                 lista de grupos {listagruposRender}
                             </div>
-
                             <div className="col-md-4">
                                 <div className="form-group">
                                     <label className="label">Estado del instrumento:</label>
@@ -404,7 +404,6 @@ class ModalModulo extends React.Component {
                                     </select>
                                 </div>
                             </div>
-
                         </div>
                     </Modal.Body>
                     <Modal.Footer>

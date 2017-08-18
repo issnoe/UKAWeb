@@ -2,7 +2,7 @@ class Instrumento extends React.Component {
     constructor(props) {
         super(props);
        
-        this.state = {isOpened:true }
+        this.state = {isOpened:false }
         this.state.showModal = false
         this.state.showModalDelete = false
         
@@ -13,7 +13,15 @@ class Instrumento extends React.Component {
 
         this.state.listaModulos = modulos
 
+      
+
     
+    }
+    componentWillReceiveProps(nextProps){
+        if(nextProps.active && nextProps.item && nextProps.item.id==nextProps.active){
+            this.setState({isOpened:true})
+        }
+
     }
     renderModulos() {
         if (this.state.listaModulos.length > 0) {;
@@ -35,6 +43,8 @@ class Instrumento extends React.Component {
    
     render() {
         var isOpened = this.state.isOpened;
+       
+        
 
         return (
             <div className="panel panel-default">
@@ -59,7 +69,7 @@ class Instrumento extends React.Component {
                                 {`${this.props.item.nombre} / ${this.props.item.subtitulo} / ${this.props.item.prefijo}`}
                             </a>
                         </div>
-                        <div className="col-md-3 col-sm-3">{moment(this.props.item.fechaCreacion).format('MMMM Do YYYY, h:mm:ss a')}</div>
+                        <div className="col-md-3 col-sm-3">{moment(this.props.item.fechaCreacion).format('MM/DD/YYYY, h:mm:ss')}</div>
                         <div className="col-md-2 col-sm-2 long-txt">{(this.props.item.aplicado)
                                 ? PERSONAS[this.props.item.aplicado].data
                                 : "No asigando"}</div>
@@ -73,18 +83,10 @@ class Instrumento extends React.Component {
                                     <img src="../../../images/menu.svg" alt="Acciones" height="28"/>
                                 </a>
                                 <ul className="dropdown-menu" aria-labelledby="dropdownMenu1">
-
+                                <li className="dropdown-header">Instrumento</li>
                                     <li>
-                                        <a href=""><img src="../../../images/enable.svg" alt="Activar instrumento" height="18"/>
+                                        <a href={"#/admin/instrumentos/editar/" + this.props.item.id}><img src="../../../images/enable.svg" alt="Activar instrumento" height="18"/>
                                             Activar</a>
-                                    </li>
-                                    <li>
-                                        <a href={"#/instrumento/" + this.props.item.id}><img src="../../../images/add.svg" alt="Agregar pregunta" height="18"/>
-                                            Agregar pregunta</a>
-                                    </li>
-                                    <li>
-                                        <a href={"#/simulacion/" + this.props.item.id}><img src="../../../images/enable.svg" alt="Visualizar instrumento" height="18"/>
-                                            Visualizar</a>
                                     </li>
                                     <li>
                                     <a href={"#/admin/instrumentos/editar/" + this.props.item.id}><img
@@ -92,23 +94,27 @@ class Instrumento extends React.Component {
                                             alt="Editar  instrumento"
                                             height="18"/>
                                             Editar</a>
-
-                                       
                                     </li>
                                     <li>
-                                        <a  href={"#/admin/instrumentos/modulos/nuevo/" + this.props.item.id}><img src="../../../images/add.svg" alt="Agregar módulo" height="18"/>
-                                            Agregar módulo</a>
-                                    </li>
-
-                                    <li>
-                                        <a
-                                            onClick={() => {
-                                            this.setState({showModalDelete: true})
-                                        }}><img
+                                        <a href={"#/admin/instrumentos/eliminar/" + this.props.item.id}><img
                                             src="../../../images/erase-gray.svg"
                                             alt="Eliminar el instrumento"
                                             height="18"/>
                                             Eliminar</a>
+                                    </li>
+                                    <li className="dropdown-header">Modulo</li>
+                                    <li>
+                                        <a  href={"#/admin/instrumentos/modulos/nuevo/" + this.props.item.id}><img src="../../../images/add.svg" alt="Agregar módulo" height="18"/>
+                                            Agregar módulo</a>
+                                    </li>
+                                    <li className="dropdown-header">Preguntas</li>
+                                    <li>
+                                        <a href={"#/instrumento/" + this.props.item.id}><img src="../../../images/add.svg" alt="Agregar pregunta" height="18"/>
+                                            Agregar pregunta</a>
+                                    </li>
+                                    <li>
+                                        <a href={"#/admin/instrumentos/simulacion/" + this.props.item.id}><img src="../../../images/enable.svg" alt="Visualizar instrumento" height="18"/>
+                                            Visualizar</a>
                                     </li>
                                 </ul>
                             </div>

@@ -43,17 +43,47 @@
 
     <div id="appUnkiloDeAyuda"></div>
 
+
+    <script type="text/babel" src="./src/scripts/components/ModalCondition.js"></script>
+
+
+
+
+    <script type="text/babel" src="./src/scripts/components/instrumentos/modulos/PopupMsg.js"></script>
+    <script type="text/babel" src="./src/scripts/components/instrumentos/modulos/PopupItem.js"></script>
+    <script type="text/babel" src="./src/scripts/components/instrumentos/modulos/ModuloItem.js"></script>
+    <script type="text/babel" src="./src/scripts/components/instrumentos/modulos/Instrumento.js"></script>
+    <script type="text/babel" src="./src/scripts/components/instrumentos/modulos/Instrumentos.js"></script>
+    <script type="text/babel" src="./src/scripts/components/instrumentos/modulos/Modulos.js"></script>
+     <script type="text/babel" src="./src/scripts/components/instrumentos/modulos/PanelPreguntas.js"></script>
+    <script type="text/babel" src="./src/scripts/components/instrumentos/modulos/Pregunta.js"></script>
+    <script type="text/babel" src="./src/scripts/components/instrumentos/modulos/Reactivos.js"></script>
+    <script type="text/babel" src="./src/scripts/components/instrumentos/modulos/Answer.js"></script>
+    <script type="text/babel" src="./src/scripts/components/instrumentos/modulos/LinkedPanelQuestion.js"></script>
+    <script type="text/babel" src="./src/scripts/components/instrumentos/modulos/LinkedQuestion.js"></script>
+    <script type="text/babel" src="./src/scripts/components/instrumentos/modulos/Q.js"></script>
+    <script type="text/babel" src="./src/scripts/components/instrumentos/modulos/Q.js"></script>
+    <script type="text/babel" src="./src/scripts/components/instrumentos/modulos/Modulo.js"></script>
+
+    
     <script type="text/babel" src="./src/scripts/components/instrumentos/ModalModulo.js"></script>
     <script type="text/babel" src="./src/scripts/components/instrumentos/ModalInstrumento.js"></script>
     <script type="text/babel" src="./src/scripts/components/instrumentos/Instrumentos.js"></script>
     <script type="text/babel" src="./src/scripts/components/instrumentos/RowModulo.js"></script>
      <script type="text/babel" src="./src/scripts/components/instrumentos/Instrumento.js"></script>
 
+
     <script type="text/babel" src="./src/scripts/components/FSChildrenNar.js"></script>
     <script type="text/babel" src="./src/scripts/components/ManagerFilters.js"></script>
     <script type="text/babel" src="./src/scripts/components/NavigationState.js"></script>
     <script type="text/babel" src="./src/scripts/components/FSRowChildren.js"></script>
     <script type="text/babel" src="./src/scripts/components/FSListChildrens.js"></script>
+
+
+
+
+
+
     <script type="text/babel" src="./src/scripts/start.js"></script>
 
     </body>

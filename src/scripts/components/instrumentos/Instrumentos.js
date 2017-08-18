@@ -3,58 +3,35 @@ class Instrumentos extends React.Component {
         super(props);
         this.state = {}
         this.state.item = {}
-        this.state.showModal = false
+       
         this.state.listaIntrumentos = [];
         this.state.spinerLoad = true
-
         getadminInstrumentos(this.setStatePromise.bind(this))
         // this.getIntrumentosWS()
 
     }
     componentWillReceiveProps(newProps){
-        getadminInstrumentos(this.setStatePromise.bind(this))
-    }
-  
-    deleteIntrumentoWS(id, callback) {
-        var params = `{id:${id}}`;
-        const url = "AdminIN.aspx/deleteIntrumento";
-        var xhr = new XMLHttpRequest();
-        xhr.open("POST", url, true);
-        xhr.setRequestHeader("Content-Type", "application/json; charset=utf-8");
-        xhr.onloadend = function () {
-            if (xhr.readyState == 4 && (xhr.status == 200 || xhr.status == 304)) {
-                var dataResp = JSON.parse(xhr.responseText);
-                return callback(dataResp)
-            }
-        }
-        xhr.send(params);
-    }
-    setStatePromise(resp) {
-       debugger
-        var instrumentos = resp.data.d
-        this.setState({listaIntrumentos: instrumentos, spinerLoad: false ,showModal: false});
-    }
-    
-    handleState(e) {
-        switch (e.action) {
-            case "delete":
-              
-               this.deleteIntrumentoWS(e.itemModulo.id,function(data){
-                    this.getIntrumentosWS(this.setStatePromise.bind(this))
-                }.bind(this));
-                break;
-          case "update":
-               this.setState({showModal: true, item:e.item });
-                break;
+        if(newProps.id){
+            this.setState({spinerLoad:true})
+            getadminInstrumentos(this.setStatePromise.bind(this))
 
         }
+     
     }
+  
+    
+    setStatePromise(resp) {
+        var instrumentos = resp.data.d
+        this.setState({listaIntrumentos: instrumentos, spinerLoad: false });
+    }
+    
+   
     renderInstrumentos(){
         if(this.state.listaIntrumentos){
             var listaIntrumentos =[];
 
              this.state.listaIntrumentos.map((item)=>{
-                 listaIntrumentos.push(<Instrumento onChange={this.handleState.bind(this)} key={item.nombre+item.id+"_lista_instrumentos_"} item={item}/>);
+                 listaIntrumentos.push(<Instrumento key={item.nombre+item.id+"_lista_instrumentos_"} item={item} active={this.props.id}/>);
              });
              
             return listaIntrumentos;
@@ -83,7 +60,7 @@ class Instrumentos extends React.Component {
                         </div>
                         <div className="col-md-5 col-sm-5 text-right">
                             <div className="form-group">
-                                <a href={"#/admin/instrumentos/nuevo"} className="btn btn-primary btn-sm" >Agregar instrumento</a>
+                                <a href={"#/admin/instrumentos/nuevo"} className="btn btn-primary btn-sm" >Instrumento</a>
                             </div>
                         </div>
                     </div>
@@ -97,7 +74,7 @@ class Instrumentos extends React.Component {
                                         Nombre del instrumento
                                     </div>
                                     <div className="col-md-3 col-sm-3">
-                                        Fecha de creación
+                                        Última modificación
                                     </div>
                                     <div className="col-md-2 col-sm-2">
                                         Aplicación a

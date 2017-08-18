@@ -10,26 +10,18 @@ class Modulo extends React.Component {
 
     }
     _getReactivos() {
-        var params = {
-            id: this.props.id
-        };
-        const url = "AdminIN.aspx/getReactivosbyModuloId";
-        axios
-            .post(url, params)
-            .then(function (response) {
-                if (response.data && response.data.d[0]) {
-                    var respRequest = response.data.d[0]
-                    try {
-                        var castJsonReactivosAux = respRequest.reactivos
-                        var reactivos = JSON.parse(castJsonReactivosAux);
-                        respRequest.reactivos = reactivos;
-                    } catch (e) {}
-                    this.setState({modulo: respRequest, spinerLoad: false})
-                }
-            }.bind(this))
-            .catch(function (error) {
-                alert("No se pudo obtener datos")
-            });
+        getModuloById(this.props.id, (response) => {
+            if (response.data && response.data.d[0]) {
+                var respRequest = response.data.d[0]
+                try {
+                    var castJsonReactivosAux = respRequest.reactivos
+                    var reactivos = JSON.parse(castJsonReactivosAux);
+                    respRequest.reactivos = reactivos;
+                } catch (e) {}
+                this.setState({modulo: respRequest, spinerLoad: false})
+            }
+
+        })
 
     }
     deleteSelected(list) {
@@ -40,7 +32,7 @@ class Modulo extends React.Component {
             var params = {
                 id: id
             }
-            const url = "AdminIN.aspx/deleteReactivo";
+            const url = URLUKA+"/Miembros/IN/Admin/AdminIN.aspx/deleteReactivo";
             axios
                 .post(url, params)
                 .then(function (response) {
@@ -69,7 +61,7 @@ class Modulo extends React.Component {
         item.estado = parseInt(0);
         item.orden = 0;
         var params = item;
-        const url = "AdminIN.aspx/saveReactivos";
+        const url = URLUKA+"/Miembros/IN/Admin/AdminIN.aspx/saveReactivos";
         axios
             .post(url, params)
             .then(function (response) {
@@ -87,7 +79,7 @@ class Modulo extends React.Component {
         if (this.state.spinerLoad == true) {
             return (
                 <div className="container">
-                    <div className="spinner" key={"spinnerModulo"+this.state.modulo.id}></div>
+                    <div className="spinner" key={"spinnerModulo" + this.state.modulo.id}></div>
                 </div>
             )
         }
@@ -116,25 +108,32 @@ class Modulo extends React.Component {
                         </div>
                     )
                     : (
-                        <div className="container">
 
-                            <div className="col-md-5  col-sm-12 pregunta-div">
-                                <Question
-                                    prefijoPregunta={this.state.modulo.prefijo + "." + (this.state.modulo.reactivos.length + 1)}
-                                    saveClose={this
-                                    .saveClose
-                                    .bind(this)}
-                                    saveNext={this
-                                    .saveNext
-                                    .bind(this)}/>
-                            </div>
-                            <div className="col-md-7 col-sm-12">
-                                <PanelPreguntas
-                                    modulo={this.state.modulo}
-                                    deleteSelected={this
-                                    .deleteSelected
-                                    .bind(this)}/>
-                            </div>
+                        <div className="container">
+                            {(this.state.modulo && this.state.modulo.reactivos)
+                                ? (
+                                    <div>
+                                        <div className="col-md-5  col-sm-12 pregunta-div">
+                                            <Question
+                                                prefijoPregunta={this.state.modulo.prefijo + "." + (this.state.modulo.reactivos.length + 1)}
+                                                saveClose={this
+                                                .saveClose
+                                                .bind(this)}
+                                                saveNext={this
+                                                .saveNext
+                                                .bind(this)}/>
+                                        </div>
+                                        <div className="col-md-7 col-sm-12">
+                                            <PanelPreguntas
+                                                modulo={this.state.modulo}
+                                                deleteSelected={this
+                                                .deleteSelected
+                                                .bind(this)}/>
+                                        </div>
+                                    </div>
+                                )
+                                : ("")}
+
                         </div>
                     )}
 

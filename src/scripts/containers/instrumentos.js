@@ -29,6 +29,57 @@ var getInstrumentoById = function (id,callback) {
             // alert("No se pudo obtener datos de somatometria")
         });
 }
+var getModuloById=function(id, callback){
+    
+    var idd= parseInt(id)
+    var url = URLUKA + "/Miembros/IN/Admin/AdminIN.aspx/getReactivosbyModuloId";
+    var params = {
+        id: idd
+    };
+    axios
+        .post(url, params)
+        .then(function (response) {
+            callback(response)
+        })
+        .catch(function (error) {
+            // alert("No se pudo obtener datos de somatometria")
+        });
+
+}
+
+
+var deleteInstrumento = function (id, callback) {
+    var url = URLUKA + "/Miembros/IN/Admin/AdminIN.aspx/deleteIntrumento";
+    var params = {
+        id: id,
+       
+    }
+    axios
+        .post(url, params)
+        .then(function (response) {
+            callback(response)
+        })
+        .catch(function (error) {
+            // alert("No se pudo obtener datos de somatometria")
+        });
+
+}
+var deleteModulo = function (id, callback) {
+    var url = URLUKA + "/Miembros/IN/Admin/AdminIN.aspx/deleteModulo";
+    var params = {
+        id: id,
+       
+    }
+    axios
+        .post(url, params)
+        .then(function (response) {
+            callback(response)
+        })
+        .catch(function (error) {
+            // alert("No se pudo obtener datos de somatometria")
+        });
+
+}
 
 
 
@@ -57,7 +108,7 @@ var saveInstrumento = function (state, callback) {
 
 //int id, int id_instrumento, string modulo, string prefijo, string leyenda, int estado, int orden, List<string> grupos
 var saveModulo = function (state, callback) {
-  
+        
     var url = URLUKA + "/Miembros/IN/Admin/AdminIN.aspx/saveModulo";
     var params = {
         id: state.id,
