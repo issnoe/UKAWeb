@@ -34,7 +34,6 @@ class FSListChildrens extends React.Component {
                     renderList.push(<FSRowChildren key={"chillistnar" + index} child={child} nar={nar}/>)
                 }
             })
-
             return (
                 <div>
                     <div>
@@ -43,15 +42,12 @@ class FSListChildrens extends React.Component {
                     <div className="row table-header">
                         <div className="col-md-1 col-sm-1">
                             No. fam.
-
                         </div>
                         <div className="col-md-2 col-sm-3">
                             Socia
-
                         </div>
                         <div className="col-md-4 col-sm-3">
                             Niño
-
                         </div>
                         <div className="col-md-5 col-sm-5">
                             <div className="row">
@@ -82,25 +78,21 @@ class FSListChildrens extends React.Component {
                                 </div>
                             </div>
                         </div>
-
                     </div>
                     {renderList}</div>
             )
         }
     }
-
     render() {
-        if (this.state.loading == true) {
+        if (this.state.loading == false) {
             return (
                 <div className="spinner" key={"spinnerInstrumento_"}></div>
             )
         }
-
         return (
             <div>
                 {this.renderChildrendsCandidateNAR()}
             </div>
         )
-
     }
 }

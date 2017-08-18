@@ -1,5 +1,4 @@
 var Modal = ReactBootstrap.Modal;
-
 const OverlayTrigger = ReactBootstrap.OverlayTrigger;
 const Popover = ReactBootstrap.Popover;
 const Panel = ReactBootstrap.Panel;
@@ -10,9 +9,7 @@ var MenuItem = ReactBootstrap.MenuItem;
 var Tab = ReactBootstrap.Tab;
 var Tabs = ReactBootstrap.Tabs;
 const Collapse = ReactCollapse.Collapse;
-
 moment.locale('es');
-
 class App extends React.Component {
     constructor(props) {
         super(props);
@@ -35,7 +32,6 @@ class App extends React.Component {
         });
     }
     componentDidMount() {
-
         var router = Router({
             '/admin': {
                 on: this.validUser,
@@ -82,8 +78,16 @@ class App extends React.Component {
                     }
                 }
             },
-            '/instrumentos': {
-                on: this.helloWorld
+            '/pdc/': {
+                '/instrumentos': {
+                    '/aplicar/:id': (id) => {
+                        debugger
+                        this.setState({controller: "aplicarInstrumento"})
+                    },
+                    on: () => {
+                        this.setState({controller: "instrumentos"})
+                    }
+                }
             },
             '/pdf': {
                 '/fichas': {
@@ -119,21 +123,18 @@ class App extends React.Component {
             if (response && response.data && response.data.d) {}
         });
     }
-
     helloWorld = () => {
         alert("se activa conteiner")
     }
     fichanar = (id) => {
         this.setState({controller: "fichanar"})
     }
-
     saveIntrumento(state) {
         this.setState({modalInstrumento: false})
         window
             .history
             .back();
     }
-
     render() {
         var renderConteiner;
         var navigatorState = [
@@ -176,20 +177,29 @@ class App extends React.Component {
                     </div>
                 );
                 break;
-            case "modulo":
 
+            case "aplicarInstrumento":
+            navigatorHistory = navigatorState.slice(0, 3);
+            renderConteiner = (
+                <div>
+                    <FSManagerFilters/>
+                    <FSListChildrens/>
+                </div>
+            );
+            break;
+
+            case "modulo":
                 renderConteiner = (
                     <div>
                         <Modulo id={this.state.id}/>
                     </div>
                 );
                 break;
-                case "simulacion":
+            case "simulacion":
                 var params = {
                     id: this.state.instrumentoId
                 };
-                var url = URLUKA+"/Miembros/IN/Admin/AdminIN.aspx/getInstrumentoId";
-
+                var url = URLUKA + "/Miembros/IN/Admin/AdminIN.aspx/getInstrumentoId";
                 var listaIdModulos = []
                 if (this.state.listaModulos) {
                     this
@@ -198,7 +208,6 @@ class App extends React.Component {
                         .map((item, index) => {
                             listaIdModulos.push(<Modulo key={index} id={item.id} simulation={true}/>)
                         });
-
                 } else {
                     axios
                         .post(url, params)
@@ -214,14 +223,17 @@ class App extends React.Component {
                             alert("No se pudo obtener datos")
                         });
                 }
-
                 renderConteiner = (listaIdModulos);
-                
-                               
-                                break;
+                break;
+            case "instrumentos":
+                navigatorHistory = navigatorState.slice(0, 2);
+                renderConteiner = (
+                    <div>
+                        <InstrumentosView/>
+                    </div>
+                );
+                break;
             case "admininstrumentos":
-                debugger
-
                 renderConteiner = (
                     <div>
                         <ModalCondition

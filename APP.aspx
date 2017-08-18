@@ -14,6 +14,7 @@
     <link rel="stylesheet" type="text/css" href="../../css/style.css" />
      <link rel="stylesheet" type="text/css" href="../../css/form.css" />
     <link rel="stylesheet" type="text/css" href="../../css/xt.css" />
+
     <link rel="stylesheet" type="text/css" href="./src/styles/zdev.css" />
     <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 
@@ -44,7 +45,7 @@
     <div id="appUnkiloDeAyuda"></div>
 
 
-    <script type="text/babel" src="./src/scripts/components/ModalCondition.js"></script>
+    <script type="text/babel" src="./src/scripts/components/instrumentos/instrumentos/ModalCondition.js"></script>
 
 
 
@@ -66,18 +67,18 @@
     <script type="text/babel" src="./src/scripts/components/instrumentos/modulos/Modulo.js"></script>
 
     
-    <script type="text/babel" src="./src/scripts/components/instrumentos/ModalModulo.js"></script>
-    <script type="text/babel" src="./src/scripts/components/instrumentos/ModalInstrumento.js"></script>
-    <script type="text/babel" src="./src/scripts/components/instrumentos/Instrumentos.js"></script>
-    <script type="text/babel" src="./src/scripts/components/instrumentos/RowModulo.js"></script>
-     <script type="text/babel" src="./src/scripts/components/instrumentos/Instrumento.js"></script>
+    <script type="text/babel" src="./src/scripts/components/instrumentos/instrumentos/ModalModulo.js"></script>
+    <script type="text/babel" src="./src/scripts/components/instrumentos/instrumentos/ModalInstrumento.js"></script>
+    <script type="text/babel" src="./src/scripts/components/instrumentos/instrumentos/Instrumentos.js"></script>
+    <script type="text/babel" src="./src/scripts/components/instrumentos/instrumentos/RowModulo.js"></script>
+     <script type="text/babel" src="./src/scripts/components/instrumentos/instrumentos/Instrumento.js"></script>
 
 
-    <script type="text/babel" src="./src/scripts/components/FSChildrenNar.js"></script>
-    <script type="text/babel" src="./src/scripts/components/ManagerFilters.js"></script>
+    <script type="text/babel" src="./src/scripts/components/rows/FSChildrenNar.js"></script>
+    <script type="text/babel" src="./src/scripts/components/rows/ManagerFilters.js"></script>
     <script type="text/babel" src="./src/scripts/components/NavigationState.js"></script>
-    <script type="text/babel" src="./src/scripts/components/FSRowChildren.js"></script>
-    <script type="text/babel" src="./src/scripts/components/FSListChildrens.js"></script>
+    <script type="text/babel" src="./src/scripts/components/rows/FSRowChildren.js"></script>
+    <script type="text/babel" src="./src/scripts/components/rows/FSListChildrens.js"></script>
 
 
 

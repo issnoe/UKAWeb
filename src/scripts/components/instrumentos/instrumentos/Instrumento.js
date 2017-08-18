@@ -157,3 +157,97 @@ class Instrumento extends React.Component {
 
     }
 }
+class InstrumentoView extends React.Component {
+    constructor(props) {
+        super(props);
+       
+        this.state = {isOpened:false }
+        this.state.showModal = false
+        this.state.showModalDelete = false
+        
+        var modulos = []
+        try {
+            modulos = JSON.parse(this.props.item.modulos)
+        } catch (error) {}
+
+        this.state.listaModulos = modulos
+
+      
+
+    
+    }
+    componentWillReceiveProps(nextProps){
+        if(nextProps.active && nextProps.item && nextProps.item.id==nextProps.active){
+            this.setState({isOpened:true})
+        }
+
+    }
+    renderModulos() {
+        if (this.state.listaModulos.length > 0) {;
+            var listItems = this
+                .state
+                .listaModulos
+                .map((item) => <ModuloInRow
+                   
+                    key={item.id+"_lista_modulo_"}
+                    item={item}/>);
+            return listItems;
+        }
+        return (
+            <h3>No cuenta con modulos</h3>
+        )
+
+    }
+
+   
+    render() {
+        var isOpened = this.state.isOpened;
+       
+        
+
+        return (
+            <div className="panel panel-default">
+
+              
+                <div className="panel-heading">
+                    <div className="row">
+                        <div
+                            className="panel-title long-txt col-md-4 col-sm-4"
+                            onClick={() => (this.setState({
+                            isOpened: !this.state.isOpened
+                        }))}>
+                            <a
+                                className={(!this.state.isOpened)
+                                ? "collapsed"
+                                : ""}>
+                               
+                                {`${this.props.item.nombre} / ${this.props.item.subtitulo} / ${this.props.item.prefijo}`}
+                            </a>
+                        </div>
+                        <div className="col-md-3 col-sm-3">{moment(this.props.item.fechaCreacion).format('MM/DD/YYYY, h:mm:ss')}</div>
+                        <div className="col-md-2 col-sm-2 long-txt">{(this.props.item.aplicado)
+                                ? PERSONAS[this.props.item.aplicado].data
+                                : "No asigando"}</div>
+                        <div className="col-md-2 col-sm-2 ">{(this.props.item.estado != null)
+                                ? STATUS[this.props.item.estado].data
+                                : "Sin estado"}</div>
+                        <div className="col-md-1 col-sm-1 text-right">
+                            <div className="form-group">
+                                <a href={"#/pdc/instrumentos/aplicar/" + this.props.item.aplicado} className="btn btn-primary btn-sm" >Aplicar</a>
+                            </div>
+                      
+                        </div> 
+
+                    </div>
+
+                </div>
+
+               
+
+            </div>
+        )
+
+    }
+}
+
+
