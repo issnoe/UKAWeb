@@ -3,10 +3,9 @@ class Instrumentos extends React.Component {
         super(props);
         this.state = {}
         this.state.item = {}
-        this.state.showModal = false
+       
         this.state.listaIntrumentos = [];
         this.state.spinerLoad = true
-
         getadminInstrumentos(this.setStatePromise.bind(this))
         // this.getIntrumentosWS()
 
@@ -32,7 +31,7 @@ class Instrumentos extends React.Component {
     setStatePromise(resp) {
        debugger
         var instrumentos = resp.data.d
-        this.setState({listaIntrumentos: instrumentos, spinerLoad: false ,showModal: false});
+        this.setState({listaIntrumentos: instrumentos, spinerLoad: false });
     }
     
     handleState(e) {
@@ -44,7 +43,7 @@ class Instrumentos extends React.Component {
                 }.bind(this));
                 break;
           case "update":
-               this.setState({showModal: true, item:e.item });
+               this.setState({ item:e.item });
                 break;
 
         }
@@ -97,7 +96,7 @@ class Instrumentos extends React.Component {
                                         Nombre del instrumento
                                     </div>
                                     <div className="col-md-3 col-sm-3">
-                                        Fecha de creación
+                                        Última modificación
                                     </div>
                                     <div className="col-md-2 col-sm-2">
                                         Aplicación a

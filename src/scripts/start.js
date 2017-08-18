@@ -18,9 +18,11 @@ class App extends React.Component {
         super(props);
         this.state = {
             routerPath: "/",
+            instrumentoId:undefined,
+            idNinio: undefined,
             modalInstrumento: false,
-            modalModulo: false,
-            idNinio: undefined
+            modalModulo: false
+            
         }
         getLocation(function (response) {
             if (response && response.data && response.data.d) {
@@ -129,6 +131,7 @@ class App extends React.Component {
                 routing: "#/fichanar"
             }
         ]
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////
         var navigatorHistory = [];
         switch (this.state.routerPath) {
             case "nar":
@@ -184,5 +187,7 @@ class App extends React.Component {
 
     }
 }
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 ReactDOM.render(
     <App/>, document.getElementById('appUnkiloDeAyuda'));

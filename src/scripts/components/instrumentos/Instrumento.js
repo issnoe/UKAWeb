@@ -59,7 +59,7 @@ class Instrumento extends React.Component {
                                 {`${this.props.item.nombre} / ${this.props.item.subtitulo} / ${this.props.item.prefijo}`}
                             </a>
                         </div>
-                        <div className="col-md-3 col-sm-3">{moment(this.props.item.fechaCreacion).format('MMMM Do YYYY, h:mm:ss a')}</div>
+                        <div className="col-md-3 col-sm-3">{moment(this.props.item.fechaCreacion).format('MM DD YY, h:mm:ss')}</div>
                         <div className="col-md-2 col-sm-2 long-txt">{(this.props.item.aplicado)
                                 ? PERSONAS[this.props.item.aplicado].data
                                 : "No asigando"}</div>
