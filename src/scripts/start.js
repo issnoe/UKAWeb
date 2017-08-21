@@ -81,7 +81,7 @@ class App extends React.Component {
             },
             '/pdc/': {
                 '/instrumentos': {
-                    '/aplicar/:id': (id) => {
+                    '/aplicar/:id/:aplicado': (id, aplicado) => {
                         this.setState({controller: "aplicarInstrumento"})
                     },
                     on: () => {
@@ -186,7 +186,7 @@ class App extends React.Component {
                 break;
 
             case "aplicarInstrumento":
-                navigatorHistory =  _.concat(navigatorState[0], navigatorState[6],navigatorState[7])
+                navigatorHistory =  _.concat(navigatorState[0], navigatorState[1],navigatorState[6],navigatorState[7])
                 /*
                 switch (key) {
                     case value:
@@ -196,10 +196,14 @@ class App extends React.Component {
                     default:
                         break;
                 }*/
+                var params={
+                    instrumento:1,
+                    para:1
+                }
                 renderConteiner = (
                     <div>
                         <PDCManagerFilters/>
-                        <PDCListChildrens/>
+                        <PDCListChildrens {...params}/>
                     </div>
                 );
                 break;
@@ -242,7 +246,7 @@ class App extends React.Component {
                 renderConteiner = (listaIdModulos);
                 break;
             case "instrumentos":
-                navigatorHistory = _.concat(navigatorState[0], navigatorState[6])
+                navigatorHistory = _.concat(navigatorState[0],navigatorState[1], navigatorState[6])
                 renderConteiner = (
                     <div>
                         <InstrumentosView/>

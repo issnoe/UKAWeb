@@ -198,17 +198,10 @@ class InstrumentoView extends React.Component {
         )
 
     }
-
-   
     render() {
         var isOpened = this.state.isOpened;
-       
-        
-
         return (
             <div className="panel panel-default">
-
-              
                 <div className="panel-heading">
                     <div className="row">
                         <div
@@ -233,7 +226,7 @@ class InstrumentoView extends React.Component {
                                 : "Sin estado"}</div>
                         <div className="col-md-1 col-sm-1 text-right">
                             <div className="form-group">
-                                <a href={"#/pdc/instrumentos/aplicar/" + this.props.item.aplicado} className="btn btn-primary btn-sm" >Aplicar</a>
+                                <a href={"#/pdc/instrumentos/aplicar/" + this.props.item.id+"/"+this.props.item.aplicado} className="btn btn-primary btn-sm" >Aplicar</a>
                             </div>
                       
                         </div> 

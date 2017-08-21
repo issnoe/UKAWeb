@@ -48,7 +48,6 @@ var getChildrends = function(filters,callback) {
         callback(response)
     })
     .catch(function (error) {
-        debugger
         var s = error;
         // alert("No se pudo obtener datos de la localidad")
     });
