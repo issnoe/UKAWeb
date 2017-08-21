@@ -22,10 +22,12 @@
     <script src="../../Scripts/jquery-ui.min.js"></script>
     <script src="../../Scripts/bootstrap.min.js"></script>
     <script src="../../Scripts/moment-with-locales.js"></script>
+
     <script src="../../Scripts/src-react/prop-types.min.js"></script>
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <script src="../../Scripts/src-react/react.js"></script>
     <script src="../../Scripts/src-react/react-dom.js"></script>
+     <script src="../../Scripts/src-react/lodash.min.js"></script>
     <script src="../../Scripts/src-react/babel.min.js"></script>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/latest/css/bootstrap-theme.min.css" />
     <link href="https://file.myfontastic.com/CrszDy9EX5PKEPWYeoAXdg/icons.css" rel="stylesheet" />
@@ -35,21 +37,19 @@
     <script src="../../Scripts/src-react/react-collapse.min.js"></script>
     <script src="../../Scripts/bootstrap-datetimepicker.min.js"></script>
 
-    <script type="text/babel" src="./src/scripts/containers/const.js"></script>
-     <script type="text/babel" src="./src/scripts/containers/user.js"></script>
-     
-     <script type="text/babel" src="./src/scripts/containers/instrumentos.js"></script>
+    
 </head>
 <body>
 
     <div id="appUnkiloDeAyuda"></div>
+ <!-- 
+    <script type="text/babel" src="./src/scripts/build/build.js"></script>
 
-
+ -->
+    <script type="text/babel" src="./src/scripts/containers/const.js"></script>
+     <script type="text/babel" src="./src/scripts/containers/user.js"></script>
+     <script type="text/babel" src="./src/scripts/containers/instrumentos.js"></script>
     <script type="text/babel" src="./src/scripts/components/instrumentos/instrumentos/ModalCondition.js"></script>
-
-
-
-
     <script type="text/babel" src="./src/scripts/components/instrumentos/modulos/PopupMsg.js"></script>
     <script type="text/babel" src="./src/scripts/components/instrumentos/modulos/PopupItem.js"></script>
     <script type="text/babel" src="./src/scripts/components/instrumentos/modulos/ModuloItem.js"></script>
@@ -65,15 +65,12 @@
     <script type="text/babel" src="./src/scripts/components/instrumentos/modulos/Q.js"></script>
     <script type="text/babel" src="./src/scripts/components/instrumentos/modulos/Q.js"></script>
     <script type="text/babel" src="./src/scripts/components/instrumentos/modulos/Modulo.js"></script>
-
-    
     <script type="text/babel" src="./src/scripts/components/instrumentos/instrumentos/ModalModulo.js"></script>
     <script type="text/babel" src="./src/scripts/components/instrumentos/instrumentos/ModalInstrumento.js"></script>
     <script type="text/babel" src="./src/scripts/components/instrumentos/instrumentos/Instrumentos.js"></script>
     <script type="text/babel" src="./src/scripts/components/instrumentos/instrumentos/RowModulo.js"></script>
      <script type="text/babel" src="./src/scripts/components/instrumentos/instrumentos/Instrumento.js"></script>
-
-
+     <script type="text/babel" src="./src/scripts/components/rows/PDCListChildrens.js"></script>
     <script type="text/babel" src="./src/scripts/components/rows/FSChildrenNar.js"></script>
     <script type="text/babel" src="./src/scripts/components/rows/ManagerFilters.js"></script>
     <script type="text/babel" src="./src/scripts/components/NavigationState.js"></script>
@@ -84,8 +81,8 @@
 
 
 
-
     <script type="text/babel" src="./src/scripts/start.js"></script>
+    
 
     </body>
     </html>

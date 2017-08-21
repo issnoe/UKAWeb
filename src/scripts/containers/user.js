@@ -17,7 +17,7 @@ var getLocation = function (callback) {
         });
 }
 var getUser = function (callback) {
-    const url = "APP.aspx/getUser";
+    var url = "APP.aspx/getUser";
     var idu= localStorage.getItem("UKAidUsuario")
     var params = {
         id: idu
@@ -32,8 +32,8 @@ var getUser = function (callback) {
         });
 }
 
-var getChildrends = function (callback) {
-    const url = "APP.aspx/getSomatometria";
+var getChildrends = function(filters,callback) {
+    var url = "APP.aspx/getSomatometria";
     var idGrupo = localStorage.getItem("UKAidGrupo")
     var params = {
         idGrupo: idGrupo,
@@ -43,13 +43,15 @@ var getChildrends = function (callback) {
 
     };
     axios
-        .post(url, params)
-        .then(function (response) {
-            callback(response)
-        })
-        .catch(function (error) {
-            // alert("No se pudo obtener datos de somatometria")
-        });
+    .post(url, params)
+    .then(function (response) {
+        callback(response)
+    })
+    .catch(function (error) {
+        debugger
+        var s = error;
+        // alert("No se pudo obtener datos de la localidad")
+    });
 }
 
 var getEstados = function (callback) {

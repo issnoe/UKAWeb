@@ -32,10 +32,7 @@ class ModalModulo extends React.Component {
                 if (id && response.data.d[0]) {
                     const {modulo,id, id_instrumento,state,orden,prefijo,grupos} = response.data.d[0]
 
-                    this.setState( {modulo,id, id_instrumento,state,orden,prefijo,grupos},()=>{
-                        debugger;
-                        this
-                    })
+                    this.setState( {modulo,id, id_instrumento,state,orden,prefijo,grupos})
                 }
 
             })
@@ -243,7 +240,6 @@ class ModalModulo extends React.Component {
     }
     save = (e) => {
         e.preventDefault();
-        debugger
         this.setState({loading: true})
         var state = this.state
         state.grupos = state
@@ -251,7 +247,6 @@ class ModalModulo extends React.Component {
             .map(g => g.IdGrupo);
         if (this.validar(state)) {
             saveModulo(state, (response) => {
-                debugger
                 window.location.href = "#/admin/instrumentos";
             })
         }

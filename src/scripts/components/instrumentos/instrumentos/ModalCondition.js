@@ -19,7 +19,6 @@ class ModalCondition extends React.Component {
     acept = (e) => {
         e.preventDefault();
         if(this.props.focusHandle=="modulo"){
-            debugger
             deleteModulo(this.props.id, (response)=>{
                 this.setState({show: false})
                 window.location.href = "#/admin/instrumentos";

@@ -1,3 +1,4 @@
+
 var Modal = ReactBootstrap.Modal;
 const OverlayTrigger = ReactBootstrap.OverlayTrigger;
 const Popover = ReactBootstrap.Popover;
@@ -81,7 +82,6 @@ class App extends React.Component {
             '/pdc/': {
                 '/instrumentos': {
                     '/aplicar/:id': (id) => {
-                        debugger
                         this.setState({controller: "aplicarInstrumento"})
                     },
                     on: () => {
@@ -117,6 +117,8 @@ class App extends React.Component {
         });
 
         router.init('/');
+        // router.configure({html5history: true});
+
     }
     validUser = () => {
         getUser((response) => {
@@ -153,12 +155,17 @@ class App extends React.Component {
             },, {
                 name: "Administrador de instrumentos",
                 routing: "#/admin/instrumentos"
-            },, {
-                name: "Modulo",
-                routing: "#/admin/instrumentos"
             }
+            , {
+                name: "Instrumentos",
+                routing: "#/pdc/instrumentos"
+            },
+            {
+                name: "Candidatos",
+                routing: "#/pdc/instrumentos/aplicar/"
+            },
         ]
-        var navigatorHistory = [];
+        var navigatorHistory =[]
         switch (this.state.controller) {
             case "nar":
                 navigatorHistory = navigatorState.slice(0, 3);
@@ -179,14 +186,23 @@ class App extends React.Component {
                 break;
 
             case "aplicarInstrumento":
-            navigatorHistory = navigatorState.slice(0, 3);
-            renderConteiner = (
-                <div>
-                    <FSManagerFilters/>
-                    <FSListChildrens/>
-                </div>
-            );
-            break;
+                navigatorHistory =  _.concat(navigatorState[0], navigatorState[6],navigatorState[7])
+                /*
+                switch (key) {
+                    case value:
+
+                        break;
+
+                    default:
+                        break;
+                }*/
+                renderConteiner = (
+                    <div>
+                        <PDCManagerFilters/>
+                        <PDCListChildrens/>
+                    </div>
+                );
+                break;
 
             case "modulo":
                 renderConteiner = (
@@ -226,7 +242,7 @@ class App extends React.Component {
                 renderConteiner = (listaIdModulos);
                 break;
             case "instrumentos":
-                navigatorHistory = navigatorState.slice(0, 2);
+                navigatorHistory = _.concat(navigatorState[0], navigatorState[6])
                 renderConteiner = (
                     <div>
                         <InstrumentosView/>
