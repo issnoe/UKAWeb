@@ -45,7 +45,7 @@ class PDCRowChildren extends React.Component {
                 <div className="col-md-4 col-sm-4">
                     <div className="row">
                         <div className="col-md-12">
-                            <a href={"#/pdc/instrumentos/aplicar" + this.props._instrumentoId}>
+                            <a href={"#/pdc/instrumentos/aplicar/" + this.props._instrumentoId}>
                                 <img src="/images/apply.svg" alt="Capturar ficha" height="18"/>
                                 <strong>
                                     {this.props.child.ninoNombreCompleto}</strong>
