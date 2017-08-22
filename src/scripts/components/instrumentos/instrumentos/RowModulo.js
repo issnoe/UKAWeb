@@ -1,4 +1,4 @@
-export class ModuloInRow extends  React.Component{
+ class ModuloInRow extends  React.Component{
     constructor(props) {
         super(props);
         this.state={}

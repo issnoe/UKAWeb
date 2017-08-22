@@ -21,6 +21,10 @@ class App extends React.Component {
             idNinio: undefined,
             modalCondition: false
         }
+        
+    }
+    componentDidMount() {
+
         getLocation(function (response) {
             if (response && response.data && response.data.d) {
                 this.setState({location: response.data.d})
@@ -31,8 +35,6 @@ class App extends React.Component {
                 this.setState({user: response.data.d})
             }
         });
-    }
-    componentDidMount() {
         var router = Router({
             '/admin': {
                 on: this.validUser,
@@ -45,15 +47,15 @@ class App extends React.Component {
                     },
                     '/eliminar/:id': (id) => {
                         var i = parseInt(id)
-                        this.setState({modalCondition: true, instrumentoId: i, controller: "admininstrumentos"})
+                        this.setState({modalCondition: true, _instrumentoId: i, controller: "admininstrumentos"})
                     },
                     '/editar/:id': (id) => {
                         var i = parseInt(id);
-                        this.setState({instrumentoId: i, modalInstrumento: true, controller: "admininstrumentos"})
+                        this.setState({_instrumentoId: i, modalInstrumento: true, controller: "admininstrumentos"})
                     },
                     '/simulacion/:id': (id) => {
                         var i = parseInt(id);
-                        this.setState({instrumentoId: i, controller: "simulacion"})
+                        this.setState({_instrumentoId: i, controller: "simulacion"})
                     },
                     '/modulos': {
                         '/:id': (id) => {
@@ -62,15 +64,15 @@ class App extends React.Component {
                         },
                         '/nuevo/:id': (id) => {
                             var i = parseInt(id)
-                            this.setState({modalModulo: true, instrumentoId: i, controller: "admininstrumentos"})
+                            this.setState({modalModulo: true, _instrumentoId: i, controller: "admininstrumentos"})
                         },
                         '/eliminar/:id': (id) => {
                             var i = parseInt(id)
-                            this.setState({modalCondition: true, instrumentoId: i, focusHandle: "modulo", controller: "admininstrumentos"})
+                            this.setState({modalCondition: true, _instrumentoId: i, focusHandle: "modulo", controller: "admininstrumentos"})
                         },
                         '/editar/:id': (id) => {
                             var i = parseInt(id)
-                            this.setState({modalModulo: true, instrumentoId: i, moduloId: i, controller: "admininstrumentos"})
+                            this.setState({modalModulo: true, _instrumentoId: i, moduloId: i, controller: "admininstrumentos"})
                         },
                         on: this.helloWorld,
                         'reactivos/': {
@@ -81,8 +83,18 @@ class App extends React.Component {
             },
             '/pdc/': {
                 '/instrumentos': {
-                    '/aplicar/:id/:aplicado': (id, aplicado) => {
-                        this.setState({controller: "aplicarInstrumento"})
+                    '/candidatos':{
+                       '/:id' : (id) => {
+                            var i = parseInt(id);
+                            this.setState({_instrumentoId: i,controller: "candidatosEncuesta"})
+                        },
+                        
+                        
+                    },
+                    '/aplicar/:id/':(id) => {
+                        debugger;
+                        var i = parseInt(id);
+                        this.setState({_instrumentoId: i, controller: "aplicarEncuesta"})
                     },
                     on: () => {
                         this.setState({controller: "instrumentos"})
@@ -162,7 +174,11 @@ class App extends React.Component {
             },
             {
                 name: "Candidatos",
-                routing: "#/pdc/instrumentos/aplicar/"
+                routing: "#/pdc/instrumentos/candidatos/"+this.state._instrumentoId
+            },
+            {
+                name: "Aplicación",
+                routing: "#/pdc/instrumentos/aplicar/"+this.state._instrumentoId
             },
         ]
         var navigatorHistory =[]
@@ -185,7 +201,7 @@ class App extends React.Component {
                 );
                 break;
 
-            case "aplicarInstrumento":
+            case "candidatosEncuesta":
                 navigatorHistory =  _.concat(navigatorState[0], navigatorState[1],navigatorState[6],navigatorState[7])
                 /*
                 switch (key) {
@@ -196,14 +212,11 @@ class App extends React.Component {
                     default:
                         break;
                 }*/
-                var params={
-                    instrumento:1,
-                    para:1
-                }
+                
                 renderConteiner = (
                     <div>
                         <PDCManagerFilters/>
-                        <PDCListChildrens {...params}/>
+                        <PDCListChildrens {...this.state}/>
                     </div>
                 );
                 break;
@@ -215,9 +228,40 @@ class App extends React.Component {
                     </div>
                 );
                 break;
+                case "aplicarEncuesta":
+                navigatorHistory =  _.concat(navigatorState[0], navigatorState[1],navigatorState[6],navigatorState[7],navigatorState[8])
+                var params = {
+                    id: this.state._instrumentoId
+                };
+                var url = URLUKA + "/Miembros/IN/Admin/AdminIN.aspx/getInstrumentoId";
+                var listaIdModulos = []
+                if (this.state.listaModulos) {
+                    this
+                        .state
+                        .listaModulos
+                        .map((item, index) => {
+                            listaIdModulos.push(<Modulo key={index} id={item.id} simulation={true}/>)
+                        });
+                } else {
+                    axios
+                        .post(url, params)
+                        .then(function (response) {
+                            if (response && response.data && response.data.d[0].modulos != "") {
+                                var modulos = JSON.parse(response.data.d[0].modulos);
+                                this.setState({listaModulos: modulos})
+                            } else {
+                                this.setState({listaModulos: []})
+                            }
+                        }.bind(this))
+                        .catch(function (error) {
+                            alert("No se pudo obtener datos")
+                        });
+                }
+                renderConteiner = (listaIdModulos);
+                break;
             case "simulacion":
                 var params = {
-                    id: this.state.instrumentoId
+                    id: this.state._instrumentoId
                 };
                 var url = URLUKA + "/Miembros/IN/Admin/AdminIN.aspx/getInstrumentoId";
                 var listaIdModulos = []
@@ -257,19 +301,19 @@ class App extends React.Component {
                 renderConteiner = (
                     <div>
                         <ModalCondition
-                            id={this.state.instrumentoId}
+                            id={this.state._instrumentoId}
                             focusHandle={this.state.focusHandle}
                             show={this.state.modalCondition}/>
                         <ModalInstrumento
-                            id={this.state.instrumentoId}
+                            id={this.state._instrumentoId}
                             show={this.state.modalInstrumento}
                             title="Instrumento"/>
                         <ModalModulo
-                            instrumentoId={this.state.instrumentoId}
+                            _instrumentoId={this.state._instrumentoId}
                             moduloId={this.state.moduloId}
                             show={this.state.modalModulo}
                             title="Modulo"/>
-                        <Instrumentos id={this.state.instrumentoId}/>
+                        <Instrumentos id={this.state._instrumentoId}/>
                     </div>
                 );
                 break;

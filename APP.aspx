@@ -8,21 +8,17 @@
     <link rel="stylesheet" type="text/css" href="../../css/bootstrap.min.css" />
     <link rel="stylesheet" href="../../css/bootstrap-theme.min.css">
     <link rel="stylesheet" href="../../css/bootstrap-datetimepicker.min.css">
-   
     <link rel="stylesheet" type="text/css" href="../../css/icons.css" />
     <link rel="stylesheet" type="text/css" href="../../css/flexslider.css" />
     <link rel="stylesheet" type="text/css" href="../../css/style.css" />
      <link rel="stylesheet" type="text/css" href="../../css/form.css" />
     <link rel="stylesheet" type="text/css" href="../../css/xt.css" />
-
     <link rel="stylesheet" type="text/css" href="./src/styles/zdev.css" />
     <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-
     <script src="../../Scripts/jquery.min.js"></script>
     <script src="../../Scripts/jquery-ui.min.js"></script>
     <script src="../../Scripts/bootstrap.min.js"></script>
     <script src="../../Scripts/moment-with-locales.js"></script>
-
     <script src="../../Scripts/src-react/prop-types.min.js"></script>
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <script src="../../Scripts/src-react/react.js"></script>
@@ -30,12 +26,13 @@
      <script src="../../Scripts/src-react/lodash.min.js"></script>
     <script src="../../Scripts/src-react/babel.min.js"></script>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/latest/css/bootstrap-theme.min.css" />
-    <link href="https://file.myfontastic.com/CrszDy9EX5PKEPWYeoAXdg/icons.css" rel="stylesheet" />
     <script src="../../Scripts/src-react/director.min.js"></script>
     <script src="../../Scripts/react-bootstrap.min.js"></script>
     <script src="../../../Scripts/src-react/react-motion.js"></script>
     <script src="../../Scripts/src-react/react-collapse.min.js"></script>
     <script src="../../Scripts/bootstrap-datetimepicker.min.js"></script>
+
+    <link href="https://file.myfontastic.com/CrszDy9EX5PKEPWYeoAXdg/icons.css" rel="stylesheet" />
 
     
 </head>
@@ -70,6 +67,7 @@
     <script type="text/babel" src="./src/scripts/components/instrumentos/instrumentos/Instrumentos.js"></script>
     <script type="text/babel" src="./src/scripts/components/instrumentos/instrumentos/RowModulo.js"></script>
      <script type="text/babel" src="./src/scripts/components/instrumentos/instrumentos/Instrumento.js"></script>
+     <script type="text/babel" src="./src/scripts/components/rows/PDCRowChildren.js"></script>
      <script type="text/babel" src="./src/scripts/components/rows/PDCListChildrens.js"></script>
     <script type="text/babel" src="./src/scripts/components/rows/FSChildrenNar.js"></script>
     <script type="text/babel" src="./src/scripts/components/rows/ManagerFilters.js"></script>

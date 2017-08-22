@@ -4,18 +4,8 @@ class PDCRowChildren extends React.Component {
         if (this.props.child && this.props.child.listaSomatometrias) {
             var popoverTop = (
                 <Popover id="popover-positioned-top" title="Encuestas terminadas">
-                    {this
-                        .props
-                        .child
-                        .listaSomatometrias
-                        .map((i, index) =>< li key = {
-                            index + "lista_encuestas"
-                        } > {
-                            i.date
-                        } < a href = {
-                            "#/" + i.id
-                        }
-                        className = "btn btn-primary btn-xs" > Imprimir < /a>
+                    {this.props.child.listaSomatometrias.map((i, index) =>< li key = {index + "lista_encuestas"} > 
+                    {i.date} <a href = {"#/" + i.id} className = "btn btn-primary btn-xs" > Imprimir </a>
                         </li>)}
                 </Popover>
             );
@@ -35,7 +25,6 @@ class PDCRowChildren extends React.Component {
         )
     }
     render() {
-
         //Falta evaluar datos de Visita con Somatometria
         return (
             <div className="row table-rw">
@@ -56,7 +45,7 @@ class PDCRowChildren extends React.Component {
                 <div className="col-md-4 col-sm-4">
                     <div className="row">
                         <div className="col-md-12">
-                            <a href={"#/fichanar/" + this.props.child.id}>
+                            <a href={"#/pdc/instrumentos/aplicar" + this.props._instrumentoId}>
                                 <img src="/images/apply.svg" alt="Capturar ficha" height="18"/>
                                 <strong>
                                     {this.props.child.ninoNombreCompleto}</strong>
@@ -82,7 +71,7 @@ class PDCRowChildren extends React.Component {
 
                     <div className="row">
                         <div className="col-md-12">
-                            <a href={"#/fichanar/" + this.props.child.id}>
+                            <a href={"#/pdc/instrumentos/aplicar/" + this.props._instrumentoId}>
 
                                 <strong>
                                     Encuesta INO</strong>

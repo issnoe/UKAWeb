@@ -6,12 +6,7 @@ class PDCListChildrens extends React.Component {
             countList: 0,
             loading: true
         }
-      
-      
-        
     }
-   
-
     componentDidMount(){
         getChildrends("",  function (response) {
             if (response && response.data && response.data.d && response.data.d.length>0) {
@@ -20,10 +15,7 @@ class PDCListChildrens extends React.Component {
         }.bind(this));
 
     }
-
-   
     renderChildrendsCandidateNAR() {
-        
         var childrends = this.state.childrends;
         if (childrends.length>0) {
             var renderList = [];
@@ -41,7 +33,7 @@ class PDCListChildrens extends React.Component {
                     }else{
                         nar.difPeso =0;
                     }
-                    renderList.push(<PDCRowChildren key={"chillistnar" + index} child={child} nar={nar}/>)
+                    renderList.push(<PDCRowChildren {...this.props} key={"chillistnar" + index} child={child} nar={nar}/>)
                
             })
             return (

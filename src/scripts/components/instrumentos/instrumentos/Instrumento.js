@@ -226,7 +226,7 @@ class InstrumentoView extends React.Component {
                                 : "Sin estado"}</div>
                         <div className="col-md-1 col-sm-1 text-right">
                             <div className="form-group">
-                                <a href={"#/pdc/instrumentos/aplicar/" + this.props.item.id+"/"+this.props.item.aplicado} className="btn btn-primary btn-sm" >Aplicar</a>
+                                <a href={"#/pdc/instrumentos/candidatos/" + this.props.item.id} className="btn btn-primary btn-sm" >Aplicar</a>
                             </div>
                       
                         </div> 
