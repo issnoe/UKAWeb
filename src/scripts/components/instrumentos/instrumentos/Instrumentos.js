@@ -11,7 +11,7 @@ class Instrumentos extends React.Component {
 
     }
     componentWillReceiveProps(newProps){
-        if(newProps.id){
+        if(true){
             this.setState({spinerLoad:true})
             getadminInstrumentos(this.setStatePromise.bind(this))
 

@@ -218,6 +218,7 @@ class PanelPreguntas extends React.Component {
     }
     renderReactivos() {
         var modulo = this.props.modulo;
+        
         if (modulo == undefined) {
             return (
                 <div className="spinner" key={"spinerModulo "+this.props.modulo.id}></div>

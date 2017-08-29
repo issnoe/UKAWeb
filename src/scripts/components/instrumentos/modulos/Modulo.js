@@ -13,6 +13,7 @@ class Modulo extends React.Component {
         getModuloById(this.props.id, (response) => {
             if (response.data && response.data.d[0]) {
                 var respRequest = response.data.d[0]
+                debugger
                 try {
                     var castJsonReactivosAux = respRequest.reactivos
                     var reactivos = JSON.parse(castJsonReactivosAux);
@@ -32,7 +33,7 @@ class Modulo extends React.Component {
             var params = {
                 id: id
             }
-            const url = URLUKA+"/Miembros/IN/Admin/AdminIN.aspx/deleteReactivo";
+            var url = URLUKA+"/Miembros/IN/Admin/AdminIN.aspx/deleteReactivo";
             axios
                 .post(url, params)
                 .then(function (response) {
@@ -61,7 +62,7 @@ class Modulo extends React.Component {
         item.estado = parseInt(0);
         item.orden = 0;
         var params = item;
-        const url = URLUKA+"/Miembros/IN/Admin/AdminIN.aspx/saveReactivos";
+        var url = URLUKA+"/Miembros/IN/Admin/AdminIN.aspx/saveReactivos";
         axios
             .post(url, params)
             .then(function (response) {
@@ -76,7 +77,8 @@ class Modulo extends React.Component {
     }
     saveClose(e) {}
     render() {
-        if (this.state.spinerLoad == true) {
+        if (this.state.spinerLoad == true && this.state.modulo !=null) {
+            
             return (
                 <div className="container">
                     <div className="spinner" key={"spinnerModulo" + this.state.modulo.id}></div>
@@ -98,6 +100,7 @@ class Modulo extends React.Component {
                     ? (
                         <div className="container">
                             <div className="col-md-12 col-sm-12">
+                                <p className="small">Sim</p>
                                 <PanelPreguntas
                                     simulation={this.props.simulation}
                                     modulo={this.state.modulo}
@@ -108,27 +111,27 @@ class Modulo extends React.Component {
                         </div>
                     )
                     : (
-
                         <div className="container">
-                            {(this.state.modulo && this.state.modulo.reactivos)
+                            {(this.state.modulo )
                                 ? (
                                     <div>
                                         <div className="col-md-5  col-sm-12 pregunta-div">
-                                            <Question
-                                                prefijoPregunta={this.state.modulo.prefijo + "." + (this.state.modulo.reactivos.length + 1)}
+                                            <h1>casa</h1>
+                                             <Question
+                                                prefijoPregunta={this.state.modulo.prefijo + "."  }
                                                 saveClose={this
                                                 .saveClose
                                                 .bind(this)}
                                                 saveNext={this
                                                 .saveNext
-                                                .bind(this)}/>
+                                                .bind(this)}/> 
                                         </div>
                                         <div className="col-md-7 col-sm-12">
-                                            <PanelPreguntas
+                                                <PanelPreguntas
                                                 modulo={this.state.modulo}
                                                 deleteSelected={this
                                                 .deleteSelected
-                                                .bind(this)}/>
+                                                .bind(this)}/>    
                                         </div>
                                     </div>
                                 )

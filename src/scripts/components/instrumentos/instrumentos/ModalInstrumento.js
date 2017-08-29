@@ -25,6 +25,7 @@ class ModalInstrumento extends React.Component {
         })
 
     }
+   
     componentWillReceiveProps(nexProps){
         var props = nexProps
         if(props.id && props.show==true){
@@ -194,8 +195,7 @@ class ModalInstrumento extends React.Component {
         if(this.validar(state)){
             saveInstrumento (state, (response)=> {
                 this.setState(this.state.init)
-                window.location.href = "#/admin/instrumentos";
-                
+                this.props.handleChange()
             })
         }
 
@@ -224,7 +224,7 @@ class ModalInstrumento extends React.Component {
         }
         const {errors}= this.state;
         return (
-            <Modal show={this.props.show} dialogClassName="modal-dialog modal-md">
+            <Modal show={this.props.show} dialogClassName="modal-dialog modal-sm">
 
                 <div className="modal-content">
 
@@ -240,7 +240,7 @@ class ModalInstrumento extends React.Component {
                     </div>
                     <Modal.Body>
                         <div className="row">
-                            <div className="col-md-4">
+                            <div className="col-md-12">
                                 <div className="form-group">
                                     <label className="label">Nombre</label>
 
@@ -257,7 +257,7 @@ class ModalInstrumento extends React.Component {
                                 </div>
                             </div>
 
-                            <div className="col-md-4">
+                            <div className="col-md-12">
                                 <div className="form-group">
                                     <label className="label">Subtítulo</label>
 
@@ -272,7 +272,7 @@ class ModalInstrumento extends React.Component {
                                         .bind(this)}/>
                                 </div>
                             </div>
-                            <div className="col-md-4">
+                            <div className="col-md-12">
                                 <div className="form-group">
                                     <label className="label">Aplica a:</label>
                                     <select
@@ -286,7 +286,7 @@ class ModalInstrumento extends React.Component {
                                     </select>
                                 </div>
                             </div>
-                            <div className="col-md-12">
+                            {/* <div className="col-md-12">
                                 <div className="form-group">
                                     <label className="label">Estado</label>
                                     <select
@@ -346,8 +346,8 @@ class ModalInstrumento extends React.Component {
                                         {this.renderGrupos()}
                                     </select>
                                 </div>
-                            </div>
-                            <div className="col-md-4 col-sm-12">
+                            </div> */}
+                            {/* <div className="col-md-4 col-sm-12">
                                 {(this.state.grupoId != "")
                                     ? (
                                         <div >
@@ -358,12 +358,12 @@ class ModalInstrumento extends React.Component {
                                     )
                                     : (undefined)}
 
-                            </div>
-                            <div className="col-md-12">
-                                lista de grupos {listagruposRender}
-                            </div>
+                            </div> */}
+                            {/* <div className="col-md-12">
+                               * No aplicar en : {listagruposRender}
+                            </div> */}
 
-                            <div className="col-md-4">
+                            <div className="col-md-12">
                                 <div className="form-group">
                                     <label className="label">Estado del instrumento:</label>
                                     <select
@@ -382,11 +382,13 @@ class ModalInstrumento extends React.Component {
                         </div>
                         </Modal.Body>
                     <Modal.Footer>
+                        <div>
+                        {/* <p className="modalTextSmall">* La lista de los grupos agregados, no sera aplicado el instrumento</p> */}
                                             {(this.state.loading)?( <div className="spinnerFixed" key={"spinnerInstrumentomodal_"}></div>):(<div><button className="btn btn-default" onClick={this.goInstrumentos}>Cancelar</button >
                         <button className="btn btn-primary" onClick={this.save}>Aceptar</button></div>)}
                    
 
-                        
+                        </div>
                         </Modal.Footer>
 
                 </div>

@@ -78,9 +78,9 @@
     <script type="text/babel" defer src="./src/scripts/components/instrumentos/instrumentos/ModalCondition.js"></script>
     <script type="text/babel" defer src="./src/scripts/components/instrumentos/modulos/PopupMsg.js"></script>
     <script type="text/babel" src="./src/scripts/components/instrumentos/modulos/PopupItem.js"></script>
-    <script type="text/babel" defer src="./src/scripts/components/instrumentos/modulos/ModuloItem.js"></script>
-    <script type="text/babel" defer src="./src/scripts/components/instrumentos/modulos/Instrumento.js"></script>
-    <script type="text/babel" defer src="./src/scripts/components/instrumentos/modulos/Instrumentos.js"></script>
+    <!-- <script type="text/babel" defer src="./src/scripts/components/instrumentos/modulos/ModuloItem.js"></script> -->
+    <!-- <script type="text/babel" defer src="./src/scripts/components/instrumentos/modulos/Instrumento.js"></script> -->
+    <!-- <script type="text/babel" defer src="./src/scripts/components/instrumentos/modulos/Instrumentos.js"></script> -->
     <script type="text/babel" defer src="./src/scripts/components/instrumentos/modulos/Modulos.js"></script>
      <script type="text/babel" defer src="./src/scripts/components/instrumentos/modulos/PanelPreguntas.js"></script>
     <script type="text/babel" defer src="./src/scripts/components/instrumentos/modulos/Pregunta.js"></script>

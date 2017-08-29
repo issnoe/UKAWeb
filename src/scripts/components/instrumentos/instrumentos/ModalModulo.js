@@ -8,7 +8,7 @@ class ModalModulo extends React.Component {
             leyenda: "",
             estado: 1,
             orden: 0,
-            id_instrumento: (this.props.instrumentoId)?this.props.instrumentoId:0,
+            id_instrumento: (this.props.instrumentoId) ? this.props.instrumentoId : 0,
             estadoId: "",
             municipioId: "",
             comunidadId: "",
@@ -19,85 +19,85 @@ class ModalModulo extends React.Component {
         getEstados("vacio", (response) => {
 
             if (response && response.data && response.data.d) {
-                this.setState({listaEstados: response.data.d})
+                this.setState({ listaEstados: response.data.d })
             }
         })
 
     }
     componentWillReceiveProps(nexProps) {
         var id = nexProps.moduloId;
-        if(id!=undefined && nexProps.show==true && nexProps.instrumentoId==undefined){
-           
-            getModuloById(id, (response)=>{
+        if (id != undefined && nexProps.show == true && nexProps.instrumentoId == undefined) {
+
+            getModuloById(id, (response) => {
                 if (id && response.data.d[0]) {
-                    const {modulo,id, id_instrumento,state,orden,prefijo,grupos} = response.data.d[0]
+                    const { modulo, id, id_instrumento, state, orden, prefijo, grupos } = response.data.d[0]
 
-                    this.setState( {modulo,id, id_instrumento,state,orden,prefijo,grupos})
+                    this.setState({ modulo, id, id_instrumento, state, orden, prefijo, grupos })
                 }
 
             })
         }
 
-        
-       /*
-        var props = nexProps
-        if (props.id && props.show == true && nexProps.id_instrumento) {
-            var state = {
-                id: -1,
-                modulo: "",
-                prefijo: "",
-                leyenda: "",
-                estado: 1,
-                orden: 0,
-                id_instrumento: nexProps.instrumentoId,
-                estadoId: "",
-                municipioId: "",
-                comunidadId: "",
-                grupoId: "",
-                listaGruposSelected: [],
-                loading: false
-            }
-            this.setState(state)
-           
-            getInstrumentoById(props.id, (response) => {
-                if (response && response.data && response.data.d[0]) {
-                    var {
-                        nombre,
-                        prefijo,
-                        subtitulo,
-                        estado,
-                        orden,
-                        aplicado,
-                        id,
-                        estadoId,
-                        municipioId,
-                        comunidadId,
-                        grupoId
-                    } = response.data.d[0];
-                    var listaGruposSelected = []
-                    this.setState({
-                        nombre,
-                        prefijo,
-                        subtitulo,
-                        estado,
-                        orden,
-                        aplicado,
-                        id,
-                        estadoId,
-                        municipioId,
-                        comunidadId,
-                        grupoId
-                    })
-                    try {
-                        if (response.data.d[0].grupos != "") {
-                            listaGruposSelected = JSON.parse(response.data.d[0].grupos);
-                            this.setState({listaGruposSelected})
-                        }
-                    } catch (error) {}
-                }
-            })
-        }
-        */
+
+        /*
+         var props = nexProps
+         if (props.id && props.show == true && nexProps.id_instrumento) {
+             var state = {
+                 id: -1,
+                 modulo: "",
+                 prefijo: "",
+                 leyenda: "",
+                 estado: 1,
+                 orden: 0,
+                 id_instrumento: nexProps.instrumentoId,
+                 estadoId: "",
+                 municipioId: "",
+                 comunidadId: "",
+                 grupoId: "",
+                 listaGruposSelected: [],
+                 loading: false
+             }
+             this.setState(state)
+            
+             getInstrumentoById(props.id, (response) => {
+                 if (response && response.data && response.data.d[0]) {
+                     var {
+                         nombre,
+                         prefijo,
+                         subtitulo,
+                         estado,
+                         orden,
+                         aplicado,
+                         id,
+                         estadoId,
+                         municipioId,
+                         comunidadId,
+                         grupoId
+                     } = response.data.d[0];
+                     var listaGruposSelected = []
+                     this.setState({
+                         nombre,
+                         prefijo,
+                         subtitulo,
+                         estado,
+                         orden,
+                         aplicado,
+                         id,
+                         estadoId,
+                         municipioId,
+                         comunidadId,
+                         grupoId
+                     })
+                     try {
+                         if (response.data.d[0].grupos != "") {
+                             listaGruposSelected = JSON.parse(response.data.d[0].grupos);
+                             this.setState({listaGruposSelected})
+                         }
+                     } catch (error) {}
+                 }
+             })
+         }
+         */
 
     }
 
@@ -147,17 +147,17 @@ class ModalModulo extends React.Component {
         });
         switch (mask) {
             case "estadoId":
-                this.setState({municipioId: "", comunidadId: "", grupoId: ""});
+                this.setState({ municipioId: "", comunidadId: "", grupoId: "" });
                 getMunicipios(valor, (response) => {
                     if (response && response.data && response.data.d) {
-                        this.setState({listaMunicipios: response.data.d})
+                        this.setState({ listaMunicipios: response.data.d })
                     }
                 });
                 break;
             case "municipioId":
                 getComunidades(valor, (response) => {
                     if (response && response.data && response.data.d) {
-                        this.setState({listaComunidades: response.data.d})
+                        this.setState({ listaComunidades: response.data.d })
                     }
                 });
                 break;
@@ -166,7 +166,7 @@ class ModalModulo extends React.Component {
                 getGrupos(valor, (response) => {
 
                     if (response && response.data && response.data.d) {
-                        this.setState({listaGrupos: response.data.d})
+                        this.setState({ listaGrupos: response.data.d })
                     }
                 });
                 break;
@@ -213,18 +213,18 @@ class ModalModulo extends React.Component {
     }
     addGrupo = (e) => {
         e.preventDefault();
-        var {listaGrupos, grupoId, listaGruposSelected} = this.state;
+        var { listaGrupos, grupoId, listaGruposSelected } = this.state;
         var item = listaGrupos.find(x => x.IdGrupo == grupoId);
         if (item.IdGrupo && item.NombreGrupo) {
             if (listaGruposSelected.length != 0) {
                 var exist = listaGruposSelected.findIndex(x => x.IdGrupo.toUpperCase() == grupoId.toUpperCase());
                 if (exist == -1) {
-                    listaGruposSelected.push({IdGrupo: item.IdGrupo, NombreGrupo: item.NombreGrupo});
-                    this.setState({listaGruposSelected: listaGruposSelected, grupoId: ""})
+                    listaGruposSelected.push({ IdGrupo: item.IdGrupo, NombreGrupo: item.NombreGrupo });
+                    this.setState({ listaGruposSelected: listaGruposSelected, grupoId: "" })
                 }
             } else if (listaGruposSelected.length == 0) {
-                listaGruposSelected.push({IdGrupo: item.IdGrupo, NombreGrupo: item.NombreGrupo});
-                this.setState({listaGruposSelected: listaGruposSelected, grupoId: ""})
+                listaGruposSelected.push({ IdGrupo: item.IdGrupo, NombreGrupo: item.NombreGrupo });
+                this.setState({ listaGruposSelected: listaGruposSelected, grupoId: "" })
             }
         }
     }
@@ -235,17 +235,19 @@ class ModalModulo extends React.Component {
             errors.nombre = "Falta por poner el nombre del instrumento";
             isValid = false
         }
-        this.setState({loading: false, errors: errors, id_instrumento:this.props.instrumentoId})
+        this.setState({ loading: false, errors: errors, id_instrumento: this.props.instrumentoId })
         return isValid
     }
     save = (e) => {
         e.preventDefault();
-        this.setState({loading: true})
+        this.setState({ loading: true })
         var state = this.state
+        state.id_instrumento = this.props._instrumentoId;
         state.grupos = state
             .listaGruposSelected
             .map(g => g.IdGrupo);
         if (this.validar(state)) {
+
             saveModulo(state, (response) => {
                 window.location.href = "#/admin/instrumentos";
             })
@@ -258,7 +260,7 @@ class ModalModulo extends React.Component {
     }
     render() {
         var listagruposRender = [];
-        const {listaGruposSelected} = this.state
+        const { listaGruposSelected } = this.state
         if (listaGruposSelected && listaGruposSelected.length > 0) {
             listaGruposSelected.map((item, i) => {
                 listagruposRender.push(
@@ -268,7 +270,7 @@ class ModalModulo extends React.Component {
                 )
             })
         }
-        const {errors} = this.state;
+        const { errors } = this.state;
         return (
             <Modal show={this.props.show} dialogClassName="modal-dialog modal-md">
                 <div className="modal-content">
@@ -279,7 +281,7 @@ class ModalModulo extends React.Component {
                         <h4 className="modal-title">{this.props.title}</h4>
                     </div>
                     <Modal.Body>
-                    <div className="row">
+                        <div className="row">
                             <div className="col-md-4">
                                 <div className="form-group">
                                     <label className="label">Nombre del  módulo</label>
@@ -290,12 +292,12 @@ class ModalModulo extends React.Component {
                                         name="modulo"
                                         value={this.state.modulo}
                                         onChange={this
-                                        .handleInput
-                                        .bind(this)}/> {(errors && errors.nombre != "")
-                                        ? (
-                                            <span className="errorMsg">{errors.nombre}</span>
-                                        )
-                                        : ("")}
+                                            .handleInput
+                                            .bind(this)} /> {(errors && errors.nombre != "")
+                                                ? (
+                                                    <span className="errorMsg">{errors.nombre}</span>
+                                                )
+                                                : ("")}
                                 </div>
                             </div>
                             <div className="col-md-4">
@@ -308,8 +310,8 @@ class ModalModulo extends React.Component {
                                         name="prefijo"
                                         value={this.state.prefijo}
                                         onChange={this
-                                        .handleInput
-                                        .bind(this)}/>
+                                            .handleInput
+                                            .bind(this)} />
                                 </div>
                             </div>
                             <div className="col-md-12">
@@ -320,8 +322,8 @@ class ModalModulo extends React.Component {
                                         value={this.state.estadoId}
                                         name="estadoId"
                                         onChange={this
-                                        .handleInput
-                                        .bind(this)}>
+                                            .handleInput
+                                            .bind(this)}>
                                         <option key={0 + "init_estado_select"} value={""}>{"Selecciona"}</option>
                                         {this.renderEstados()}
                                     </select>
@@ -335,8 +337,8 @@ class ModalModulo extends React.Component {
                                         value={this.state.municipioId}
                                         name="municipioId"
                                         onChange={this
-                                        .handleInput
-                                        .bind(this)}>
+                                            .handleInput
+                                            .bind(this)}>
                                         <option key={0 + "init_Muni_select"} value={""}>{"Selecciona "}</option>
                                         {this.renderMunicipios()}
                                     </select>
@@ -350,8 +352,8 @@ class ModalModulo extends React.Component {
                                         value={this.state.comunidadId}
                                         name="comunidadId"
                                         onChange={this
-                                        .handleInput
-                                        .bind(this)}>
+                                            .handleInput
+                                            .bind(this)}>
                                         <option key={0 + "init_comunidad_select"} value={""}>{"Selecciona "}</option>
                                         {this.renderComunidades()}
                                     </select>
@@ -365,8 +367,8 @@ class ModalModulo extends React.Component {
                                         value={this.state.grupoId}
                                         name="grupoId"
                                         onChange={this
-                                        .handleInput
-                                        .bind(this)}>
+                                            .handleInput
+                                            .bind(this)}>
                                         <option key={0 + "init_grupo_select"} value={""}>{"Selecciona "}</option>
                                         {this.renderGrupos()}
                                     </select>
@@ -382,7 +384,7 @@ class ModalModulo extends React.Component {
                                     : (undefined)}
                             </div>
                             <div className="col-md-12">
-                                lista de grupos {listagruposRender}
+                                 * No aplicar en : {listagruposRender}
                             </div>
                             <div className="col-md-4">
                                 <div className="form-group">
@@ -392,8 +394,8 @@ class ModalModulo extends React.Component {
                                         value={this.state.estado}
                                         name="estado"
                                         onChange={this
-                                        .handleInput
-                                        .bind(this)}>
+                                            .handleInput
+                                            .bind(this)}>
 
                                         {this.renderStatus()}
                                     </select>
@@ -402,17 +404,20 @@ class ModalModulo extends React.Component {
                         </div>
                     </Modal.Body>
                     <Modal.Footer>
-                        {(this.state.loading)
-                            ? (
-                                <div className="spinnerFixed" key={"spinnerInstrumentomodal_"}></div>
-                            )
-                            : (
-                                <div>
-                                    <button className="btn btn-default" onClick={this.goInstrumentos}>Cancelar</button >
-                                    <button className="btn btn-primary" onClick={this.save}>Aceptar</button>
-                                </div>
-                            )}
+                        <div>
+                            <p className="modalTextSmall">* La lista de los grupos agregados, no sera aplicado el instrumento</p>
 
+                            {(this.state.loading)
+                                ? (
+                                    <div className="spinnerFixed" key={"spinnerInstrumentomodal_"}></div>
+                                )
+                                : (
+                                    <div>
+                                        <button className="btn btn-default" onClick={this.goInstrumentos}>Cancelar</button >
+                                        <button className="btn btn-primary" onClick={this.save}>Aceptar</button>
+                                    </div>
+                                )}
+                        </div>
                     </Modal.Footer>
 
                 </div>

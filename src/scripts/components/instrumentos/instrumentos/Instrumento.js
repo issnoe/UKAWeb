@@ -104,17 +104,17 @@ class Instrumento extends React.Component {
                                     </li>
                                     <li className="dropdown-header">Modulo</li>
                                     <li>
-                                        <a  href={"#/admin/instrumentos/modulos/nuevo/" + this.props.item.id}><img src="../../../images/add.svg" alt="Agregar módulo" height="18"/>
+                                        <a  href={"#/admin/instrumentos/modulo/nuevo/" + this.props.item.id}><img src="../../../images/add.svg" alt="Agregar módulo" height="18"/>
                                             Agregar módulo</a>
                                     </li>
                                     <li className="dropdown-header">Preguntas</li>
                                     <li>
-                                        <a href={"#/instrumento/" + this.props.item.id}><img src="../../../images/add.svg" alt="Agregar pregunta" height="18"/>
+                                        <a href={"#/admin/instrumentos/modulos/" + this.props.item.id}><img src="../../../images/add.svg" alt="Agregar pregunta" height="18"/>
                                             Agregar pregunta</a>
                                     </li>
                                     <li>
                                         <a href={"#/admin/instrumentos/simulacion/" + this.props.item.id}><img src="../../../images/enable.svg" alt="Visualizar instrumento" height="18"/>
-                                            Visualizar</a>
+                                            Vista previa</a>
                                     </li>
                                 </ul>
                             </div>

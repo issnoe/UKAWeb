@@ -51,8 +51,7 @@ var getModuloById=function(id, callback){
 var deleteInstrumento = function (id, callback) {
     var url = URLUKA + "/Miembros/IN/Admin/AdminIN.aspx/deleteIntrumento";
     var params = {
-        id: id,
-       
+        id: id
     }
     axios
         .post(url, params)
@@ -82,9 +81,6 @@ var deleteModulo = function (id, callback) {
 }
 
 var searchByPrefijo = function(params , callback){
-    
-
-                        debugger
                         //Obtener solo el prefijo 
                         var onlyText =params.prefijo.split(/[0-9]+/);
                         var params = {
@@ -132,7 +128,6 @@ var saveInstrumento = function (state, callback) {
 
 //int id, int id_instrumento, string modulo, string prefijo, string leyenda, int estado, int orden, List<string> grupos
 var saveModulo = function (state, callback) {
-        
     var url = URLUKA + "/Miembros/IN/Admin/AdminIN.aspx/saveModulo";
     var params = {
         id: state.id,

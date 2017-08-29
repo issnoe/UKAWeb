@@ -14,20 +14,23 @@ class ModalCondition extends React.Component {
     goInstrumentos = (e) => {
         e.preventDefault();
         this.setState({show: false})
-        window.location.href = "#/admin/instrumentos";
+         this.props.handleChange()
     }
     acept = (e) => {
         e.preventDefault();
         if(this.props.focusHandle=="modulo"){
             deleteModulo(this.props.id, (response)=>{
                 this.setState({show: false})
-                window.location.href = "#/admin/instrumentos";
+                 this.props.handleChange()
             })
-        }
-        deleteInstrumento(this.props.id, (response)=>{
-            this.setState({show: false})
-            window.location.href = "#/admin/instrumentos";
+        }else{
+            deleteInstrumento(this.props.id, (response)=>{
+                this.setState({show: false})
+                this.props.handleChange()
         })
+
+        }
+        
 
 
        

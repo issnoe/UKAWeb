@@ -33,7 +33,7 @@
                                     </li>
                                     <li>
 
-                                        <a href={"#/admin/instrumentos/modulos/editar/" + this.props.item.id}><img
+                                        <a href={"#/admin/instrumentos/modulo/editar/" + this.props.item.id}><img
                                             src="../../../images/edit.svg"
                                             alt="Editar nombre del módulo"
                                             height="18"/>
@@ -42,14 +42,14 @@
                                     
                                    
                                     <li>
-                                        <a href={"#/admin/instrumentos/modulos/eliminar/" + this.props.item.id}><img
+                                        <a href={"#/admin/instrumentos/modulo/eliminar/" + this.props.item.id}><img
                                             src="../../../images/erase-gray.svg"
                                             alt="Eliminar el módulo"
                                             height="18"/>
                                             Eliminar</a>
                                     </li>
                                      <li>
-                                        <a href={"#/admin/instrumentos/modulos/"+this.props.item.id}
+                                        <a href={"#/admin/instrumentos/modulo/"+this.props.item.id}
                                             ><img src="../../../images/add.svg" alt="Agregar módulo" height="18"/>
                                             Agregar pregunta</a>
                                     </li>
