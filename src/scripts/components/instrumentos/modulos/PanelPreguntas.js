@@ -14,7 +14,7 @@
                        
                         var popoverTop = (
                             <Popover id="popover-positioned-top" title={condition}>
-                                <a href={"#/search/" + condition+"/"+this.props.item.id_modulo+"/"+this.props.item.id_instrumento}>Ir a </a>
+                                <a href={"#/admin/instrumentos/search/" + condition+"/"+this.props.item.id_modulo+"/"+this.props.item.id_instrumento}>Ir a </a>
                             </Popover>
                         );
                         options.push(
@@ -116,7 +116,7 @@ class QuestionManager extends React.Component {
                     if (condition) {
                         var popoverTop = (
                             <Popover id="popover-positioned-top" title={condition}>
-                                <a href={"#/search/" + condition+"/"+this.props.item.id_modulo+"/"+this.props.item.id_instrumento}>Ir a </a>
+                                <a href={"#/admin/instrumentos/search/" + condition+"/"+this.props.item.id_modulo+"/"+this.props.item.id_instrumento}>Ir a </a>
                                    
                             </Popover>
                         );

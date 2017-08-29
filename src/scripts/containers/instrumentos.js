@@ -81,6 +81,30 @@ var deleteModulo = function (id, callback) {
 
 }
 
+var searchByPrefijo = function(params , callback){
+    
+
+                        debugger
+                        //Obtener solo el prefijo 
+                        var onlyText =params.prefijo.split(/[0-9]+/);
+                        var params = {
+                            prefijo: onlyText[0],
+                            id_modulo: parseInt(params.idModulo),
+                            id_instrumento: parseInt(params.idInstrumento)
+                        };
+                        var url = URLUKA+"/Miembros/IN/Admin/AdminIN.aspx/searchByPrefijo";
+                        axios
+                            .post(url, params)
+                            .then(function (response) {
+                                callback(response)
+
+
+                            }.bind(this))
+                            .catch(function (error) {
+                                alert("No se pudo obtener datos de ese prefijo")
+                            });
+
+}
 
 
 var saveInstrumento = function (state, callback) {

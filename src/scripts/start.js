@@ -21,18 +21,19 @@ class App extends React.Component {
             idNinio: undefined,
             modalCondition: false
         }
-        
+
     }
+
     componentDidMount() {
 
         getLocation(function (response) {
             if (response && response.data && response.data.d) {
-                this.setState({location: response.data.d})
+                this.setState({ location: response.data.d })
             }
         }.bind(this));
         getUser((response) => {
             if (response && response.data && response.data.d) {
-                this.setState({user: response.data.d})
+                this.setState({ user: response.data.d })
             }
         });
         var router = Router({
@@ -40,39 +41,69 @@ class App extends React.Component {
                 on: this.validUser,
                 '/instrumentos': {
                     on: () => {
-                        this.setState({controller: "admininstrumentos", modalCondition: undefined, moduloId: undefined, modalInstrumento: undefined, modalModulo: undefined})
+                        this.setState({ controller: "admininstrumentos", modalCondition: undefined, moduloId: undefined, modalInstrumento: undefined, modalModulo: undefined })
                     },
                     '/nuevo': () => {
-                        this.setState({modalInstrumento: true, controller: "admininstrumentos"})
+                        this.setState({ modalInstrumento: true, controller: "admininstrumentos" })
                     },
                     '/eliminar/:id': (id) => {
                         var i = parseInt(id)
-                        this.setState({modalCondition: true, _instrumentoId: i, controller: "admininstrumentos"})
+                        this.setState({ modalCondition: true, _instrumentoId: i, controller: "admininstrumentos" })
                     },
                     '/editar/:id': (id) => {
                         var i = parseInt(id);
-                        this.setState({_instrumentoId: i, modalInstrumento: true, controller: "admininstrumentos"})
+                        this.setState({ _instrumentoId: i, modalInstrumento: true, controller: "admininstrumentos" })
                     },
                     '/simulacion/:id': (id) => {
                         var i = parseInt(id);
-                        this.setState({_instrumentoId: i, controller: "simulacion"})
+                        this.setState({ _instrumentoId: i, controller: "simulacion" })
+                    },
+                    '/search/:prefijo/:idModulo/:idInstrumento': (prefijo, idModulo, idInstrumento) => {
+
+                        searchByPrefijo({ prefijo, idModulo, idInstrumento }, (response) => {
+                            debugger
+                            if (response && response.data) {
+                                var lenghtData = response.data.d.length;
+                                if (lenghtData > 1) {
+                                    this.setState({ routerPath: "msg", mensaje: "Existe ambiguedad por el prefijo en estos instrumentos;", listIdsModulos: response.data.d })
+                                    //alert("Existe un módulo con el mismo prefijo"+ids)
+                                } else if (!response.data.d.length) {
+                                    this.setState({ routerPath: "msg", mensaje: "No se encuentra ninguna referencia con este prefijo ;", listIdsModulos: undefined })
+
+                                } else if (lenghtData == 1) {
+                                    var onlyNumber = prefijo.split(/[A-Za-z]+/);
+                                    var index = onlyNumber[1];
+                                    if (index) {
+                                        var idm = response.data.d[0].id
+                                        window.location.href = '#/admin/instrumentos/modulos/' + idm;
+                                    } else {
+                                        var idm = response.data.d[0].id
+                                        window.location.href = '#/admin/instrumentos/modulos/' + idm;
+                                    }
+
+                                }
+
+                            }
+
+                        })
+
                     },
                     '/modulos': {
                         '/:id': (id) => {
                             var i = parseInt(id)
-                            this.setState({id: id, controller: "modulo"})
+                            this.setState({ id: id, controller: "modulo" })
                         },
                         '/nuevo/:id': (id) => {
                             var i = parseInt(id)
-                            this.setState({modalModulo: true, _instrumentoId: i, controller: "admininstrumentos"})
+                            this.setState({ modalModulo: true, _instrumentoId: i, controller: "admininstrumentos" })
                         },
                         '/eliminar/:id': (id) => {
                             var i = parseInt(id)
-                            this.setState({modalCondition: true, _instrumentoId: i, focusHandle: "modulo", controller: "admininstrumentos"})
+                            this.setState({ modalCondition: true, _instrumentoId: i, focusHandle: "modulo", controller: "admininstrumentos" })
                         },
                         '/editar/:id': (id) => {
                             var i = parseInt(id)
-                            this.setState({modalModulo: true, _instrumentoId: i, moduloId: i, controller: "admininstrumentos"})
+                            this.setState({ modalModulo: true, _instrumentoId: i, moduloId: i, controller: "admininstrumentos" })
                         },
                         on: this.helloWorld,
                         'reactivos/': {
@@ -83,21 +114,21 @@ class App extends React.Component {
             },
             '/pdc/': {
                 '/instrumentos': {
-                    '/candidatos':{
-                       '/:id' : (id) => {
+                    '/candidatos': {
+                        '/:id': (id) => {
                             var i = parseInt(id);
-                            this.setState({_instrumentoId: i,controller: "candidatosEncuesta"})
+                            this.setState({ _instrumentoId: i, controller: "candidatosEncuesta" })
                         },
-                        
-                        
+
+
                     },
-                    '/aplicar/:id/':(id) => {
+                    '/aplicar/:id/': (id) => {
                         debugger;
                         var i = parseInt(id);
-                        this.setState({_instrumentoId: i, controller: "aplicarEncuesta"})
+                        this.setState({ _instrumentoId: i, controller: "aplicarEncuesta" })
                     },
                     on: () => {
-                        this.setState({controller: "instrumentos"})
+                        this.setState({ controller: "instrumentos" })
                     }
                 }
             },
@@ -106,24 +137,24 @@ class App extends React.Component {
                     '/nar': {
                         '/:id': this.fichanar,
                         on: () => {
-                            this.setState({controller: "nar"})
+                            this.setState({ controller: "nar" })
                         }
                     },
                     '/obesidad': () => {
-                        this.setState({controller: "nar"})
+                        this.setState({ controller: "nar" })
                     },
                     '/embarazo': () => {
-                        this.setState({controller: "nar"})
+                        this.setState({ controller: "nar" })
                     }
                 },
                 '/somatometria': () => {
-                    this.setState({controller: "nar"})
+                    this.setState({ controller: "nar" })
                 },
                 '/reporte': () => {
-                    this.setState({controller: "nar"})
+                    this.setState({ controller: "nar" })
                 },
                 '/grafica': () => {
-                    this.setState({controller: "nar"})
+                    this.setState({ controller: "nar" })
                 }
             }
         });
@@ -134,17 +165,17 @@ class App extends React.Component {
     }
     validUser = () => {
         getUser((response) => {
-            if (response && response.data && response.data.d) {}
+            if (response && response.data && response.data.d) { }
         });
     }
     helloWorld = () => {
         alert("se activa conteiner")
     }
     fichanar = (id) => {
-        this.setState({controller: "fichanar"})
+        this.setState({ controller: "fichanar" })
     }
     saveIntrumento(state) {
-        this.setState({modalInstrumento: false})
+        this.setState({ modalInstrumento: false })
         window
             .history
             .back();
@@ -164,7 +195,7 @@ class App extends React.Component {
             }, {
                 name: "Fichas de niños de alto riesgo (NAR)",
                 routing: "#/fichanar"
-            },, {
+            }, , {
                 name: "Administrador de instrumentos",
                 routing: "#/admin/instrumentos"
             }
@@ -174,21 +205,21 @@ class App extends React.Component {
             },
             {
                 name: "Candidatos",
-                routing: "#/pdc/instrumentos/candidatos/"+this.state._instrumentoId
+                routing: "#/pdc/instrumentos/candidatos/" + this.state._instrumentoId
             },
             {
                 name: "Aplicación",
-                routing: "#/pdc/instrumentos/aplicar/"+this.state._instrumentoId
+                routing: "#/pdc/instrumentos/aplicar/" + this.state._instrumentoId
             },
         ]
-        var navigatorHistory =[]
+        var navigatorHistory = []
         switch (this.state.controller) {
             case "nar":
                 navigatorHistory = navigatorState.slice(0, 3);
                 renderConteiner = (
                     <div>
-                        <FSManagerFilters/>
-                        <FSListChildrens/>
+                        <FSManagerFilters />
+                        <FSListChildrens />
                     </div>
                 );
                 break;
@@ -196,13 +227,44 @@ class App extends React.Component {
                 navigatorHistory = navigatorState.slice(0, 4);
                 renderConteiner = (
                     <div>
-                        <FSChildrenNar idNinio={this.state.idNinio}/>
+                        <FSChildrenNar idNinio={this.state.idNinio} />
                     </div>
+                );
+                break;
+            case "msg":
+                var ids = [];
+                if (this.state.listIdsModulos) {
+                    this
+                        .state
+                        .listIdsModulos
+                        .map((item, index) => {
+                            ids.push(
+                                <div>
+                                    <a key={"ambiguedad_" + index} href={"#/modulo/" + item.id} ><br />{item.modulo}   </a></div>
+                            )
+                        });
+                }
+
+                renderConteiner = (
+                    <Modal show={true} dialogClassName="modal-dialog modal-long">
+                        <div className="modal-content">
+                            <div className="modal-body">
+                                <div className="text-center">
+                                    {this.state.mensaje}
+                                </div>
+                                {ids}
+                                <button onClick={() => { window.history.back(); }}>Regresar</button>
+                                <div className="modal-footer"></div>
+
+                            </div>
+
+                        </div>
+                    </Modal>
                 );
                 break;
 
             case "candidatosEncuesta":
-                navigatorHistory =  _.concat(navigatorState[0], navigatorState[1],navigatorState[6],navigatorState[7])
+                navigatorHistory = _.concat(navigatorState[0], navigatorState[1], navigatorState[6], navigatorState[7])
                 /*
                 switch (key) {
                     case value:
@@ -212,11 +274,11 @@ class App extends React.Component {
                     default:
                         break;
                 }*/
-                
+
                 renderConteiner = (
                     <div>
-                        <PDCManagerFilters/>
-                        <PDCListChildrens {...this.state}/>
+                        <PDCManagerFilters />
+                        <PDCListChildrens {...this.state} />
                     </div>
                 );
                 break;
@@ -224,12 +286,12 @@ class App extends React.Component {
             case "modulo":
                 renderConteiner = (
                     <div>
-                        <Modulo id={this.state.id}/>
+                        <Modulo id={this.state.id} />
                     </div>
                 );
                 break;
-                case "aplicarEncuesta":
-                navigatorHistory =  _.concat(navigatorState[0], navigatorState[1],navigatorState[6],navigatorState[7],navigatorState[8])
+            case "aplicarEncuesta":
+                navigatorHistory = _.concat(navigatorState[0], navigatorState[1], navigatorState[6], navigatorState[7], navigatorState[8])
                 var params = {
                     id: this.state._instrumentoId
                 };
@@ -240,7 +302,7 @@ class App extends React.Component {
                         .state
                         .listaModulos
                         .map((item, index) => {
-                            listaIdModulos.push(<Modulo key={index} id={item.id} simulation={true}/>)
+                            listaIdModulos.push(<Modulo key={index} id={item.id} simulation={true} />)
                         });
                 } else {
                     axios
@@ -248,9 +310,9 @@ class App extends React.Component {
                         .then(function (response) {
                             if (response && response.data && response.data.d[0].modulos != "") {
                                 var modulos = JSON.parse(response.data.d[0].modulos);
-                                this.setState({listaModulos: modulos})
+                                this.setState({ listaModulos: modulos })
                             } else {
-                                this.setState({listaModulos: []})
+                                this.setState({ listaModulos: [] })
                             }
                         }.bind(this))
                         .catch(function (error) {
@@ -270,7 +332,7 @@ class App extends React.Component {
                         .state
                         .listaModulos
                         .map((item, index) => {
-                            listaIdModulos.push(<Modulo key={index} id={item.id} simulation={true}/>)
+                            listaIdModulos.push(<Modulo key={index} id={item.id} simulation={true} />)
                         });
                 } else {
                     axios
@@ -278,9 +340,9 @@ class App extends React.Component {
                         .then(function (response) {
                             if (response && response.data && response.data.d[0].modulos != "") {
                                 var modulos = JSON.parse(response.data.d[0].modulos);
-                                this.setState({listaModulos: modulos})
+                                this.setState({ listaModulos: modulos })
                             } else {
-                                this.setState({listaModulos: []})
+                                this.setState({ listaModulos: [] })
                             }
                         }.bind(this))
                         .catch(function (error) {
@@ -290,10 +352,10 @@ class App extends React.Component {
                 renderConteiner = (listaIdModulos);
                 break;
             case "instrumentos":
-                navigatorHistory = _.concat(navigatorState[0],navigatorState[1], navigatorState[6])
+                navigatorHistory = _.concat(navigatorState[0], navigatorState[1], navigatorState[6])
                 renderConteiner = (
                     <div>
-                        <InstrumentosView/>
+                        <InstrumentosView />
                     </div>
                 );
                 break;
@@ -303,17 +365,17 @@ class App extends React.Component {
                         <ModalCondition
                             id={this.state._instrumentoId}
                             focusHandle={this.state.focusHandle}
-                            show={this.state.modalCondition}/>
+                            show={this.state.modalCondition} />
                         <ModalInstrumento
                             id={this.state._instrumentoId}
                             show={this.state.modalInstrumento}
-                            title="Instrumento"/>
+                            title="Instrumento" />
                         <ModalModulo
                             _instrumentoId={this.state._instrumentoId}
                             moduloId={this.state.moduloId}
                             show={this.state.modalModulo}
-                            title="Modulo"/>
-                        <Instrumentos id={this.state._instrumentoId}/>
+                            title="Modulo" />
+                        <Instrumentos id={this.state._instrumentoId} />
                     </div>
                 );
                 break;
@@ -338,4 +400,4 @@ class App extends React.Component {
     }
 }
 ReactDOM.render(
-    <App/>, document.getElementById('appUnkiloDeAyuda'));
+    <App />, document.getElementById('appUnkiloDeAyuda'));

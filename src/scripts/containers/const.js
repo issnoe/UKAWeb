@@ -1,5 +1,5 @@
-//const URLUKA= "http://localhost:25585/";
-const URLUKA= "http://ukawebm.azurewebsites.net/";
+const URLUKA= "http://localhost:25585/";
+//const URLUKA= "http://ukawebm.azurewebsites.net/";
 
 
 
