@@ -266,7 +266,7 @@ class PanelPreguntas extends React.Component {
         }
         if (modulo && modulo.reactivos == "") {
             return (
-                <div >Sin preguntas</div>
+                <div className="emptyContainer"><img src="./src/img/box.png"/><p className="">Sin preguntas</p></div>
             )
         }
     }

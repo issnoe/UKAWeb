@@ -151,7 +151,7 @@ class InstrumentosView extends React.Component {
        
         if (this.state.spinerLoad == true) {
             return (
-                <div className="spinner" key={"spinnerInstrumento_"}></div>
+                <div className="spinnerFixed" key={"spinnerInstrumento_"}></div>
             )
         }
 

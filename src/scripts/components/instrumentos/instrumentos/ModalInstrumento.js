@@ -48,6 +48,7 @@ class ModalInstrumento extends React.Component {
             this.setState(state)
             getInstrumentoById(props.id,(response)=>{
                 if (response && response.data && response.data.d[0]) {
+                    
                     var {nombre,prefijo,subtitulo,estado,orden,aplicado,id,estadoId,municipioId,comunidadId,grupoId} = response.data.d[0];
                     var listaGruposSelected = []
                     this.setState({nombre,prefijo,subtitulo,estado,orden,aplicado,id,estadoId,municipioId,comunidadId,grupoId})

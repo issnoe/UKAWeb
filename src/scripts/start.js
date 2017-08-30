@@ -158,7 +158,6 @@ class App extends React.Component {
 
     }
     validUser = () => {
-        debugger
         getUser((response) => {
             if (response && response.data && response.data.d) { }
         });
@@ -369,7 +368,7 @@ class App extends React.Component {
                             alert("No se pudo obtener datos")
                         });
                 }
-                renderConteiner = (listaIdModulos);
+                renderConteiner = (<div><InstrumentoHeader id={this.state._instrumentoId}/>{listaIdModulos}</div>);
                 break;
             case "instrumentos":
                 navigatorHistory = _.concat(navigatorState[0], navigatorState[1], navigatorState[6])
@@ -392,14 +391,12 @@ class App extends React.Component {
                         .state
                         .listaModulos
                         .map((item, index) => {
-                            debugger
                             listaIdModulos.push(<Modulo key={index} id={item.id}/>)
                         });
                 } else {
                     axios
                         .post(url, params)
                         .then(function (response) {
-                            debugger
                             if (response && response.data && response.data.d[0].modulos != "") {
                                 var modulos = JSON.parse(response.data.d[0].modulos);
                                 this.setState({listaModulos: modulos})

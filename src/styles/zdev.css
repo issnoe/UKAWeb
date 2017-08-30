@@ -64,6 +64,29 @@ border-radius: 5px 0px 0px 5px;
     color: #f31937;
     font-size: 12px;
 }
+.emptyContainer{
+        /* padding-left: 37px!important; */
+        text-align: center;
+            background-color: rgba(74, 70, 71, 0.16)!important;
+}
+.spinnerList{
+    width: 40px;
+    height: 40px;
+    border-radius: 32px;
+    box-sizing: border-box;
+    border: 2px groove #d20202;
+    position: relative;
+    left: 50%;
+    top: 80%;
+    margin: -16px 0px 0px -16px;
+    border-top-color: rgb(90, 161, 187);
+    border-left-color: rgba(239, 235, 235, 0.9);
+    border-bottom-color: rgba(255,255,255,0.8);
+    border-right-color: rgba(255,255,255,0.7);
+    animation: rotate 1000ms infinite linear;
+    transform: translateZ(0px);
+
+}
 .spinnerFixed {
     width: 40px;
     height: 40px;

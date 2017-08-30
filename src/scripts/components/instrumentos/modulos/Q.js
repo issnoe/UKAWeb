@@ -40,7 +40,6 @@ class Question extends React.Component {
     }
 
     componentWillUnmount() {
-        debugger;
         this.setState({reactivo: 0, tipopregunta: 0, preguntaJson: _ABIERTA, nota: ""});
     }
     handleReactivoType(e) {
@@ -494,9 +493,6 @@ class Question extends React.Component {
         }
     }
     render() {
-        debugger
-        
-
         return (
             <div>
                 <div className="row">

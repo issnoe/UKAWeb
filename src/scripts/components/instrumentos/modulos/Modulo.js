@@ -13,7 +13,6 @@ class Modulo extends React.Component {
         getModuloById(this.props.id, (response) => {
             if (response.data && response.data.d[0]) {
                 var respRequest = response.data.d[0]
-                debugger
                 try {
                     var castJsonReactivosAux = respRequest.reactivos
                     var reactivos = JSON.parse(castJsonReactivosAux);
@@ -81,7 +80,7 @@ class Modulo extends React.Component {
             
             return (
                 <div className="container">
-                    <div className="spinner" key={"spinnerModulo" + this.state.modulo.id}></div>
+                    <div className="spinnerList" key={"spinnerModulo" + this.state.modulo.id}></div>
                 </div>
             )
         }
@@ -100,7 +99,7 @@ class Modulo extends React.Component {
                     ? (
                         <div className="container">
                             <div className="col-md-12 col-sm-12">
-                                <p className="small">Sim</p>
+                               
                                 <PanelPreguntas
                                     simulation={this.props.simulation}
                                     modulo={this.state.modulo}
@@ -116,7 +115,6 @@ class Modulo extends React.Component {
                                 ? (
                                     <div>
                                         <div className="col-md-5  col-sm-12 pregunta-div">
-                                            <h1>casa</h1>
                                              <Question
                                                 prefijoPregunta={this.state.modulo.prefijo + "."  }
                                                 saveClose={this
