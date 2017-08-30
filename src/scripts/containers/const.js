@@ -1,5 +1,5 @@
-const URLUKA= "http://localhost:25585/";
-//const URLUKA= "http://ukawebm.azurewebsites.net/";
+//const URLUKA= "http://localhost:25585/";
+const URLUKA= "http://ukawebm.azurewebsites.net/";
 
 var Modal = ReactBootstrap.Modal;
 const OverlayTrigger = ReactBootstrap.OverlayTrigger;
@@ -57,13 +57,17 @@ const PERSONAS = [
         data: "Ninguno"
     }, {
         id: 1,
-        data: "Niños menores de tres años "
+        data: "Niños/as menores de cinco años "
     }, {
         id: 2,
-        data: "Niños mayores de tres años "
+        data: "Niños/as y adolecentes (5 a 17 )"
     }, {
         id: 3,
         data: "Hogares"
+    },   
+     {
+        id: 4,
+        data: "Mujeres"
     }
 ];
 const _ABIERTA = {

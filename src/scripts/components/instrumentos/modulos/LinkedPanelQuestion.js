@@ -165,6 +165,14 @@ class LinkedPanelQuestion extends React.Component {
                             .handleTextQuestion
                             .bind(this)}
                             className="form-control pregunta"></textarea>
+                             <label className="label">Anexo</label>
+                            <textarea
+                            name="anexo"
+                            value={this.state.anexo}
+                            onChange={this
+                            .handleTextQuestion
+                            .bind(this)}
+                            className="form-control pregunta"></textarea>
                     </div>
                 </div>
 

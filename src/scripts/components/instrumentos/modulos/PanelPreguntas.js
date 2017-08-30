@@ -63,12 +63,13 @@
     }
 
     render() {
-      
+      debugger
         return (
             <div className="reg-preg preg-rel">
                    <small >{(this.props.question.onlyTo)?"Para: "+this.props.question.onlyTo:""}</small><br/>
                 {this.props.question.question}<br/>
-                 <small >{(this.props.question.note)?"Nota: "+this.props.question.note:""}</small><br/>
+                {(this.props.question.anexo)?<span><small>{this.props.question.anexo}</small></span>:""}
+                 <small >{(this.props.question.note)?"Nota: "+this.props.question.note:""}</small>
                 
                 
                 <small >{this.props.question.nota}</small>
@@ -166,6 +167,7 @@ class QuestionManager extends React.Component {
     }
 
     render() {
+       // debugger
         return (
             <div className="reg-preg">
                 {(this.props.simulation)?(""):(<input
@@ -178,6 +180,8 @@ class QuestionManager extends React.Component {
                 <strong>
                     {this.props.prefijo + " "}</strong>
                 {this.props.castJsonPregunta[0].question}<br/>
+             
+                 
                 <small >{this.props.item.nota}</small>
                 {this.renderOption()}
                 {this.renderLinkedQuestions()}

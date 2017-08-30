@@ -303,6 +303,7 @@ class Question extends React.Component {
             "questions": [
                 {
                     "question": '',
+                    "anexo":"",
                     "options": [
                         {
                             "option": "",
