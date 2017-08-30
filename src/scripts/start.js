@@ -281,7 +281,7 @@ class App extends React.Component {
                 break;
 
             case "candidatosEncuesta":
-                navigatorHistory = _.concat(navigatorState[0], navigatorState[1], navigatorState[6], navigatorState[7])
+                navigatorHistory = _.concat(navigatorState[0], navigatorState[1], navigatorState[5], navigatorState[6])
                 /*
                 switch (key) {
                     case value:
@@ -309,7 +309,7 @@ class App extends React.Component {
                 );
                 break;
             case "aplicarEncuesta":
-                navigatorHistory = _.concat(navigatorState[0], navigatorState[1], navigatorState[6], navigatorState[7], navigatorState[8])
+                navigatorHistory = _.concat(navigatorState[0], navigatorState[1], navigatorState[5], navigatorState[6], navigatorState[7])
                 var params = {
                     id: this.state._instrumentoId
                 };
@@ -371,7 +371,7 @@ class App extends React.Component {
                 renderConteiner = (<div><InstrumentoHeader id={this.state._instrumentoId}/>{listaIdModulos}</div>);
                 break;
             case "instrumentos":
-                navigatorHistory = _.concat(navigatorState[0], navigatorState[1], navigatorState[6])
+                navigatorHistory = _.concat(navigatorState[0], navigatorState[1], navigatorState[5])
                 renderConteiner = (
                     <div>
                         <InstrumentosView />

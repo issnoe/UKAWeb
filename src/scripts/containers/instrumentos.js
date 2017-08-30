@@ -2,7 +2,25 @@ var getadminInstrumentos = function (callback) {
     var url = URLUKA + "/Miembros/IN/Admin/AdminIN.aspx/getInstrumentos";
     var idGrupo = localStorage.getItem("UKAidGrupo")
     var params = {
-        idGrupo: idGrupo
+        idGrupo: idGrupo,
+         filterStatus:false
+    };
+    axios
+        .post(url, params)
+        .then(function (response) {
+            callback(response)
+        })
+        .catch(function (error) {
+            // alert("No se pudo obtener datos de somatometria")
+        });
+
+}
+    var getInstrumentos = function (callback) {
+    var url = URLUKA + "/Miembros/IN/Admin/AdminIN.aspx/getInstrumentos";
+    var idGrupo = localStorage.getItem("UKAidGrupo")
+    var params = {
+        idGrupo: idGrupo,
+        filterStatus:true
     };
     axios
         .post(url, params)

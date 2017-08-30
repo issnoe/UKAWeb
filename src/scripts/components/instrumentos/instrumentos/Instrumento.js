@@ -246,12 +246,10 @@ class InstrumentoView extends React.Component {
                             </a>
                         </div>
                         <div className="col-md-3 col-sm-3">{moment(this.props.item.fechaCreacion).format('MM/DD/YYYY, h:mm:ss')}</div>
-                        <div className="col-md-2 col-sm-2 long-txt">{(this.props.item.aplicado)
+                        <div className="col-md-4 col-sm-4 long-txt">{(this.props.item.aplicado)
                                 ? PERSONAS[this.props.item.aplicado].data
                                 : "No asigando"}</div>
-                        <div className="col-md-2 col-sm-2 ">{(this.props.item.estado != null)
-                                ? STATUS[this.props.item.estado].data
-                                : "Sin estado"}</div>
+                      
                         <div className="col-md-1 col-sm-1 text-right">
                             <div className="form-group">
                                 <a href={"#/pdc/instrumentos/candidatos/" + this.props.item.id} className="btn btn-primary btn-sm" >Aplicar</a>

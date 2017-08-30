@@ -111,14 +111,14 @@ class InstrumentosView extends React.Component {
        
         this.state.listaIntrumentos = [];
         this.state.spinerLoad = true
-        getadminInstrumentos(this.setStatePromise.bind(this))
+        getInstrumentos(this.setStatePromise.bind(this))
         // this.getIntrumentosWS()
 
     }
     componentWillReceiveProps(newProps){
         if(newProps.id){
             this.setState({spinerLoad:true})
-            getadminInstrumentos(this.setStatePromise.bind(this))
+            getInstrumentos(this.setStatePromise.bind(this))
 
         }
      
@@ -177,13 +177,9 @@ class InstrumentosView extends React.Component {
                                     <div className="col-md-3 col-sm-3">
                                         Última modificación
                                     </div>
-                                    <div className="col-md-2 col-sm-2">
+                                    <div className="col-md-4 col-sm-4">
                                         Aplicación a
                                     </div>
-                                    <div className="col-md-2 col-sm-2">
-                                        Estado
-                                    </div>
-                                    <div></div>
 
                                 </div>
                                 <div className="panel-group instrumentos-l">

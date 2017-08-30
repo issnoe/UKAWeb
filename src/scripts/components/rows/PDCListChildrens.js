@@ -8,6 +8,7 @@ class PDCListChildrens extends React.Component {
         }
     }
     componentDidMount(){
+        debugger
         getChildrends("",  function (response) {
             if (response && response.data && response.data.d && response.data.d.length>0) {
                 this.setState({childrends: response.data.d, loading: false})
