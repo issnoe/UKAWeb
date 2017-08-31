@@ -1,5 +1,6 @@
 ﻿using Infokilo.DataLayer;
 using InfoKilo.WebApp.Miembros.WS.Controllers;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -120,20 +121,62 @@ namespace InfoKilo.WebApp.Miembros.WS
 
 
         [System.Web.Services.WebMethod]
-        public static IQueryable<dynamic> getCandidatos(string idGrupo, string textoBusqueda, string orden)
+        public static IQueryable<dynamic> getCandidatos(int instrumentoId, string idGrupo, string textoBusqueda,bool isActivo,  string orden)
         {
             Repository<NinioEnPrograma> handle = new Repository<NinioEnPrograma>();
-            int contadorNinios = 0;
-            List<string> listaTablas = new List<string>
+            Repository<ExpedienteMadre> handleMadre = new Repository<ExpedienteMadre>();
+            Repository<Cuidador> handleCuidador = new Repository<Cuidador>();
+            Repository<Instrumentos> handleInstrumento = new Repository<Instrumentos>();
+            Instrumentos instrumento = handleInstrumento.Retrieve(u => u.id == instrumentoId);
+            string candidatos = "";
+           List<string> listaTablas = new List<string>
             {
+                
                 "Familias.Cuidador",
                 "Familias.ExpedienteMadre",
-                "Somatometria"
+                "AplicacionInstrumento"
             };
+
+            switch(instrumento.aplicado)   {
+                case 1:
+                    // listaTablas.Count, listaTablas
+                    candidatos =  "Niños/as menores de cinco años ";
+                    var listaIterResponse = handle.Filter(n => n.Familias.IdGrupo.ToString() == idGrupo && n.Borrado == isActivo,listaTablas.Count, listaTablas).ToList();
+                    List<CandidatosNinio> listRender = new List<CandidatosNinio>();
+                    foreach (var item in listaIterResponse)
+                    {
+                        CandidatosNinio added = new CandidatosNinio(item.IdNinio,item.Nombre, item.ApPaterno, item.ApMaterno, item.Genero, item.CURP, item.NumeroSS,item.FechaNacimiento,item.NumeroNinioEnFamilia, item.UrlFotoNinio, item.ClaveNinio, item.domicilio, item.Egresado);
+                        added.GetEncuestas(item.AplicacionInstrumento.Where(z=>z.instrumentoId==instrumentoId).ToList());
+                        added.GetCuidador(item.Familias.Cuidador);
+                        added.GetFamilia(item.Familias.NumFamilia);
+                        listRender.Add(added);
+                    }
+                    return listRender.AsQueryable();
+                   break;
+                case 2:
+                    candidatos =  "Niños/as y adolecentes (5 a 17 )";
+                    break;
+                     
+                //
+                case 3:
+                    candidatos =  "Hogares";
+                    break;
+
+                //
+                case 4:
+                    candidatos =  "Mujeres";
+                    break;
+                default:
+                    break;
+
+            }
+          
+               
+           
             var lista = new List<NinioEnPrograma>();
             if (textoBusqueda == "")
             {
-                lista = handle.Filter(n => n.Familias.IdGrupo.ToString() == idGrupo && n.Borrado == false, listaTablas.Count, listaTablas);
+                lista = handle.Filter(n => n.Familias.IdGrupo.ToString() == idGrupo && n.Borrado == isActivo, listaTablas.Count, listaTablas);
             }
             else
             {
@@ -329,6 +372,8 @@ namespace InfoKilo.WebApp.Miembros.WS
             public string comunidad { get; set; }
             public string grupo { get; set; }
         }
+
+       
 
         public class dymanicChild
         {

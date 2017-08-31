@@ -65,6 +65,29 @@ var getModuloById=function(id, callback){
 
 }
 
+var getCandidatos = function(filters,callback) {
+    if(filters._instrumentoId){
+    var url = "APP.aspx/getCandidatos";
+    var idGrupo = localStorage.getItem("UKAidGrupo")
+    var params = {
+        instrumentoId:filters._instrumentoId,
+        idGrupo: idGrupo,
+        textoBusqueda: "",
+        isActivo:true,
+        orden: "Familia"
+    };
+    axios
+    .post(url, params)
+    .then(function (response) {
+        callback(response)
+    })
+    .catch(function (error) {
+        var s = error;
+        // alert("No se pudo obtener datos de la localidad")
+    });
+    }
+}
+
 
 var deleteInstrumento = function (id, callback) {
     var url = URLUKA + "/Miembros/IN/Admin/AdminIN.aspx/deleteIntrumento";

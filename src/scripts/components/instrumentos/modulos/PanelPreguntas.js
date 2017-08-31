@@ -63,7 +63,6 @@
     }
 
     render() {
-      debugger
         return (
             <div className="reg-preg preg-rel">
                    <small >{(this.props.question.onlyTo)?"Para: "+this.props.question.onlyTo:""}</small><br/>
@@ -167,7 +166,6 @@ class QuestionManager extends React.Component {
     }
 
     render() {
-       // debugger
         return (
             <div className="reg-preg">
                 {(this.props.simulation)?(""):(<input

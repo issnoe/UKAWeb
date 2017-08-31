@@ -2,39 +2,29 @@ class PDCListChildrens extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            childrends: [],
+            rows: [],
             countList: 0,
             loading: true
         }
     }
     componentDidMount(){
-        debugger
-        getChildrends("",  function (response) {
+        
+        getCandidatos(this.props,  function (response) {
             if (response && response.data && response.data.d && response.data.d.length>0) {
-                this.setState({childrends: response.data.d, loading: false})
+                this.setState({rows: response.data.d, loading: false})
             }
         }.bind(this));
 
     }
-    renderChildrendsCandidateNAR() {
-        var childrends = this.state.childrends;
-        if (childrends.length>0) {
+    renderRowsCandidate() {
+        
+        var rows = this.state.rows;
+        if (rows.length>0) {
+
             var renderList = [];
             var countList = 0;
-            childrends.map((child, index) => {
-                var lastSomatometria = child.listaSomatometrias[0];
-                    countList++;
-                    var nar = {}
-                    nar.lastSomatometriaDate = lastSomatometria.date;
-                    nar.dxPE = lastSomatometria.dxPE;
-                    nar.lastPeso = lastSomatometria.peso;
-                    var almostlast = child.listaSomatometrias[1]
-                    if(almostlast){
-                        nar.difPeso = Math.abs(lastSomatometria.peso - (almostlast.peso))
-                    }else{
-                        nar.difPeso =0;
-                    }
-                    renderList.push(<PDCRowChildren {...this.props} key={"chillistnar" + index} child={child} nar={nar}/>)
+            rows.map((candidate, index) => {
+                    renderList.push(<PDCRowCandidate {...this.props} key={"candidatos" + index} candidate={candidate} />)
                
             })
             return (
@@ -68,7 +58,7 @@ class PDCListChildrens extends React.Component {
         }
         return (
             <div>
-                {this.renderChildrendsCandidateNAR()}
+                {this.renderRowsCandidate()}
             </div>
         )
     }

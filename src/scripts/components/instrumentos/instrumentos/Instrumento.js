@@ -2,10 +2,10 @@ class InstrumentoHeader extends React.Component{
     
     componentWillReceiveProps(nextProps){
         if(nextProps.id){
-            debugger
+             
         getInstrumentoById(nextProps.id,(response)=>{
                 if (response && response.data && response.data.d[0]) {
-                    debugger
+                     
                     var {nombre,prefijo,subtitulo,estado,orden,aplicado,id,estadoId,municipioId,comunidadId,grupoId} = response.data.d[0];
                     var listaGruposSelected = []
                     this.setState({nombre,prefijo,subtitulo,estado,orden,aplicado,id,estadoId,municipioId,comunidadId,grupoId})
@@ -16,7 +16,7 @@ class InstrumentoHeader extends React.Component{
     }
     render(){
         const state = this.state;
-        debugger
+         
         if(state && state.nombre){
             return(<div>{state.nombre +" / "+state.subtitulo+ " / "+ PERSONAS[state.aplicado].data}</div>)
             

@@ -45,10 +45,10 @@ const TIPOPREGUNTAS = [
 const STATUS = [
     {
         id: 0,
-        data: "Habilitado"
+        data: "Deshabilitado"
     }, {
         id: 1,
-        data: "Deshabilitado"
+        data: "Habilitado"
     }
 ];
 const PERSONAS = [
