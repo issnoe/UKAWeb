@@ -47,6 +47,26 @@ var getInstrumentoById = function (id,callback) {
             // alert("No se pudo obtener datos de somatometria")
         });
 }
+
+
+var getReactivosrespuestasbyModuloId=function(id, callback){
+    
+    var idd= parseInt(id)
+    var url = URLUKA + "/Miembros/IN/Admin/AdminIN.aspx/getReactivosrespuestasbyModuloId";
+    var params = {
+        id: idd
+    };
+    axios
+        .post(url, params)
+        .then(function (response) {
+            callback(response)
+        })
+        .catch(function (error) {
+            // alert("No se pudo obtener datos de somatometria")
+        });
+
+}
+
 var getModuloById=function(id, callback){
     
     var idd= parseInt(id)
@@ -64,7 +84,7 @@ var getModuloById=function(id, callback){
         });
 
 }
-
+//
 var getCandidatos = function(filters,callback) {
     if(filters._instrumentoId){
     var url = "APP.aspx/getCandidatos";
@@ -73,6 +93,7 @@ var getCandidatos = function(filters,callback) {
         instrumentoId:filters._instrumentoId,
         idGrupo: idGrupo,
         textoBusqueda: "",
+        fechaAplicacion:"",
         isActivo:true,
         orden: "Familia"
     };
@@ -87,6 +108,30 @@ var getCandidatos = function(filters,callback) {
     });
     }
 }
+
+
+var handleGenerateAplicacionInstrumento = function(params,callback) {
+    var url = "APP.aspx/handleGenerateAplicacionInstrumento";
+    var idGrupo = localStorage.getItem("UKAidGrupo")
+    var params = {
+        aplicacionIdCurrentEncuesta:params.aplicacionIdCurrentEncuesta,
+        candidato: params.candidato,
+        instrumentoId: params.instrumentoId ,
+        fechaInicio:"01/09/2017",
+       
+    };
+    axios
+    .post(url, params)
+    .then(function (response) {
+        callback(response)
+    })
+    .catch(function (error) {
+        var s = error;
+        // alert("No se pudo obtener datos de la localidad")
+    });
+    
+}
+
 
 
 var deleteInstrumento = function (id, callback) {

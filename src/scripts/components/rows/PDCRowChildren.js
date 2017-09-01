@@ -1,11 +1,13 @@
 class PDCRowCandidate extends React.Component {
 
     renderEncuestasTerminadas() {
-        if (this.props.candidate && this.props.candidate.listaSomatometrias) {
+       
+        if (this.props.candidate && this.props.candidate.encuestas) {
+            
             var popoverTop = (
                 <Popover id="popover-positioned-top" title="Encuestas terminadas">
-                    {this.props.candidate.listaSomatometrias.map((i, index) =>< li key = {index + "lista_encuestas"} > 
-                    {i.date} <a href = {"#/" + i.id} className = "btn btn-primary btn-xs" > Imprimir </a>
+                    {this.props.candidate.encuestas.map((i, index) =>< li key = {index + "lista_encuestas"} > 
+                    {i.fechaModificacionString} <a href = {"#/" + i.aplicacionId} className = "btn btn-primary btn-xs" > Imprimir </a>
                         </li>)}
                 </Popover>
             );
@@ -13,7 +15,7 @@ class PDCRowCandidate extends React.Component {
             var _render = (
                 <OverlayTrigger trigger="click" rootClose placement="left" overlay={popoverTop}>
                     <div>
-                    {(this.props.candidate && this.props.candidate.listaSomatometrias)?(this.props.candidate.listaSomatometrias.length+"  "):"0"}
+                    {(this.props.candidate && this.props.candidate.encuestas)?(this.props.candidate.encuestas.length+"  "):"0"}
                     <button className="btn btn-primary btn-xs">Ver</button>
                     </div>
                 </OverlayTrigger >
@@ -31,7 +33,7 @@ class PDCRowCandidate extends React.Component {
                 <div className="col-md-1 col-sm-1">
                     <div className="row">
                         <div className="col-md-12">
-                            {this.props.candidate.numeroFamilia}
+                            {this.props.candidate.NoFamilia}
                         </div>
                     </div>
                 </div>
@@ -45,7 +47,7 @@ class PDCRowCandidate extends React.Component {
                 <div className="col-md-4 col-sm-4">
                     <div className="row">
                         <div className="col-md-12">
-                            <a href={"#/pdc/instrumentos/aplicar/" + this.props._instrumentoId}>
+                            <a href={"#/pdc/instrumentos/aplicar/" + this.props._instrumentoId+"/"+this.props.candidate.aplicacionIdCurrentEncuesta+"/"+this.props.candidate.IdNinio}>
                                 <img src="/images/apply.svg" alt="Capturar ficha" height="18"/>
                                 <strong>
                                     {this.props.candidate.NinioNombreCompleto}</strong>
@@ -53,15 +55,15 @@ class PDCRowCandidate extends React.Component {
 
                         </div>
                         <div className="col-md-4 col-sm-4 nino-inf">
-                            <span className="txt-sm">Fecha nac.</span><br/> {this.props.candidate.FechaNacimiento}
+                            <span className="txt-sm">Fecha nac.</span><br/> {this.props.candidate.FechaNacimientoString}
 
                         </div>
                         <div className="col-md-5 col-sm-5 nino-inf">
-                            <span className="txt-sm">Edad en meses</span><br/> {this.props.candidate.edadMeses}
+                            <span className="txt-sm">Edad en meses</span><br/> {this.props.candidate.edadEnMeses}
 
                         </div>
                         <div className="col-md-3 col-sm-3 nino-inf">
-                            <span className="txt-sm">Sexo</span><br/> {this.props.candidate.sexo}
+                            <span className="txt-sm">Sexo</span><br/> {this.props.candidate.Genero}
 
                         </div>
 
@@ -71,25 +73,25 @@ class PDCRowCandidate extends React.Component {
 
                     <div className="row">
                         <div className="col-md-12">
-                            <a href={"#/pdc/instrumentos/aplicar/" + this.props._instrumentoId}>
+                            <a href={"#/pdc/instrumentos/aplicar/" + this.props._instrumentoId+"/"+this.props.candidate.aplicacionIdCurrentEncuesta+"/"+this.props.candidate.IdNinio}>
 
                                 <strong>
-                                    Encuesta INO</strong>
+                                    {this.props.candidate.NombreInstrumento}
+                                </strong>
                             </a>
 
                         </div>
                         <div className="col-md-3 col-sm-3 nino-inf">
                             <span className="txt-sm">Estatus</span><br/>
-                            Terminada
-
+                            {this.props.candidate.StatusUltimoInstrumento}
                         </div>
                         <div className="col-md-4 col-sm-4 nino-inf">
-                            <span className="txt-sm">Última encuesta</span><br/>
-                            -- / -- / --
-
+                            <span className="txt-sm">Última modificación</span><br/>
+                            {this.props.candidate.FechaUltimoInstrumento}
+                            
                         </div>
                         <div className="col-md-5 col-sm-5 nino-inf">
-                            {/* <span className="txt-sm">Terminadas</span><br/> {this.renderEncuestasTerminadas()} */}
+                            <span className="txt-sm">Terminadas</span><br/> {this.renderEncuestasTerminadas()}
 
                         </div>
 

@@ -117,8 +117,11 @@ class App extends React.Component {
 
 
                     },
-                    '/aplicar/:id/': (id) => {
+                    '/aplicar/:id/:idaplicacion/:idCandidate': (id, idaplicacion,idCandidate) => {
                         var i = parseInt(id);
+                        handleGenerateAplicacionInstrumento({ aplicacionIdCurrentEncuesta:idaplicacion,
+                            candidato:idCandidate,
+                            instrumentoId: id},(response)=>{debugger})
                         this.setState({ _instrumentoId: i, controller: "aplicarEncuesta" })
                     },
                     on: () => {
@@ -313,6 +316,7 @@ class App extends React.Component {
                 var params = {
                     id: this.state._instrumentoId
                 };
+                //clonar metodo pero con respuestas 
                 var url = URLUKA + "/Miembros/IN/Admin/AdminIN.aspx/getInstrumentoId";
                 var listaIdModulos = []
                 if (this.state.listaModulos) {

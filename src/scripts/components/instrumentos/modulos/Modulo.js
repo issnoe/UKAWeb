@@ -10,7 +10,7 @@ class Modulo extends React.Component {
 
     }
     _getReactivos() {
-        getModuloById(this.props.id, (response) => {
+        getReactivosrespuestasbyModuloId(this.props.id, (response) => {
             if (response.data && response.data.d[0]) {
                 var respRequest = response.data.d[0]
                 try {

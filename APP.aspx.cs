@@ -4,6 +4,7 @@ using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Transactions;
 using System.Web;
 using System.Web.Script.Serialization;
 using System.Web.UI;
@@ -119,52 +120,168 @@ namespace InfoKilo.WebApp.Miembros.WS
 
         }
 
+        [System.Web.Services.WebMethod]
+        public static string handleGenerateAplicacionInstrumento(string aplicacionIdCurrentEncuesta, string candidato, int instrumentoId, string fechaInicio)
+        {
+            string response = aplicacionIdCurrentEncuesta;
+            Repository<AplicacionInstrumento> handle = new Repository<AplicacionInstrumento>();
+            if (aplicacionIdCurrentEncuesta == "na")
+            {
+               Repository<Instrumentos> handleInstrumento = new Repository<Instrumentos>();
+               Repository<Reactivos> handlReactivos = new Repository<Reactivos>();
+               Repository<ReactivosRespuestas> handlReactivosRespuestas = new Repository<ReactivosRespuestas>();
+               Instrumentos instrumento = handleInstrumento.Retrieve(u => u.id == instrumentoId);
+                try 
+	            {	        
+                using (TransactionScope tran = new TransactionScope())
+                {
+                ///Generar
+                AplicacionInstrumento nueva = new AplicacionInstrumento();
+                nueva.aplicacionId = Guid.NewGuid();
+                nueva.fechaInicio = Convert.ToDateTime(fechaInicio);
+                nueva.instrumentoId = instrumentoId;
+                nueva.status = 0;
+                nueva.fechaModificacion = DateTime.Now;
+                switch(instrumento.aplicado){
+                    case 1:
+                        nueva.candidatoNinioId = new Guid(candidato);
+                    break;
+                     case 2:
+                        nueva.candidatoNinioId = new Guid(candidato);
+                    break;
+                    case 4:
+                        nueva.candidatoMadreId = new Guid(candidato);
+                    break;
+                    case 3:
+                        nueva.candidatoMadreId = new Guid(candidato);
+                        nueva.candidatoCuidador = new Guid(candidato);
+                        nueva.candidatoNinioId = new Guid(candidato);
+
+                    break;
+
+                }
+
+                AplicacionInstrumento respAplication = handle.Create(nueva);
+               
+                try
+                {
+                    //llamar proceso de copia de intrumento 
+                   var listaReactivos =  handlReactivos.Filter(a => a.id_instrumento == instrumentoId);
+                   foreach (var item in listaReactivos)
+                   {
+                       try
+                       {
+                           handlReactivosRespuestas.Create(new ReactivosRespuestas(respAplication, item));
+                       }
+                       catch (Exception ex)
+                       {
+
+                           var exs = ex.Message;
+                       }
+                   }
+                    // Actualizar el instrumento con un estado diferente para entender que se ha modificado y en caso de alguna modificacion la version del cambio
+                }
+                catch (Exception)
+                {
+                    return "error copy";
+                }
+                tran.Complete();
+                response = Convert.ToString(respAplication.aplicacionId);
+
+                }
+             }
+	            catch (Exception)
+	            {
+                    return "error new aplication";
+	            }
+            } 
+            return response;
+        }
+
 
         [System.Web.Services.WebMethod]
-        public static IQueryable<dynamic> getCandidatos(int instrumentoId, string idGrupo, string textoBusqueda,bool isActivo,  string orden)
+        public static IQueryable<dynamic> getCandidatos(int instrumentoId, string idGrupo, string textoBusqueda,string fechaAplicacion, bool isActivo,  string orden)
         {
             Repository<NinioEnPrograma> handle = new Repository<NinioEnPrograma>();
             Repository<ExpedienteMadre> handleMadre = new Repository<ExpedienteMadre>();
             Repository<Cuidador> handleCuidador = new Repository<Cuidador>();
             Repository<Instrumentos> handleInstrumento = new Repository<Instrumentos>();
             Instrumentos instrumento = handleInstrumento.Retrieve(u => u.id == instrumentoId);
-            string candidatos = "";
            List<string> listaTablas = new List<string>
             {
-                
                 "Familias.Cuidador",
                 "Familias.ExpedienteMadre",
                 "AplicacionInstrumento"
             };
+            DateTime nows = DateTime.Now;
 
             switch(instrumento.aplicado)   {
                 case 1:
-                    // listaTablas.Count, listaTablas
-                    candidatos =  "Niños/as menores de cinco años ";
-                    var listaIterResponse = handle.Filter(n => n.Familias.IdGrupo.ToString() == idGrupo && n.Borrado == isActivo,listaTablas.Count, listaTablas).ToList();
+                    // "Niños/as menores de cinco años ";
+                    var listaIterResponse = handle.Filter(n => n.Familias.IdGrupo.ToString() == idGrupo   && n.Borrado == !isActivo, listaTablas.Count, listaTablas).OrderBy(m=>m.Familias.NumFamilia).ToList();
                     List<CandidatosNinio> listRender = new List<CandidatosNinio>();
                     foreach (var item in listaIterResponse)
                     {
-                        CandidatosNinio added = new CandidatosNinio(item.IdNinio,item.Nombre, item.ApPaterno, item.ApMaterno, item.Genero, item.CURP, item.NumeroSS,item.FechaNacimiento,item.NumeroNinioEnFamilia, item.UrlFotoNinio, item.ClaveNinio, item.domicilio, item.Egresado);
-                        added.GetEncuestas(item.AplicacionInstrumento.Where(z=>z.instrumentoId==instrumentoId).ToList());
-                        added.GetCuidador(item.Familias.Cuidador);
-                        added.GetFamilia(item.Familias.NumFamilia);
-                        listRender.Add(added);
+                        try
+                        {
+                            if (Convert.ToInt32(Calcular.EdadEnMeses(nows, item.FechaNacimiento)) <= 60) {
+                                CandidatosNinio added = new CandidatosNinio(item.IdNinio, item.Nombre, item.ApPaterno, item.ApMaterno, item.Genero, item.CURP, item.NumeroSS, item.FechaNacimiento, item.NumeroNinioEnFamilia, item.UrlFotoNinio, item.ClaveNinio, item.domicilio, item.Egresado);
+                                //Status 1 terminada 
+                                added.GetEncuestasTerminadas(item.AplicacionInstrumento.Where(z => z.instrumentoId == instrumentoId && z.status == 1).ToList());
+                                added.GetCurrentEncuesta(item.AplicacionInstrumento.Where(z => z.instrumentoId == instrumentoId && z.status == 0).ToList(), instrumento.nombre);
+                                added.GetCuidador(item.Familias.Cuidador);
+                                added.GetFamilia(item.Familias.NumFamilia);
+                                listRender.Add(added);
+                            }
+                        }
+                        catch (Exception)
+                        {
+                         //   throw;
+                        }
+                       
                     }
                     return listRender.AsQueryable();
                    break;
                 case 2:
-                    candidatos =  "Niños/as y adolecentes (5 a 17 )";
+                    // "Niños/as y adolecentes (5 a 17 )";
+                    var listaIterResponse2 = handle.Filter(n => n.Familias.IdGrupo.ToString() == idGrupo   && n.Borrado == !isActivo, listaTablas.Count, listaTablas).OrderBy(m=>m.Familias.NumFamilia).ToList();
+                    List<CandidatosNinio> listRender2 = new List<CandidatosNinio>();
+                    foreach (var item in listaIterResponse2)
+                    {
+                        try
+                        {
+
+                            if (Convert.ToInt32(Calcular.EdadEnMeses(nows, item.FechaNacimiento)) > 60) {
+                                CandidatosNinio added = new CandidatosNinio(item.IdNinio, item.Nombre, item.ApPaterno, item.ApMaterno, item.Genero, item.CURP, item.NumeroSS, item.FechaNacimiento, item.NumeroNinioEnFamilia, item.UrlFotoNinio, item.ClaveNinio, item.domicilio, item.Egresado);
+                                //Status 1 terminada 
+                                added.GetEncuestasTerminadas(item.AplicacionInstrumento.Where(z => z.instrumentoId == instrumentoId && z.status == 1).ToList());
+                                added.GetCurrentEncuesta(item.AplicacionInstrumento.Where(z => z.instrumentoId == instrumentoId && z.status == 0).ToList(), instrumento.nombre);
+                                added.GetCuidador(item.Familias.Cuidador);
+                                added.GetFamilia(item.Familias.NumFamilia);
+                                listRender2.Add(added);
+                            
+                            }
+                           
+                        }
+                        catch (Exception)
+                        {
+                            
+                            throw;
+                        }
+                       
+                    }
+                    return listRender2.AsQueryable();
                     break;
                      
                 //
                 case 3:
-                    candidatos =  "Hogares";
+                  //  candidatos =  "Hogares";
+
                     break;
 
                 //
                 case 4:
-                    candidatos =  "Mujeres";
+                  //  candidatos =  "Mujeres";
                     break;
                 default:
                     break;

@@ -24,6 +24,7 @@ class PDCListChildrens extends React.Component {
             var renderList = [];
             var countList = 0;
             rows.map((candidate, index) => {
+                countList++;
                     renderList.push(<PDCRowCandidate {...this.props} key={"candidatos" + index} candidate={candidate} />)
                
             })
