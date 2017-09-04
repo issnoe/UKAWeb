@@ -52,7 +52,7 @@ var getInstrumentoById = function (id,callback) {
 var getReactivosrespuestasbyModuloId=function(id, callback){
     
     var idd= parseInt(id)
-    var url = URLUKA + "/Miembros/IN/Admin/AdminIN.aspx/getReactivosrespuestasbyModuloId";
+    var url = URLUKA + "/Miembros/IN/Admin/AdminIN.aspx/getReactivosrespuestasbyModuloId";//";
     var params = {
         id: idd
     };

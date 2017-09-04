@@ -38,6 +38,8 @@
                                 key={index + "_option_linkedq" + this.props.item.id}
                                 className="col-md-4  col-sm-12 text-center">
                                 <label className="lbl-id">
+                                <input type="checkbox" checked={false}
+                                    onClick={(e)=>{e.preventDefault(); debugger; var eds= e;}}/>
                                     <strong>{parseInt(index) + 1})</strong>
 
                                     {option}
@@ -79,16 +81,34 @@
     }
 
 }
+class HandleAnswer extends React.Component{
+    state = {
+        answer:this.props.answer
+    }
+    handleRespuesta =(e) => {
+      
+        var valor = e.target.value
+        var mask = e.target.name
+        this.setState({[mask]:valor})
+
+   }
+
+
+    render(){
+        return (
+            <div><input onChange={this.handleRespuesta} name="answer" value={(this.state.answer=="undefined")?"":this.state.answer}     id=""/><br/></div>
+        )
+    }
+}
 class QuestionManager extends React.Component {
     renderLinkedQuestions() {
-        this;
         if (this.props.castJsonPregunta && this.props.castJsonPregunta[0].questions) {
 
             var lista = this.props.castJsonPregunta[0].questions;
             var questions = []
             for (var index in lista) {
                 questions.push(<LinkedQuestionManager
-                    key={index + "linked_qeustion_" + this.props.item.id}
+                    key={index + "linked_qeustion_s" + this.props.item.id}
                     item={this.props.item}
                     question={lista[index]}/>)
 
@@ -122,7 +142,7 @@ class QuestionManager extends React.Component {
                         );
                         options.push(
                             <div
-                                key={index + "_option_" + this.props.item.id}
+                                key={index + "_optionl_" + this.props.item.id}
                                 className="col-md-4  col-sm-12 text-center">
 
                                 <OverlayTrigger trigger="click" rootClose placement="top" overlay={popoverTop}>
@@ -136,13 +156,18 @@ class QuestionManager extends React.Component {
                             </div>
                         )
                     } else {
+                        debugger
+                        this;
                         options.push(
                             <div
-                                key={index + "_option_" + this.props.item.id}
+                                key={index + "_option_s" + this.props.item.id}
                                 className="col-md-4  col-sm-12 text-center">
+                               
                                 <label className="lbl-id">
+                                <input type="checkbox" checked={false}
+                                    onClick={(e)=>{e.preventDefault(); debugger; var eds= e;}}/>
                                     <strong>{parseInt(index) + 1})</strong>
-
+                                   
                                     {option}
                                 </label>
 
@@ -167,8 +192,10 @@ class QuestionManager extends React.Component {
 
     render() {
         return (
+            
             <div className="reg-preg">
                 {(this.props.simulation)?(""):(<input
+                    contentEditable={true}
                     type="checkbox"
                     value={this.props.item.id}
                     checked={this.props.checked}
@@ -177,8 +204,9 @@ class QuestionManager extends React.Component {
                 
                 <strong>
                     {this.props.prefijo + " "}</strong>
-                {this.props.castJsonPregunta[0].question}<br/>
-             
+                {this.props.castJsonPregunta[0].question}
+                {(this.props.simulation && !this.props.castJsonPregunta[0].options)?<HandleAnswer id={this.props.item.id} key={"respuesta_Pregunta"+this.props.item.id} index={this.props.item.id} {...this.props.castJsonPregunta[0]}/>:""}
+               
                  
                 <small >{this.props.item.nota}</small>
                 {this.renderOption()}
@@ -230,6 +258,7 @@ class PanelPreguntas extends React.Component {
             var lista = modulo.reactivos
             var listaRender = []
             for (var key in lista) {
+                debugger
                 var listaDelete = this.state.listDetele;
                 var preguntaJson = lista[key].dataJson
                 var id = lista[key].id;
@@ -244,7 +273,7 @@ class PanelPreguntas extends React.Component {
                         var pregunta = (
                             <QuestionManager
                                 simulation={this.props.simulation}
-                                key={lista[key].id}
+                                key={"keyModulo_"+lista[key].id}
                                 item={lista[key]}
                                 checked={checkedItem}
                                 prefijo={prefijopregunta}

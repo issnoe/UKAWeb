@@ -1,5 +1,5 @@
-//const URLUKA= "http://localhost:25585/";
-const URLUKA= "http://ukawebm.azurewebsites.net/";
+const URLUKA= "http://localhost:25585/";
+//const URLUKA= "http://ukawebm.azurewebsites.net/";
 
 var Modal = ReactBootstrap.Modal;
 const OverlayTrigger = ReactBootstrap.OverlayTrigger;
@@ -20,7 +20,7 @@ const TIPOREACTIVO = [
         data: "Pregunta"
     }, {
         id: 1,
-        data: "Encabezado"
+        data: "Anexo"
     }
 ];
 const TIPOPREGUNTAS = [

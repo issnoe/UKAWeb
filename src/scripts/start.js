@@ -121,7 +121,9 @@ class App extends React.Component {
                         var i = parseInt(id);
                         handleGenerateAplicacionInstrumento({ aplicacionIdCurrentEncuesta:idaplicacion,
                             candidato:idCandidate,
-                            instrumentoId: id},(response)=>{debugger})
+                            instrumentoId: id},(response)=>{
+                                //stateAplicado
+                            })
                         this.setState({ _instrumentoId: i, controller: "aplicarEncuesta" })
                     },
                     on: () => {

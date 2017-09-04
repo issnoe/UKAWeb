@@ -4,14 +4,19 @@ class PDCListChildrens extends React.Component {
         this.state = {
             rows: [],
             countList: 0,
-            loading: true
+            loading: true,
+            dev:false, 
         }
     }
+    
     componentDidMount(){
         
         getCandidatos(this.props,  function (response) {
             if (response && response.data && response.data.d && response.data.d.length>0) {
                 this.setState({rows: response.data.d, loading: false})
+            }
+            else if(response && response.data && response.data.d ){
+                this.setState({dev:true,loading: false})
             }
         }.bind(this));
 
@@ -50,6 +55,12 @@ class PDCListChildrens extends React.Component {
                     {renderList}</div>
             )
         }
+        if(this.state.dev
+        ){
+            return (
+                <div className="enMantenimento"> <img src="./src/img/construccion.jpg"/></div>
+            )
+        }
     }
     render() {
         if (this.state.loading == true) {
@@ -60,6 +71,7 @@ class PDCListChildrens extends React.Component {
         return (
             <div>
                 {this.renderRowsCandidate()}
+              
             </div>
         )
     }
