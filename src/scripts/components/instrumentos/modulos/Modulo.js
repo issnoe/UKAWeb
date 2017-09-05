@@ -97,7 +97,7 @@ class Modulo extends React.Component {
                 </div>
                 {(this.props.simulation)
                     ? (
-                        <div className="container">
+                        <div className={(this.props.display)?"container":"container ocultar"}>
                             <div className="col-md-12 col-sm-12">
                                
                                 <PanelPreguntas

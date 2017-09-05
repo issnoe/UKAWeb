@@ -156,8 +156,7 @@ class QuestionManager extends React.Component {
                             </div>
                         )
                     } else {
-                        debugger
-                        this;
+                        
                         options.push(
                             <div
                                 key={index + "_option_s" + this.props.item.id}
@@ -193,7 +192,7 @@ class QuestionManager extends React.Component {
     render() {
         return (
             
-            <div className="reg-preg">
+            <div className={(this.props.display)?"row resp-reg":"ocultar"}>
                 {(this.props.simulation)?(""):(<input
                     contentEditable={true}
                     type="checkbox"
@@ -259,6 +258,7 @@ class PanelPreguntas extends React.Component {
             var listaRender = []
             for (var key in lista) {
                 debugger
+                var di = (key=="0")?true:false;
                 var listaDelete = this.state.listDetele;
                 var preguntaJson = lista[key].dataJson
                 var id = lista[key].id;
@@ -272,6 +272,7 @@ class PanelPreguntas extends React.Component {
                         var castJsonPregunta = JSON.parse(preguntaDef);
                         var pregunta = (
                             <QuestionManager
+                                display={di}
                                 simulation={this.props.simulation}
                                 key={"keyModulo_"+lista[key].id}
                                 item={lista[key]}

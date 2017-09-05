@@ -326,7 +326,8 @@ class App extends React.Component {
                         .state
                         .listaModulos
                         .map((item, index) => {
-                            listaIdModulos.push(<Modulo key={index} id={item.id} simulation={true} />)
+                            var dis =(index ==0)?true:false;
+                            listaIdModulos.push(<Modulo display={dis} key={index} id={item.id} simulation={true} />)
                         });
                 } else {
                     axios
