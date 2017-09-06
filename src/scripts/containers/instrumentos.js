@@ -109,7 +109,23 @@ var getCandidatos = function(filters,callback) {
     }
 }
 
+var getTreeInstrumento = function (params,callback){
+    var url = "APP.aspx/getTreeInstrumento";
+    var params = {
+        aplicacionIdCurrentEncuesta:params.aplicacionIdCurrentEncuesta,
+    };
+    axios
+    .post(url, params)
+    .then(function (response) {
+        callback(response)
+    })
+    .catch(function (error) {
+        var s = error;
+        // alert("No se pudo obtener datos de la localidad")
+    });
+    
 
+}
 var handleGenerateAplicacionInstrumento = function(params,callback) {
     var url = "APP.aspx/handleGenerateAplicacionInstrumento";
     var idGrupo = localStorage.getItem("UKAidGrupo")

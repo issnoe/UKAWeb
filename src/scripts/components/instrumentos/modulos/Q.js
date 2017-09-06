@@ -149,7 +149,9 @@ class Question extends React.Component {
         var valor = e.target.value
         var mask = e.target.name
         var question = this.state.preguntaJson
-        question.question = valor;
+        var preguntaJsonTrim = valor.trim()
+        var preguntaJsonTrimS = preguntaJsonTrim.split("\n");
+        question.question = preguntaJsonTrimS;
         this.setState({[mask]: question});
 
     }

@@ -47,6 +47,7 @@ class Modulo extends React.Component {
         }.bind(this));
     }
     saveNext(question) {
+        
         this.setState({spinerLoad: true})
         var obj = [question.preguntaJson]
         var data = JSON.stringify(obj)
@@ -97,7 +98,7 @@ class Modulo extends React.Component {
                 </div>
                 {(this.props.simulation)
                     ? (
-                        <div className={(this.props.display)?"container":"container ocultar"}>
+                        <div className="container">
                             <div className="col-md-12 col-sm-12">
                                
                                 <PanelPreguntas

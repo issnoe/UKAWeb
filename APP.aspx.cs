@@ -120,6 +120,25 @@ namespace InfoKilo.WebApp.Miembros.WS
 
         }
 
+
+        [System.Web.Services.WebMethod]
+        public static IQueryable<ReactivosRespuestas> getTreeInstrumento(string aplicacionIdCurrentEncuesta)
+        {
+
+            Repository<AplicacionInstrumento> handle = new Repository<AplicacionInstrumento>();
+
+            List<string> listaTablas = new List<string>
+            {
+               "Reactivosrespuestas",
+               "Instrumentos",
+               
+               
+            };
+
+            var listaReactivos = handle.Retrieve(c => c.aplicacionId.ToString() == aplicacionIdCurrentEncuesta).ReactivosRespuestas;
+            return listaReactivos.ToList().AsQueryable();
+        }
+
         [System.Web.Services.WebMethod]
         public static string handleGenerateAplicacionInstrumento(string aplicacionIdCurrentEncuesta, string candidato, int instrumentoId, string fechaInicio)
         {

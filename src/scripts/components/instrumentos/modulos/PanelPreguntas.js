@@ -38,8 +38,6 @@
                                 key={index + "_option_linkedq" + this.props.item.id}
                                 className="col-md-4  col-sm-12 text-center">
                                 <label className="lbl-id">
-                                <input type="checkbox" checked={false}
-                                    onClick={(e)=>{e.preventDefault(); debugger; var eds= e;}}/>
                                     <strong>{parseInt(index) + 1})</strong>
 
                                     {option}
@@ -156,15 +154,14 @@ class QuestionManager extends React.Component {
                             </div>
                         )
                     } else {
-                        
                         options.push(
                             <div
                                 key={index + "_option_s" + this.props.item.id}
                                 className="col-md-4  col-sm-12 text-center">
                                
                                 <label className="lbl-id">
-                                <input type="checkbox" checked={false}
-                                    onClick={(e)=>{e.preventDefault(); debugger; var eds= e;}}/>
+                                     <input type="checkbox" checked={false}
+                                    onClick={(e)=>{e.preventDefault();  var eds= e;}}/>
                                     <strong>{parseInt(index) + 1})</strong>
                                    
                                     {option}
@@ -192,7 +189,7 @@ class QuestionManager extends React.Component {
     render() {
         return (
             
-            <div className={(this.props.display)?"row resp-reg":"ocultar"}>
+            <div className="reg-preg">
                 {(this.props.simulation)?(""):(<input
                     contentEditable={true}
                     type="checkbox"
@@ -204,7 +201,7 @@ class QuestionManager extends React.Component {
                 <strong>
                     {this.props.prefijo + " "}</strong>
                 {this.props.castJsonPregunta[0].question}
-                {(this.props.simulation && !this.props.castJsonPregunta[0].options)?<HandleAnswer id={this.props.item.id} key={"respuesta_Pregunta"+this.props.item.id} index={this.props.item.id} {...this.props.castJsonPregunta[0]}/>:""}
+                {(this.props.simulation)?<HandleAnswer id={this.props.item.id} key={"respuesta_Pregunta"+this.props.item.id} index={this.props.item.id} {...this.props.castJsonPregunta[0]}/>:""}
                
                  
                 <small >{this.props.item.nota}</small>
@@ -257,8 +254,6 @@ class PanelPreguntas extends React.Component {
             var lista = modulo.reactivos
             var listaRender = []
             for (var key in lista) {
-                debugger
-                var di = (key=="0")?true:false;
                 var listaDelete = this.state.listDetele;
                 var preguntaJson = lista[key].dataJson
                 var id = lista[key].id;
@@ -272,7 +267,6 @@ class PanelPreguntas extends React.Component {
                         var castJsonPregunta = JSON.parse(preguntaDef);
                         var pregunta = (
                             <QuestionManager
-                                display={di}
                                 simulation={this.props.simulation}
                                 key={"keyModulo_"+lista[key].id}
                                 item={lista[key]}

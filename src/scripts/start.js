@@ -13,7 +13,7 @@ class App extends React.Component {
     }
 
     componentDidMount() {
-        
+
 
         getLocation(function (response) {
             if (response && response.data && response.data.d) {
@@ -31,7 +31,7 @@ class App extends React.Component {
                 on: this.validUser,
                 '/instrumentos': {
                     on: () => {
-                        this.setState({  controller: "admininstrumentos",listaModulos:undefined, modalCondition: undefined, _instrumentoId:undefined,_moduloId: undefined, modalInstrumento: undefined, modalModulo: undefined })
+                        this.setState({ controller: "admininstrumentos", listaModulos: undefined, modalCondition: undefined, _instrumentoId: undefined, _moduloId: undefined, modalInstrumento: undefined, modalModulo: undefined })
                     },
                     '/nuevo': () => {
                         this.setState({ modalInstrumento: true, controller: "admininstrumentos" })
@@ -77,7 +77,7 @@ class App extends React.Component {
                         })
 
                     },
-                     '/modulos': {
+                    '/modulos': {
                         '/:id': (id) => {
                             var i = parseInt(id)
                             this.setState({ _instrumentoId: id, controller: "modulos" })
@@ -112,19 +112,30 @@ class App extends React.Component {
                     '/candidatos': {
                         '/:id': (id) => {
                             var i = parseInt(id);
-                            this.setState({ _instrumentoId: i,listaModulos:undefined, controller: "candidatosEncuesta" })
+                            this.setState({ _instrumentoId: i, listaModulos: undefined, controller: "candidatosEncuesta" })
                         },
 
 
                     },
-                    '/aplicar/:id/:idaplicacion/:idCandidate': (id, idaplicacion,idCandidate) => {
+                    '/aplicar/:id/:idaplicacion/:idCandidate': (id, idaplicacion, idCandidate) => {
                         var i = parseInt(id);
-                        handleGenerateAplicacionInstrumento({ aplicacionIdCurrentEncuesta:idaplicacion,
-                            candidato:idCandidate,
-                            instrumentoId: id},(response)=>{
-                                //stateAplicado
-                            })
-                        this.setState({ _instrumentoId: i, controller: "aplicarEncuesta" })
+                        
+                        if(idaplicacion=="na"){
+                            handleGenerateAplicacionInstrumento({
+                                aplicacionIdCurrentEncuesta: idaplicacion,
+                                candidato: idCandidate,
+                                instrumentoId: id
+                            }, (response) => { window.location.href = "#/pdc/instrumentos/aplicar/" + response.data.d })
+
+                        }else{
+                            window.location.href = "#/pdc/instrumentos/aplicar/" + idaplicacion
+                        }
+                        
+                        // this.setState({ _instrumentoId: i,_aplicacionId:undefined, controller: "aplicarEncuesta" })
+                    },
+                    '/aplicar/:idaplicacion': (idaplicacion) => {
+                        getTreeInstrumento({aplicacionIdCurrentEncuesta:idaplicacion},(response)=>{})
+                        this.setState({ _aplicacionId: idaplicacion, controller: "aplicacionOnebyOne" })
                     },
                     on: () => {
                         this.setState({ controller: "instrumentos" })
@@ -309,11 +320,13 @@ class App extends React.Component {
                 navigatorHistory = _.concat(navigatorState[0], navigatorState[4], navigatorState[8])
                 renderConteiner = (
                     <div>
-                        <Modulo id={this.state._moduloId}  />
+                        <Modulo id={this.state._moduloId} />
                     </div>
                 );
                 break;
             case "aplicarEncuesta":
+
+
                 navigatorHistory = _.concat(navigatorState[0], navigatorState[1], navigatorState[5], navigatorState[6], navigatorState[7])
                 var params = {
                     id: this.state._instrumentoId
@@ -326,8 +339,7 @@ class App extends React.Component {
                         .state
                         .listaModulos
                         .map((item, index) => {
-                            var dis =(index ==0)?true:false;
-                            listaIdModulos.push(<Modulo display={dis} key={index} id={item.id} simulation={true} />)
+                            listaIdModulos.push(<Modulo key={index} id={item.id} simulation={true} />)
                         });
                 } else {
                     axios
@@ -346,6 +358,7 @@ class App extends React.Component {
                 }
                 renderConteiner = (listaIdModulos);
                 break;
+
             case "simulacion":
                 navigatorHistory = _.concat(navigatorState[0], navigatorState[4], navigatorState[4])
                 var params = {
@@ -375,8 +388,9 @@ class App extends React.Component {
                             alert("No se pudo obtener datos")
                         });
                 }
-                renderConteiner = (<div><InstrumentoHeader id={this.state._instrumentoId}/>{listaIdModulos}</div>);
+                renderConteiner = (<div><InstrumentoHeader id={this.state._instrumentoId} />{listaIdModulos}</div>);
                 break;
+
             case "instrumentos":
                 navigatorHistory = _.concat(navigatorState[0], navigatorState[1], navigatorState[5])
                 renderConteiner = (
@@ -385,10 +399,19 @@ class App extends React.Component {
                     </div>
                 );
                 break;
-           
-           
+
+
+            case "aplicacionOnebyOne":
+            navigatorHistory = _.concat(navigatorState[0], navigatorState[1], navigatorState[5], navigatorState[6], navigatorState[7])
+            renderConteiner = (
+                <div>
+                  Este es el id de el cuestionario {this.state._aplicacionId}
+                </div>
+            );
+                break;
+
             case "modulos":
-               var params = {
+                var params = {
                     id: this.state._instrumentoId
                 };
                 var url = URLUKA + "/Miembros/IN/Admin/AdminIN.aspx/getInstrumentoId";
@@ -398,7 +421,7 @@ class App extends React.Component {
                         .state
                         .listaModulos
                         .map((item, index) => {
-                            listaIdModulos.push(<Modulo key={index} id={item.id}/>)
+                            listaIdModulos.push(<Modulo key={index} id={item.id} />)
                         });
                 } else {
                     axios
@@ -406,23 +429,23 @@ class App extends React.Component {
                         .then(function (response) {
                             if (response && response.data && response.data.d[0].modulos != "") {
                                 var modulos = JSON.parse(response.data.d[0].modulos);
-                                this.setState({listaModulos: modulos})
+                                this.setState({ listaModulos: modulos })
                             } else {
-                                this.setState({listaModulos: []})
+                                this.setState({ listaModulos: [] })
                             }
                         }.bind(this))
                         .catch(function (error) {
                             alert("No se pudo obtener datos")
                         });
                 }
-                    navigatorHistory = _.concat(navigatorState[0], navigatorState[4], navigatorState[8])
+                navigatorHistory = _.concat(navigatorState[0], navigatorState[4], navigatorState[8])
                 renderConteiner = (
                     <div>
                         {listaIdModulos}
                     </div>
                 );
-            
-            break;
+
+                break;
             case "admininstrumentos":
                 navigatorHistory = _.concat(navigatorState[0], navigatorState[4])
                 renderConteiner = (
