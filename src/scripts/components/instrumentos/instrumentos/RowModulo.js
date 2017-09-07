@@ -1,4 +1,4 @@
-class ModuloInRow extends  React.Component{
+ class ModuloInRow extends  React.Component{
     constructor(props) {
         super(props);
         this.state={}
@@ -6,27 +6,6 @@ class ModuloInRow extends  React.Component{
        
 
     }
-     handleModal(decition) {
-        
-        if (decition.action) {
-
-             this
-            .props
-            .onChange({action: "delete", item: this.props.item})
-            this.setState({showModalDelete: false})
-        } else {
-            this.setState({showModalDelete: false})
-        }
-       
-
-    }
-    showDetails(e) {
-        e.preventDefault();
-        this
-            .props
-            .onChange(this.props);
-    }
-
     render() {
 
         return (
@@ -49,36 +28,28 @@ class ModuloInRow extends  React.Component{
                                 </a>
                                 <ul className="dropdown-menu" aria-labelledby="dropdownMenu1">
                                     <li>
-                                        <a href=""><img src="../../../images/enable.svg" alt="Activar instrumento" height="18"/>
+                                        <a><img src="../../../images/enable.svg" alt="Activar instrumento" height="18"/>
                                             Activar</a>
                                     </li>
                                     <li>
 
-                                        <a
-                                            onClick={() => {
-                                            this
-                                                .props
-                                                .onChange({action: "update", item: this.props.item})
-                                        }}><img
+                                        <a href={"#/admin/instrumentos/modulo/editar/" + this.props.item.id}><img
                                             src="../../../images/edit.svg"
-                                            alt="Editar nombre del instrumento"
+                                            alt="Editar nombre del módulo"
                                             height="18"/>
                                             Editar</a>
                                     </li>
                                     
                                    
                                     <li>
-                                        <a
-                                            onClick={() => {
-                                            this.setState({showModalDelete: true})
-                                        }}><img
+                                        <a href={"#/admin/instrumentos/modulo/eliminar/" + this.props.item.id}><img
                                             src="../../../images/erase-gray.svg"
-                                            alt="Eliminar el instrumento"
+                                            alt="Eliminar el módulo"
                                             height="18"/>
                                             Eliminar</a>
                                     </li>
                                      <li>
-                                        <a href={"#/modulo/"+this.props.item.id}
+                                        <a href={"#/admin/instrumentos/modulo/"+this.props.item.id}
                                             ><img src="../../../images/add.svg" alt="Agregar módulo" height="18"/>
                                             Agregar pregunta</a>
                                     </li>

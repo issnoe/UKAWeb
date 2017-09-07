@@ -14,7 +14,7 @@
                        
                         var popoverTop = (
                             <Popover id="popover-positioned-top" title={condition}>
-                                <a href={"#/search/" + condition+"/"+this.props.item.id_modulo+"/"+this.props.item.id_instrumento}>Ir a </a>
+                                <a href={"#/admin/instrumentos/search/" + condition+"/"+this.props.item.id_modulo+"/"+this.props.item.id_instrumento}>Ir a </a>
                             </Popover>
                         );
                         options.push(
@@ -63,12 +63,12 @@
     }
 
     render() {
-      
         return (
             <div className="reg-preg preg-rel">
                    <small >{(this.props.question.onlyTo)?"Para: "+this.props.question.onlyTo:""}</small><br/>
                 {this.props.question.question}<br/>
-                 <small >{(this.props.question.note)?"Nota: "+this.props.question.note:""}</small><br/>
+                {(this.props.question.anexo)?<span><small>{this.props.question.anexo}</small></span>:""}
+                 <small >{(this.props.question.note)?"Nota: "+this.props.question.note:""}</small>
                 
                 
                 <small >{this.props.question.nota}</small>
@@ -79,16 +79,34 @@
     }
 
 }
+class HandleAnswer extends React.Component{
+    state = {
+        answer:this.props.answer
+    }
+    handleRespuesta =(e) => {
+      
+        var valor = e.target.value
+        var mask = e.target.name
+        this.setState({[mask]:valor})
+
+   }
+
+
+    render(){
+        return (
+            <div><input onChange={this.handleRespuesta} name="answer" value={(this.state.answer=="undefined")?"":this.state.answer}     id=""/><br/></div>
+        )
+    }
+}
 class QuestionManager extends React.Component {
     renderLinkedQuestions() {
-        this;
         if (this.props.castJsonPregunta && this.props.castJsonPregunta[0].questions) {
 
             var lista = this.props.castJsonPregunta[0].questions;
             var questions = []
             for (var index in lista) {
                 questions.push(<LinkedQuestionManager
-                    key={index + "linked_qeustion_" + this.props.item.id}
+                    key={index + "linked_qeustion_s" + this.props.item.id}
                     item={this.props.item}
                     question={lista[index]}/>)
 
@@ -116,13 +134,13 @@ class QuestionManager extends React.Component {
                     if (condition) {
                         var popoverTop = (
                             <Popover id="popover-positioned-top" title={condition}>
-                                <a href={"#/search/" + condition+"/"+this.props.item.id_modulo+"/"+this.props.item.id_instrumento}>Ir a </a>
+                                <a href={"#/admin/instrumentos/search/" + condition+"/"+this.props.item.id_modulo+"/"+this.props.item.id_instrumento}>Ir a </a>
                                    
                             </Popover>
                         );
                         options.push(
                             <div
-                                key={index + "_option_" + this.props.item.id}
+                                key={index + "_optionl_" + this.props.item.id}
                                 className="col-md-4  col-sm-12 text-center">
 
                                 <OverlayTrigger trigger="click" rootClose placement="top" overlay={popoverTop}>
@@ -138,11 +156,14 @@ class QuestionManager extends React.Component {
                     } else {
                         options.push(
                             <div
-                                key={index + "_option_" + this.props.item.id}
+                                key={index + "_option_s" + this.props.item.id}
                                 className="col-md-4  col-sm-12 text-center">
+                               
                                 <label className="lbl-id">
+                                     <input type="checkbox" checked={false}
+                                    onClick={(e)=>{e.preventDefault();  var eds= e;}}/>
                                     <strong>{parseInt(index) + 1})</strong>
-
+                                   
                                     {option}
                                 </label>
 
@@ -167,8 +188,10 @@ class QuestionManager extends React.Component {
 
     render() {
         return (
+            
             <div className="reg-preg">
                 {(this.props.simulation)?(""):(<input
+                    contentEditable={true}
                     type="checkbox"
                     value={this.props.item.id}
                     checked={this.props.checked}
@@ -177,7 +200,10 @@ class QuestionManager extends React.Component {
                 
                 <strong>
                     {this.props.prefijo + " "}</strong>
-                {this.props.castJsonPregunta[0].question}<br/>
+                {this.props.castJsonPregunta[0].question}
+                {(this.props.simulation)?<HandleAnswer id={this.props.item.id} key={"respuesta_Pregunta"+this.props.item.id} index={this.props.item.id} {...this.props.castJsonPregunta[0]}/>:""}
+               
+                 
                 <small >{this.props.item.nota}</small>
                 {this.renderOption()}
                 {this.renderLinkedQuestions()}
@@ -218,6 +244,7 @@ class PanelPreguntas extends React.Component {
     }
     renderReactivos() {
         var modulo = this.props.modulo;
+        
         if (modulo == undefined) {
             return (
                 <div className="spinner" key={"spinerModulo "+this.props.modulo.id}></div>
@@ -241,7 +268,7 @@ class PanelPreguntas extends React.Component {
                         var pregunta = (
                             <QuestionManager
                                 simulation={this.props.simulation}
-                                key={lista[key].id}
+                                key={"keyModulo_"+lista[key].id}
                                 item={lista[key]}
                                 checked={checkedItem}
                                 prefijo={prefijopregunta}
@@ -265,7 +292,7 @@ class PanelPreguntas extends React.Component {
         }
         if (modulo && modulo.reactivos == "") {
             return (
-                <div >Sin preguntas</div>
+                <div className="emptyContainer"><img src="./src/img/box.png"/><p className="">Sin preguntas</p></div>
             )
         }
     }

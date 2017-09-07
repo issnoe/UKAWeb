@@ -68,7 +68,7 @@ class LinkedPanelAnswer extends React.Component {
 
                 try {
                     options.push(<Answer
-                        key={index + "option_anidada" + this.props.index}
+                        key={index + "option_anidada_" + this.props.index}
                         {...lista[index]}
                         index={index}
                         onEdit={this
@@ -161,6 +161,14 @@ class LinkedPanelQuestion extends React.Component {
                         <textarea
                             name="question"
                             value={this.state.question}
+                            onChange={this
+                            .handleTextQuestion
+                            .bind(this)}
+                            className="form-control pregunta"></textarea>
+                             <label className="label">Anexo</label>
+                            <textarea
+                            name="anexo"
+                            value={this.state.anexo}
                             onChange={this
                             .handleTextQuestion
                             .bind(this)}

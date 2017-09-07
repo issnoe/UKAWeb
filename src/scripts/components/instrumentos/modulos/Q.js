@@ -40,7 +40,6 @@ class Question extends React.Component {
     }
 
     componentWillUnmount() {
-
         this.setState({reactivo: 0, tipopregunta: 0, preguntaJson: _ABIERTA, nota: ""});
     }
     handleReactivoType(e) {
@@ -150,7 +149,9 @@ class Question extends React.Component {
         var valor = e.target.value
         var mask = e.target.name
         var question = this.state.preguntaJson
-        question.question = valor;
+        var preguntaJsonTrim = valor.trim()
+        var preguntaJsonTrimS = preguntaJsonTrim.split("\n");
+        question.question = preguntaJsonTrimS;
         this.setState({[mask]: question});
 
     }
@@ -203,7 +204,7 @@ class Question extends React.Component {
     }
     //##move to other
     renderOption() {
-
+        
         if (this.state.preguntaJson && this.state.preguntaJson.options) {
             var lista = this.state.preguntaJson.options;
             var options = []
@@ -304,6 +305,7 @@ class Question extends React.Component {
             "questions": [
                 {
                     "question": '',
+                    "anexo":"",
                     "options": [
                         {
                             "option": "",
@@ -494,7 +496,6 @@ class Question extends React.Component {
         }
     }
     render() {
-
         return (
             <div>
                 <div className="row">

@@ -1,15 +1,27 @@
 const URLUKA= "http://localhost:25585/";
 //const URLUKA= "http://ukawebm.azurewebsites.net/";
 
+var Modal = ReactBootstrap.Modal;
+const Tooltip = ReactBootstrap.Tooltip;
+const OverlayTrigger = ReactBootstrap.OverlayTrigger;
+const Popover = ReactBootstrap.Popover;
+const Panel = ReactBootstrap.Panel;
+const Button = ReactBootstrap.Button;
+const Fade = ReactBootstrap.Fade;
+var DropdownButton = ReactBootstrap.DropdownButton;
+var MenuItem = ReactBootstrap.MenuItem;
+var Tab = ReactBootstrap.Tab;
+var Tabs = ReactBootstrap.Tabs;
+const Collapse = ReactCollapse.Collapse;
+moment.locale('es');
 
-
-const TIPOREACTIVO = [
+const TIPOREACTIVO = [  
     {
         id: 0,
         data: "Pregunta"
     }, {
         id: 1,
-        data: "Encabezado"
+        data: "Anexo"
     }
 ];
 const TIPOPREGUNTAS = [
@@ -34,10 +46,10 @@ const TIPOPREGUNTAS = [
 const STATUS = [
     {
         id: 0,
-        data: "Habilitado"
+        data: "Deshabilitado"
     }, {
         id: 1,
-        data: "Deshabilitado"
+        data: "Habilitado"
     }
 ];
 const PERSONAS = [
@@ -46,13 +58,17 @@ const PERSONAS = [
         data: "Ninguno"
     }, {
         id: 1,
-        data: "Niños menores de tres años "
+        data: "Niños/as menores de cinco años "
     }, {
         id: 2,
-        data: "Niños mayores de tres años "
+        data: "Niños/as y adolecentes (5 a 17 )"
     }, {
         id: 3,
         data: "Hogares"
+    },   
+     {
+        id: 4,
+        data: "Mujeres"
     }
 ];
 const _ABIERTA = {
