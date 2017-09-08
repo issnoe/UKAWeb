@@ -112,6 +112,7 @@ var getCandidatos = function(filters,callback) {
 var setReactivo = function (params,callback){
     var url = "APP.aspx/setReactivo";
     var params = {
+        aplicacionIdCurrentEncuesta:params.aplicacionIdCurrentEncuesta,
         aplicacionReactivoInstrumento:params.aplicacionReactivoInstrumento,
         dataJson:params.dataJson,
         respuesta:params.respuesta

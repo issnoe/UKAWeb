@@ -116,25 +116,26 @@ class App extends React.Component {
 
                     },
                     '/aplicar/:id/:idaplicacion/:idCandidate': (id, idaplicacion, idCandidate) => {
-                        var i = parseInt(id);
-
+                        var idInstrumento = parseInt(id);
                         
-                        if(idaplicacion=="na"){
                             handleGenerateAplicacionInstrumento({
                                 aplicacionIdCurrentEncuesta: idaplicacion,
                                 candidato: idCandidate,
-                                instrumentoId: id
-                            }, (response) => { debugger; 
-                             this.setState({ _aplicacionId:  response.data.d[0],_aplicacionReactivoInstrumento:response.data.d[1],  controller: "aplicacionOnebyOne" });
-                             window.location.href = "#/pdc/instrumentos/aplicar/"+ id+"/" + response.data.d[0]+"/"+idCandidate})
+                                instrumentoId: idInstrumento
+                            }, (response) => { 
+                                //this.setState({ _aplicacionId: response.data.d[0],_aplicacionReactivoInstrumento:response.data.d[1], controller: "aplicacionOnebyOne" })
+                             //this.setState({ _aplicacionId:  response.data.d[0],_aplicacionReactivoInstrumento:response.data.d[1],  controller: "aplicacionOnebyOne" });
+                             window.location.href = "#/pdc/instrumentos/aplicar/"+ idInstrumento+"/" + response.data.d[0]+"/"+response.data.d[1]
+                            })
 
-                        }
+                        
                         
                         // this.setState({ _instrumentoId: i,_aplicacionId:undefined, controller: "aplicarEncuesta" })
                     },
-                    '/aplicar/:idaplicacion': (idaplicacion) => {
+                    '/aplicar/:instrumento/:aplicacion/:reactivo': (instrumento,aplicacion,reactivo) => {
+                        var instrumentoInt = parseInt(instrumento);
                         // getTreeReactivos({aplicacionIdCurrentEncuesta:idaplicacion},(response)=>{})
-                        this.setState({ _aplicacionId: idaplicacion, controller: "aplicacionOnebyOne" })
+                        this.setState({ _aplicacionId: aplicacion,_aplicacionReactivoInstrumento:reactivo,_instrumentoId:instrumentoInt, controller: "aplicacionOnebyOne" })
                     },
                     on: () => {
                         this.setState({ controller: "instrumentos" })
@@ -404,14 +405,14 @@ class App extends React.Component {
 
 
             case "aplicacionOnebyOne":
-
             navigatorHistory = _.concat(navigatorState[0], navigatorState[1], navigatorState[5], navigatorState[6], navigatorState[7])
             renderConteiner = (
                 <div>
                 <div className="row">
-
-                 <Tree _aplicacionId={this.state._aplicacionId} setReactivoId={this.setReactivoId}/>
+                 <Tree _aplicacionId={this.state._aplicacionId} _aplicacionReactivoInstrumento={this.state._aplicacionReactivoInstrumento} setReactivoId={this.setReactivoId}>
+                 <InstrumentoHeader id={this.state._instrumentoId} />
                  <HandlePregunta  aplicacionReactivoInstrumento={this.state._aplicacionReactivoInstrumento}/>
+                 </Tree>
                 </div>
                    
                 </div>

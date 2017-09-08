@@ -30,7 +30,18 @@ margin-left: 1.42857%;
 #menu ul{
   position:relative;
 }
-
+.headerinstrumento{
+    
+    font-stretch: border;
+}
+.answerInput{
+    width: 100%!important;
+}
+.itemAnswer{
+    
+        margin-top: 19px!important;
+    
+}
 
 .rocket:before {
 content: "";
@@ -41,6 +52,9 @@ top: 0;
 left: -9.5238%;
 background: url('http://one-div.com/codepen/menu/menu-bg.png');
 border-radius: 5px 0px 0px 5px;
+}
+.focusreactivo{
+    background-color:rgb(90, 161, 187);;
 }
 
 .spinner {

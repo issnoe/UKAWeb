@@ -18,7 +18,7 @@ class InstrumentoHeader extends React.Component{
         const state = this.state;
          
         if(state && state.nombre){
-            return(<div>{state.nombre +" / "+state.subtitulo+ " / "+ PERSONAS[state.aplicado].data}</div>)
+            return(<div className="headerinstrumento">{state.nombre }</div>)
             
 
         }

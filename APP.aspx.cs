@@ -123,7 +123,7 @@ namespace InfoKilo.WebApp.Miembros.WS
 
 
         [System.Web.Services.WebMethod]
-        public static int setReactivo(string aplicacionReactivoInstrumento, string dataJson, string respuesta)
+        public static string setReactivo(string aplicacionIdCurrentEncuesta, string aplicacionReactivoInstrumento, string dataJson, string respuesta)
         {
             Repository<ReactivosRespuestas> handle = new Repository<ReactivosRespuestas>();
 
@@ -139,7 +139,7 @@ namespace InfoKilo.WebApp.Miembros.WS
                         data.dataJson = dataJson;
                         data.respuesta = respuesta;
                         handle.Update(data);
-
+                            
                     }
 
 
@@ -149,11 +149,11 @@ namespace InfoKilo.WebApp.Miembros.WS
             catch (Exception)
             {
 
-                return 400;
+                return "400";
             }
-            
 
-            return 1;
+
+            return getLastReactivo(aplicacionIdCurrentEncuesta).ToString();
         }
 
         [System.Web.Services.WebMethod]
@@ -190,11 +190,25 @@ namespace InfoKilo.WebApp.Miembros.WS
         }
         public static string getLastReactivo(string aplicacionIdCurrentEncuesta)
         {
-           
-            Repository<ReactivosRespuestas> handle = new Repository<ReactivosRespuestas>();
-            var firstResponsNull = handle.Filter(c => c.aplicacionInstrumentoId.ToString() == aplicacionIdCurrentEncuesta ).OrderBy(n => n.id_modulo).ThenBy(o => o.id).ToList().Last();
+            try
+            {
+                List<string> relations = new List<string>
+            {
+                "Instrumentos",
+                "Modulos"
+            };
 
-            return firstResponsNull.aplicacionReactivoInstrumento.ToString();
+                Repository<ReactivosRespuestas> handle = new Repository<ReactivosRespuestas>();
+                var listaReactivos = handle.Filter(c => c.aplicacionInstrumentoId.ToString() == aplicacionIdCurrentEncuesta && c.respuesta == "---", relations.Count, relations).OrderBy(n => n.id_modulo).ThenBy(o => o.id).ToList();
+                return listaReactivos.First().aplicacionReactivoInstrumento.ToString();
+            }
+            catch (Exception ez)
+            {
+                var es = ez.Message;
+                
+                throw;
+            }
+          
         }
 
       
@@ -206,75 +220,78 @@ namespace InfoKilo.WebApp.Miembros.WS
             Repository<AplicacionInstrumento> handle = new Repository<AplicacionInstrumento>();
             if (aplicacionIdCurrentEncuesta == "na")
             {
-               Repository<Instrumentos> handleInstrumento = new Repository<Instrumentos>();
-               Repository<Reactivos> handlReactivos = new Repository<Reactivos>();
-               Repository<ReactivosRespuestas> handlReactivosRespuestas = new Repository<ReactivosRespuestas>();
-               Instrumentos instrumento = handleInstrumento.Retrieve(u => u.id == instrumentoId);
-                try 
-	            {	        
-                using (TransactionScope tran = new TransactionScope())
-                {
-                ///Generar
-                AplicacionInstrumento nueva = new AplicacionInstrumento();
-                nueva.aplicacionId = Guid.NewGuid();
-                nueva.fechaInicio = Convert.ToDateTime(fechaInicio);
-                nueva.instrumentoId = instrumentoId;
-                nueva.status = 0;
-                nueva.fechaModificacion = DateTime.Now;
-                switch(instrumento.aplicado){
-                    case 1:
-                        nueva.candidatoNinioId = new Guid(candidato);
-                    break;
-                     case 2:
-                        nueva.candidatoNinioId = new Guid(candidato);
-                    break;
-                    case 4:
-                        nueva.candidatoMadreId = new Guid(candidato);
-                    break;
-                    case 3:
-                        nueva.candidatoMadreId = new Guid(candidato);
-                        nueva.candidatoCuidador = new Guid(candidato);
-                        nueva.candidatoNinioId = new Guid(candidato);
-
-                    break;
-
-                }
-
-                AplicacionInstrumento respAplication = handle.Create(nueva);
-               
+                Repository<Instrumentos> handleInstrumento = new Repository<Instrumentos>();
+                Repository<Reactivos> handlReactivos = new Repository<Reactivos>();
+                Repository<ReactivosRespuestas> handlReactivosRespuestas = new Repository<ReactivosRespuestas>();
+                Instrumentos instrumento = handleInstrumento.Retrieve(u => u.id == instrumentoId);
                 try
                 {
-                    //llamar proceso de copia de intrumento 
-                   var listaReactivos =  handlReactivos.Filter(a => a.id_instrumento == instrumentoId);
-                   foreach (var item in listaReactivos)
-                   {
-                       try
-                       {
-                           handlReactivosRespuestas.Create(new ReactivosRespuestas(respAplication, item));
-                       }
-                       catch (Exception ex)
-                       {
+                    using (TransactionScope tran = new TransactionScope())
+                    {
+                        ///Generar
+                        AplicacionInstrumento nueva = new AplicacionInstrumento();
+                        nueva.aplicacionId = Guid.NewGuid();
+                        nueva.fechaInicio = Convert.ToDateTime(fechaInicio);
+                        nueva.instrumentoId = instrumentoId;
+                        nueva.status = 0;
+                        nueva.fechaModificacion = DateTime.Now;
+                        switch (instrumento.aplicado)
+                        {
+                            case 1:
+                                nueva.candidatoNinioId = new Guid(candidato);
+                                break;
+                            case 2:
+                                nueva.candidatoNinioId = new Guid(candidato);
+                                break;
+                            case 4:
+                                nueva.candidatoMadreId = new Guid(candidato);
+                                break;
+                            case 3:
+                                nueva.candidatoMadreId = new Guid(candidato);
+                                nueva.candidatoCuidador = new Guid(candidato);
+                                nueva.candidatoNinioId = new Guid(candidato);
 
-                           var exs = ex.Message;
-                       }
-                   }
-                    // Actualizar el instrumento con un estado diferente para entender que se ha modificado y en caso de alguna modificacion la version del cambio
+                                break;
+
+                        }
+
+                        AplicacionInstrumento respAplication = handle.Create(nueva);
+
+                        try
+                        {
+                            //llamar proceso de copia de intrumento 
+                            var listaReactivos = handlReactivos.Filter(a => a.id_instrumento == instrumentoId);
+                            foreach (var item in listaReactivos)
+                            {
+                                try
+                                {
+                                    handlReactivosRespuestas.Create(new ReactivosRespuestas(respAplication, item));
+                                }
+                                catch (Exception ex)
+                                {
+
+                                    var exs = ex.Message;
+                                }
+                            }
+                            // Actualizar el instrumento con un estado diferente para entender que se ha modificado y en caso de alguna modificacion la version del cambio
+                        }
+                        catch (Exception)
+                        {
+                            return new List<string> { "error", "error" };
+                        }
+                        tran.Complete();
+                        response = Convert.ToString(respAplication.aplicacionId);
+
+                    }
                 }
                 catch (Exception)
                 {
-                    return new List<string> { "error", "error"};
-                }
-                tran.Complete();
-                response = Convert.ToString(respAplication.aplicacionId);
-
-                }
-             }
-	            catch (Exception)
-	            {
                     return new List<string> { "error", "error" };
-	            }
+                }
+                return new List<string> { response, getLastReactivo(response) };
             }
-            return new List<string> { response, getLastReactivo(response) };
+            return new List<string> { aplicacionIdCurrentEncuesta, getLastReactivo(aplicacionIdCurrentEncuesta) };
+            
         }
 
 

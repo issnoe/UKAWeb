@@ -24,6 +24,7 @@ class Tree extends React.Component {
    
     renderTree(){
         var lista  = this.state.listaReactivos;
+        var idFocus = this.props._aplicacionReactivoInstrumento;
         if(lista.length>0){
              var listaModulos =[]
             var res =  _.map(_.uniqBy(lista, 'id_modulo'), function (ob,i) {
@@ -33,8 +34,9 @@ class Tree extends React.Component {
                 
                     if(item.id_modulo==ob.id_modulo){
                         var prefijoPregunta = ob.prefijo+""+ (++contadorPregunta);
+                        var classStyle = (idFocus == item.aplicacionReactivoInstrumento)?"focusreactivo":"";
                         try {
-                        listaPreguntas.push( <div key={"bure"+index+"de"}><button onClick={this.focusReactivo.bind(this, item.aplicacionReactivoInstrumento)}>{prefijoPregunta}</button></div>)
+                        listaPreguntas.push( <div key={"bure"+index+"de"}><button className={classStyle} onClick={this.focusReactivo.bind(this, item.aplicacionReactivoInstrumento)}>{prefijoPregunta}</button></div>)
                         
                         } catch (error) {
                          console.log(error)
@@ -43,7 +45,7 @@ class Tree extends React.Component {
                 }) 
                //var s =  ;
                 listaModulos.push( <div key={"tree_modulo"+i+"de"}>
-                    {(i==0)?( <h1>{ob.nombreInstrumento}</h1>):("")}
+                   {/*  {(i==0)?( <h1>{ob.nombreInstrumento}</h1>):("")} */}
                      {ob.prefijo}<Collapse isOpened={true          }>
                     {listaPreguntas}
                    </Collapse></div>)
@@ -54,8 +56,6 @@ class Tree extends React.Component {
 
             
             
-        }else{
-            return "No hay"
         }
 
     }
@@ -67,11 +67,17 @@ class Tree extends React.Component {
 
             //Falta evaluar datos de Visita con Somatometria
             return (
-                <div className="col-md-3 col-sm-3">
+                <div className="row">
 
-                     No. preguntas: {(lista)?lista.length:"?"}
+                     
+                   <div className="col-md-2 col-sm-2">
+                   No. preguntas: {(lista)?lista.length:"?"}
+                   {this.renderTree()}
+                   </div>
                    
-                    {this.renderTree()}
+                    <div className="col-md-10 col-sm-10">
+                    {this.props.children}
+                    </div>
                 </div>
     
             )

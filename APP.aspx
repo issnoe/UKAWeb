@@ -104,6 +104,7 @@
     <script type="text/babel" defer src="./src/scripts/components/rows/FSRowChildren.js"></script>
     <script type="text/babel" defer src="./src/scripts/components/rows/FSListChildrens.js"></script>
     <script type="text/babel" defer src="./src/scripts/components/instrumentos/aplicar/Tree.js"></script>
+    <script type="text/babel" defer src="./src/scripts/components/instrumentos/aplicar/AnswerWithOptions.js"></script>
     <script type="text/babel" defer src="./src/scripts/components/instrumentos/aplicar/HandlePregunta.js"></script>
     
   

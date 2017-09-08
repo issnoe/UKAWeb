@@ -14,6 +14,7 @@ namespace InfoKilo.WebApp.Miembros
         {
             // TODO: Complete member initialization
             this.aplicacionReactivoInstrumento = item.aplicacionReactivoInstrumento;
+            this.aplicacionIdCurrentEncuesta = item.aplicacionInstrumentoId.ToString();
             this.respuesta = item.respuesta;
             this.id_instrumento = item.id_instrumento;
             this.id_modulo = item.id_modulo;
@@ -33,5 +34,7 @@ namespace InfoKilo.WebApp.Miembros
         public string nombreModulos { get; set; }
         public string prefijo { get; set; }
         public string nota { get; set; }
+
+        public string aplicacionIdCurrentEncuesta { get; set; }
     }
 }
