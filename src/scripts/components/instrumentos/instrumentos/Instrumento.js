@@ -233,7 +233,7 @@ class InstrumentoView extends React.Component {
                 <div className="panel-heading">
                     <div className="row">
                         <div
-                            className="panel-title long-txt col-md-4 col-sm-4"
+                            className="panel-title long-txt col-md-8 col-sm-8"
                             onClick={() => (this.setState({
                             isOpened: !this.state.isOpened
                         }))}>
@@ -245,8 +245,7 @@ class InstrumentoView extends React.Component {
                                 {`${this.props.item.nombre} / ${this.props.item.subtitulo} / ${this.props.item.prefijo}`}
                             </a>
                         </div>
-                        <div className="col-md-3 col-sm-3">{moment(this.props.item.fechaCreacion).format('MM/DD/YYYY, h:mm:ss')}</div>
-                        <div className="col-md-4 col-sm-4 long-txt">{(this.props.item.aplicado)
+                        <div className="col-md-3 col-sm-3 long-txt">{(this.props.item.aplicado)
                                 ? PERSONAS[this.props.item.aplicado].data
                                 : "No asigando"}</div>
                       

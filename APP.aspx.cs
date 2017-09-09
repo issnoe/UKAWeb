@@ -155,7 +155,19 @@ namespace InfoKilo.WebApp.Miembros.WS
 
             return getLastReactivo(aplicacionIdCurrentEncuesta).ToString();
         }
-
+         [System.Web.Services.WebMethod]
+        public static SimpleAplicacionInstrumento getAplicacionInstrumento(string aplicacionId)
+        {
+          /*  List<string> relations = new List<string>
+            {
+                "Instrumentos",
+                "Modulos"
+            };
+             */
+            Repository<AplicacionInstrumento> handle = new Repository<AplicacionInstrumento>();
+            var reactivo = handle.Retrieve(c => c.aplicacionId.ToString() == aplicacionId);
+            return new SimpleAplicacionInstrumento(reactivo);
+        }
         [System.Web.Services.WebMethod]
         public static SimpleReactivo getReactivo(string aplicacionReactivoInstrumento)
         {
@@ -188,6 +200,8 @@ namespace InfoKilo.WebApp.Miembros.WS
             }
             return tree.AsQueryable();
         }
+
+        
         public static string getLastReactivo(string aplicacionIdCurrentEncuesta)
         {
             try
@@ -200,7 +214,8 @@ namespace InfoKilo.WebApp.Miembros.WS
 
                 Repository<ReactivosRespuestas> handle = new Repository<ReactivosRespuestas>();
                 var listaReactivos = handle.Filter(c => c.aplicacionInstrumentoId.ToString() == aplicacionIdCurrentEncuesta && c.respuesta == "---", relations.Count, relations).OrderBy(n => n.id_modulo).ThenBy(o => o.id).ToList();
-                return listaReactivos.First().aplicacionReactivoInstrumento.ToString();
+                
+                return (listaReactivos.Count==0)? "END":listaReactivos.First().aplicacionReactivoInstrumento.ToString();
             }
             catch (Exception ez)
             {

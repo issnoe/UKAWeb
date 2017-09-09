@@ -123,9 +123,13 @@ class App extends React.Component {
                                 candidato: idCandidate,
                                 instrumentoId: idInstrumento
                             }, (response) => { 
+                                var aplicacionId = response.data.d[0];
+                                var reactivoId =  response.data.d[1];
+                                window.location.href = "#/pdc/instrumentos/aplicar/"+ idInstrumento+"/" +aplicacionId +"/"+reactivoId
+                             
+                                
                                 //this.setState({ _aplicacionId: response.data.d[0],_aplicacionReactivoInstrumento:response.data.d[1], controller: "aplicacionOnebyOne" })
                              //this.setState({ _aplicacionId:  response.data.d[0],_aplicacionReactivoInstrumento:response.data.d[1],  controller: "aplicacionOnebyOne" });
-                             window.location.href = "#/pdc/instrumentos/aplicar/"+ idInstrumento+"/" + response.data.d[0]+"/"+response.data.d[1]
                             })
 
                         
@@ -134,8 +138,15 @@ class App extends React.Component {
                     },
                     '/aplicar/:instrumento/:aplicacion/:reactivo': (instrumento,aplicacion,reactivo) => {
                         var instrumentoInt = parseInt(instrumento);
+                        if(reactivo=="END"){
+                            alert("Ha terminado la aplicación del instrumento");
+                            this.setState({ _aplicacionId: aplicacion,_aplicacionReactivoInstrumento:reactivo,_instrumentoId:instrumentoInt, controller: "aplicacionOnebyOne" })
+                          //  window.location.href = "#/pdc/instrumentos/candidatos/"+instrumentoInt;
+                           
+                        }else{
                         // getTreeReactivos({aplicacionIdCurrentEncuesta:idaplicacion},(response)=>{})
-                        this.setState({ _aplicacionId: aplicacion,_aplicacionReactivoInstrumento:reactivo,_instrumentoId:instrumentoInt, controller: "aplicacionOnebyOne" })
+                         this.setState({ _aplicacionId: aplicacion,_aplicacionReactivoInstrumento:reactivo,_instrumentoId:instrumentoInt, controller: "aplicacionOnebyOne" })
+                        }
                     },
                     on: () => {
                         this.setState({ controller: "instrumentos" })
@@ -411,7 +422,7 @@ class App extends React.Component {
                 <div className="row">
                  <Tree _aplicacionId={this.state._aplicacionId} _aplicacionReactivoInstrumento={this.state._aplicacionReactivoInstrumento} setReactivoId={this.setReactivoId}>
                  <InstrumentoHeader id={this.state._instrumentoId} />
-                 <HandlePregunta  aplicacionReactivoInstrumento={this.state._aplicacionReactivoInstrumento}/>
+                 <HandlePregunta _aplicacionId={this.state._aplicacionId}  aplicacionReactivoInstrumento={this.state._aplicacionReactivoInstrumento}/>
                  </Tree>
                 </div>
                    

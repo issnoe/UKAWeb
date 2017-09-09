@@ -27,6 +27,7 @@ class PDCRowCandidate extends React.Component {
         )
     }
     render() {
+      
         //Falta evaluar datos de Visita con Somatometria
         return (
             <div className="row table-rw">
@@ -73,14 +74,20 @@ class PDCRowCandidate extends React.Component {
 
                     <div className="row">
                         <div className="col-md-12">
-                            <a href={"#/pdc/instrumentos/aplicar/" + this.props._instrumentoId+"/"+this.props.candidate.aplicacionIdCurrentEncuesta+"/"+this.props.candidate.IdNinio}>
-
-                                <strong>
+                           
+                              
+                           
+                            
+                            <a  href={"#/pdc/instrumentos/aplicar/" + this.props._instrumentoId+"/"+this.props.candidate.aplicacionIdCurrentEncuesta+"/"+this.props.candidate.IdNinio}>
+                                <img src="/images/apply.svg" alt="Capturar ficha" height="18"/>
+                                {(this.props.candidate.StatusUltimoInstrumento=="No Terminada")?"Continuar  ":"Aplicar  "}
+                            </a>
+                            <strong>
                                     {this.props.candidate.NombreInstrumento}
                                 </strong>
-                            </a>
 
                         </div>
+                       
                         <div className="col-md-3 col-sm-3 nino-inf">
                             <span className="txt-sm">Estatus</span><br/>
                             {this.props.candidate.StatusUltimoInstrumento}

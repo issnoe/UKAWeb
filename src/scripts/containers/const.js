@@ -1,4 +1,4 @@
-//const URLUKA= "http://localhost:25585/";
+//  const URLUKA= "http://localhost:25585/";
 const URLUKA= "http://ukawebm.azurewebsites.net/";
 
 var Modal = ReactBootstrap.Modal;

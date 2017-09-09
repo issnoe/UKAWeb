@@ -130,6 +130,24 @@ var setReactivo = function (params,callback){
 
 }
 
+var getAplicacionInstrumento = function (params,callback){
+    var url = "APP.aspx/getAplicacionInstrumento";
+    var params = {
+        aplicacionId:params.aplicacionId,
+    };
+    axios
+    .post(url, params)
+    .then(function (response) {
+        callback(response)
+    })
+    .catch(function (error) {
+        var s = error;
+        // alert("No se pudo obtener datos de la localidad")
+    });
+    
+
+}
+
 var getReactivo = function (params,callback){
     var url = "APP.aspx/getReactivo";
     var params = {

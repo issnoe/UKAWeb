@@ -4,10 +4,7 @@ class Tree extends React.Component {
         this.state = {
             listaReactivos:[],
             aplicacionReactivoInstrumento:""
-
         }
-        
-
     }
     componentWillReceiveProps(newProps){
         if(newProps && newProps._aplicacionId){
@@ -15,13 +12,10 @@ class Tree extends React.Component {
                 this.setState({listaReactivos:response.data.d})
             })
         }
-
-     
     }
     focusReactivo(i, e){
         this.props.setReactivoId(i)
     }
-   
     renderTree(){
         var lista  = this.state.listaReactivos;
         var idFocus = this.props._aplicacionReactivoInstrumento;
@@ -31,7 +25,6 @@ class Tree extends React.Component {
                 var listaPreguntas = []
                 var contadorPregunta = 0;
                 lista.map((item, index)=>{
-                
                     if(item.id_modulo==ob.id_modulo){
                         var prefijoPregunta = ob.prefijo+""+ (++contadorPregunta);
                         var classStyle = (idFocus == item.aplicacionReactivoInstrumento)?"focusreactivo":"";
@@ -50,36 +43,23 @@ class Tree extends React.Component {
                     {listaPreguntas}
                    </Collapse></div>)
             }.bind(this));
-           
-            
             return listaModulos;
-
-            
-            
         }
 
     }
-  
-      
         render() {
             var lista  = this.state.listaReactivos;
-
-
             //Falta evaluar datos de Visita con Somatometria
             return (
                 <div className="row">
-
-                     
                    <div className="col-md-2 col-sm-2">
                    No. preguntas: {(lista)?lista.length:"?"}
                    {this.renderTree()}
                    </div>
-                   
                     <div className="col-md-10 col-sm-10">
                     {this.props.children}
                     </div>
                 </div>
-    
             )
         }
 }

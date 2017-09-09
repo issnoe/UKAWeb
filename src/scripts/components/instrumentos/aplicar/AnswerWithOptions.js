@@ -13,6 +13,7 @@ class AnswerWithOptions extends React.Component {
                             type="checkbox"
                             onClick={this.props.selectOption}
                             value={this.props.option}
+                            name={this.props.index}
                              
                            
                            />

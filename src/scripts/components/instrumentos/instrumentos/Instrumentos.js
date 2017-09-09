@@ -171,13 +171,11 @@ class InstrumentosView extends React.Component {
                         <div className="row">
                             <div className="content-form col-md-12">
                                 <div className="row header-intrumentos">
-                                    <div className="col-md-4 col-sm-4">
+                                    <div className="col-md-8 col-sm-8">
                                         Nombre del instrumento
                                     </div>
+                                   
                                     <div className="col-md-3 col-sm-3">
-                                        Última modificación
-                                    </div>
-                                    <div className="col-md-4 col-sm-4">
                                         Aplicación a
                                     </div>
 

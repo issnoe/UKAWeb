@@ -6,9 +6,16 @@ class HandlePregunta extends React.Component {
         
 
     }
-    
+
+    componentDidMount(){
+        window.scrollTo(0,0);
+        const initState ={};
+        this.setState(initState)
+        
+    }
     componentWillReceiveProps(newProps){
-        if(newProps && newProps.aplicacionReactivoInstrumento){
+      
+        if(newProps && newProps.aplicacionReactivoInstrumento &&  newProps.aplicacionReactivoInstrumento!="END" ){
             window.scrollTo(0,0);
             getReactivo({aplicacionReactivoInstrumento:newProps.aplicacionReactivoInstrumento},(response)=>{
                 var p = response.data.d.dataJson.trim();
@@ -20,25 +27,18 @@ class HandlePregunta extends React.Component {
                 this.setState({reactivo:response.data.d,castReactivo:castT, spinerLoad:false})
             })
         }
+        if(newProps.aplicacionReactivoInstrumento=="END"){
+            alert("Confirme la fecha de aplicación");
+            getAplicacionInstrumento({aplicacionId:this.props._aplicacionId}, (response)=>{
+                debugger
+                this.setState({spinerLoad:false})
+            })
+            
+
+
+        }
 
      
-    }
-    rendeHeader(){
-        var reactivo = this.state.reactivo;
-        if(reactivo.aplicacionReactivoInstrumento){
-            var fath = (<div>{reactivo.nombreInstrumento+ "---"+reactivo.nombreModulos}</div>            );
-            var nota = (<small>{reactivo.nota}</small>)
-            return (<div>{nota}</div>)
-        }
-        return <h1>sin pregunta</h1>
-    }
-    handleAnwer(e){
-        //e.preventDefault();
-        var name = e.target.name;
-        var valu = e.target.value;
-        var castReactivo = this.state.castReactivo;
-        castReactivo.answer = valu;
-        this.setState({castReactivo:castReactivo})
     }
     saveNext=()=>{
         var state = this.state;
@@ -56,19 +56,50 @@ class HandlePregunta extends React.Component {
         })
 
     }
+    
+  
+    handleAnwerSub(subQuestion, index , e){
+        var valor = e.target.value;
+        var castReactivo = this.state.castReactivo;
+        castReactivo.questions[index].answer = valor;
+        this.setState({castReactivo:castReactivo})
+
+    }
+    handleAnwer(e){
+        var name = e.target.name;
+        var valu = e.target.value;
+        var castReactivo = this.state.castReactivo;
+        castReactivo.answer = valu;
+        this.setState({castReactivo:castReactivo})
+    }
+  
+    selectOptionSub(subQuestion, index , e){
+        var valorIndex = parseInt(e.target.name);
+        var castReactivo = this.state.castReactivo;
+        castReactivo.questions[index].answer = subQuestion.options[valorIndex].option;
+        this.setState({castReactivo:castReactivo})
+
+    }
     selectOption =(e)=>{
-       
         var isChecked = e.target.checked
         var valu = e.target.value;
         var ex = e.target.name;
         var castReactivo = this.state.castReactivo;
         castReactivo.answer = valu;
         this.setState({castReactivo:castReactivo})
-        
+    }
 
+      
+    rendeHeader(){
+        var reactivo = this.state.reactivo;
+        if(reactivo.aplicacionReactivoInstrumento){
+            var fath = (<div>{reactivo.nombreInstrumento+ "---"+reactivo.nombreModulos}</div>            );
+            var nota = (<small>{reactivo.nota}</small>)
+            return (<div>{nota}</div>)
+        }
+        return <h1>sin pregunta</h1>
     }
     renderOptions(){
-        
         if (this.state.castReactivo && this.state.castReactivo.options) {
             var lista = this.state.castReactivo.options;
             var options = []
@@ -85,7 +116,6 @@ class HandlePregunta extends React.Component {
                     console.log("#12JDFU37635WF")
                     alert("Error al render opcion multiple")
                 }
-
             }
             return options
         }else{
@@ -98,23 +128,21 @@ class HandlePregunta extends React.Component {
             var listaPregunas =[]
             var lista = this.state.castReactivo.questions;
             lista.map((item, index)=>{
-                var pregunta = (<div>{item.question}</div>)
-                listaPregunas.push(pregunta);
+                listaPregunas.push(<HandleSubPregunta key={"pregunta_"+index} selectOptionSub={this.selectOptionSub.bind(this, item,index)} handleAnwerSub={this.handleAnwerSub.bind(this,item, index)} question={item}/>);
             })
-            return (<div className="col-md-12">{listaPregunas}</div>)
-
+            return (listaPregunas)
         }
-        return <span></span>;
+        return (undefined);
     }
     rendeCastReactivo(){
         var castReactivo = this.state.castReactivo;
         if(castReactivo){
-          // var questions  =  (<div className="col-md-12">{this.renderQuestions()}</div>);
+           var questions  =  (<div className="col-md-12 resp-reg">{this.renderQuestions()}</div>);
             var opciones = (<div className="col-md-12">{this.renderOptions()}</div>);
-            var question =(<div className="col-md-12 col-sm-12">{(castReactivo.question!="" && castReactivo.questions)?castReactivo.question:"Escribe: vacio y click en continuar"}</div>);
+            var question =(<div className="col-md-12 col-sm-12">{(castReactivo.question!="" )?castReactivo.question:"Escribe: vacio y click en continuar"}</div>);
             var anwser =(<div className="col-md-12 col-sm-12 itemAnswer"><input className="answerInput" onChange={this.handleAnwer.bind(this)} value={castReactivo.answer} name="answer" /></div>);
             var control =(<div className="col-md-12 col-sm-12 itemAnswer"><button className="btn btn-primary btn-md" onClick={this.saveNext}>Continuar</button></div>)
-            return (<div className="row">{question}  {opciones} {anwser} {control} </div>)
+            return (<div className="row">{question} {questions} {opciones} {anwser} {control} </div>)
         }
         return <h1></h1>
     }
