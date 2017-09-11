@@ -9,8 +9,6 @@ namespace InfoKilo.WebApp.Miembros
 {
     public class CandidatosNinio
     {
-
-
         public System.Guid IdNinio { get; set; }
         public string Nombre { get; set; }
         public string ApPaterno { get; set; }
