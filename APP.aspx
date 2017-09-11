@@ -1,10 +1,11 @@
 ﻿<%@ Page Language="C#" AutoEventWireup="false" CodeBehind="APP.aspx.cs" Inherits="InfoKilo.WebApp.Miembros.WS.APP" %>
+
 <!DOCTYPE html>
 <html>
 <head>
 <title>UKA</title>
     <meta charset="utf-8">
-    <!-- <meta http-equiv="X-UA-Compatible" content="IE=edge"> -->
+   
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
        <script src="../../Scripts/jquery.min.js" defer ></script>
@@ -63,25 +64,21 @@
     
 </head>
 <body>
+
+   
    <div id="loadingScripts">Cargando archivos . . .
        <div class="spinner"></div>
    </div>
 
     <div id="appUnkiloDeAyuda" ></div>
- <!-- 
-    <script type="text/babel" src="./src/scripts/build/build.js"></script>
 
- -->
     <script type="text/babel" defer src="./src/scripts/containers/const.js"></script>
      <script type="text/babel" defer src="./src/scripts/containers/user.js"></script>
      <script type="text/babel" defer src="./src/scripts/containers/instrumentos.js"></script>
     <script type="text/babel" defer src="./src/scripts/components/instrumentos/instrumentos/ModalCondition.js"></script>
     <script type="text/babel" defer src="./src/scripts/components/instrumentos/modulos/PopupMsg.js"></script>
     <script type="text/babel" src="./src/scripts/components/instrumentos/modulos/PopupItem.js"></script>
-    <!-- <script type="text/babel" defer src="./src/scripts/components/instrumentos/modulos/ModuloItem.js"></script> -->
-    <!-- <script type="text/babel" defer src="./src/scripts/components/instrumentos/modulos/Instrumento.js"></script> -->
-    <!-- <script type="text/babel" defer src="./src/scripts/components/instrumentos/modulos/Instrumentos.js"></script> -->
-    <script type="text/babel" defer src="./src/scripts/components/instrumentos/modulos/Modulos.js"></script>
+   <script type="text/babel" defer src="./src/scripts/components/instrumentos/modulos/Modulos.js"></script>
      <script type="text/babel" defer src="./src/scripts/components/instrumentos/modulos/PanelPreguntas.js"></script>
     <script type="text/babel" defer src="./src/scripts/components/instrumentos/modulos/Pregunta.js"></script>
     <script type="text/babel" defer src="./src/scripts/components/instrumentos/modulos/Reactivos.js"></script>
@@ -109,16 +106,31 @@
     <script type="text/babel" defer src="./src/scripts/components/instrumentos/aplicar/HandlePregunta.js"></script>
     
   
-
-
     
 
     <script type="text/babel" defer src="./src/scripts/start.js"></script>
     
-
+   
     </body>
     </html>
+     
+    <!--
 
 
+ <!DOCTYPE html><html lang="en">
+     <head><meta charset="utf-8">
+         <meta name="viewport" content="width=device-width,initial-scale=1,shrink-to-fit=no">
+         
+         <meta name="theme-color" content="#000000">
+         <link rel="manifest" href="/manifest.json">
+         <link rel="shortcut icon" href="/favicon.ico">
+         <title>UKA</title>
+         <link href="./app/build/static/css/main.cacbacc7.css" rel="stylesheet">
 
- 
+     </head><body>
+         <noscript>You need to enable JavaScript to run this app.</noscript>
+         <div id="root"></div>
+         <script type="text/javascript" src="./app/build/static/js/main.9fdf0e48.js">
+
+                              </script></body></html>
+                            -->
