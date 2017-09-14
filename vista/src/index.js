@@ -5,7 +5,7 @@ import {getadminInstrumentos} from "./scripts/containers/instrumentos";
 import { getLocation, getUser} from "./scripts/containers/user";
 import registerServiceWorker from './registerServiceWorker';
 import "./scripts/containers/const";
-import { Router, Route } from 'react-router';
+import { Router, Route, Switch } from 'react-router-dom';
 import createBrowserHistory from 'history/createBrowserHistory'
 import {_} from "lodash"
 
@@ -13,7 +13,8 @@ import "./index.css"
 // import Instrumentos from "./scripts/components/Instrumentos";
 import NavigationState from "./scripts/components/NavigationState";
 const history = createBrowserHistory();
-const HandleRoute = () => {
+const HandleRoute = (props) => {
+    debugger
    var  state={
        controller:"", 
         _instrumentoId:undefined
@@ -94,8 +95,8 @@ const HandleRoute = () => {
                         moduloId={this.state._moduloId}
                         show={this.state.modalModulo}
                         title="Modulo" />
-                   
                 </div> */}
+                
                 {/* <Instrumentos id={this.state._instrumentoId} /> */}
                 </div>
             );
@@ -120,12 +121,6 @@ const HandleRoute = () => {
     )
     
 }
-ReactDOM.render(
-<Router history={history}>
-    <Route  path="/admin" component={HandleRoute}>
-        <Route  path="/instrumentos" >
-             <Route path="/nuevo" component={HandleRoute} /> 
-        </Route>
-    </Route>
-</Router>, document.getElementById('appUnkiloDeAyuda'));
+ReactDOM.render(<Switch><Route  exact  path="/admin" component={HandleRoute}/><Route path="/admin/:id" component={HandleRoute}/>
+</Switch>, document.getElementById('appUnkiloDeAyuda'));
 registerServiceWorker();
