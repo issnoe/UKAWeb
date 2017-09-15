@@ -30,7 +30,14 @@ export default function register() {
     }
 
     window.addEventListener('load', () => {
-      const swUrl = `${process.env.PUBLIC_URL}/service-worker.js`;
+      var swUrl="";
+      if (process.env.NODE_ENV === 'production' ){
+        swUrl = `/Miembros/WS/vista/build/service-worker.js`;
+        console.log("entra aqui")
+      }else{
+       
+        swUrl = `${process.env.PUBLIC_URL}/service-worker.js`;
+      }
 
       if (!isLocalhost) {
         // Is not local host. Just register service worker

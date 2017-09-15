@@ -45,6 +45,7 @@ class RouterHandle extends Component {
     return (
       <Router>
         <Switch>
+        <Route path="/" component={this.Handle.bind(this)} />
           <Route path="/about/:de" render={this.Handle.bind(this)} />
           <Route path="/company" component={this.Handle.bind(this)} />
           <Route path="/admin/:user" component={this.Handle.bind(this)} />
