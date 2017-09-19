@@ -118,6 +118,8 @@
     <script type="text/babel"  src="./src/scripts/components/instrumentos/modulos/Reactivos.js"></script>
     <script type="text/babel"  src="./src/scripts/components/instrumentos/modulos/Answer.js"></script>
     <script type="text/babel"  src="./src/scripts/components/instrumentos/modulos/LinkedPanelQuestion.js"></script>
+    <script type="text/babel"  src="./src/scripts/components/instrumentos/modulos/HandleJsonCreate.js"></script>
+    
     <script type="text/babel"  src="./src/scripts/components/instrumentos/modulos/LinkedQuestion.js"></script>
     <script type="text/babel"  src="./src/scripts/components/instrumentos/modulos/Q.js"></script>
     <script type="text/babel"  src="./src/scripts/components/instrumentos/modulos/Q.js"></script>

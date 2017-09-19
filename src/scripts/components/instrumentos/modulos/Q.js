@@ -139,6 +139,42 @@ class Question extends React.Component {
                 }
                 this.setState({preguntaJson: jsonQ, tipopregunta: valor});
                 break;
+                case 5:
+                var jsonQ = {
+                    "question": '',
+                    "questions": [
+                        {
+                            "question": '',
+                            "questions": [
+                                {
+                                    "question": '',
+                                    "answer": 'undefined',
+                                    "options": [
+                                        {
+                                            "option": "",
+                                            "condition": '',
+                                            "type": 'radio'
+                                        }
+                                    ],
+                
+                                   
+                                }
+                            ],
+                            "options": [
+                                {
+                                    "option": "",
+                                    "condition": '',
+                                    "type": 'radio'
+                                }
+                            ],
+                            "answer": 'undefined',
+                           
+                        }
+                    ],
+                    "answer": 'undefined'
+                }
+                this.setState({preguntaJson: jsonQ, tipopregunta: valor});
+                break;
 
             default:
                 break;
@@ -431,6 +467,16 @@ class Question extends React.Component {
             return renderIndexed
         }
     }
+    renderPolifasetica(){
+
+        if(this.state.tipopregunta == 5){
+            return(
+                <HandleJsonCreate preguntaJson={...this.state.preguntaJson}/>
+
+              
+            )
+        }
+    }
     renderAnidadaMultiple(){
         if(this.state.tipopregunta == 3 &&this.state.preguntaJson.questions){
             var listQuestions
@@ -548,6 +594,7 @@ class Question extends React.Component {
                     {this.renderAnidada()}
                     {this.renderAnidadaGroup()}
                     {this.renderAnidadaMultiple()}
+                    {this.renderPolifasetica()}
                     <div className="col-md-12">
                         <div className="form-group">
                             <label className="label">Nota(s):</label>

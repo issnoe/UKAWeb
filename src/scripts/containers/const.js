@@ -39,6 +39,10 @@ const TIPOPREGUNTAS = [
     }, {
         id: 4,
         data: "Grupal"
+    },
+    , {
+        id: 5,
+        data: "Polifacético"
     }
 
 ];
@@ -99,6 +103,39 @@ const _INDEXADA = {
                 }
             ],
             "answer": 'undefined'
+        }
+    ],
+    "answer": 'undefined'
+}
+const _POLI = {
+    "question": '',
+    "questions": [
+        {
+            "question": '',
+            "questions": [
+                {
+                    "question": '',
+                    "answer": 'undefined',
+                    "options": [
+                        {
+                            "option": "",
+                            "condition": '',
+                            "type": 'radio'
+                        }
+                    ],
+
+                   
+                }
+            ],
+            "options": [
+                {
+                    "option": "",
+                    "condition": '',
+                    "type": 'radio'
+                }
+            ],
+            "answer": 'undefined',
+           
         }
     ],
     "answer": 'undefined'
