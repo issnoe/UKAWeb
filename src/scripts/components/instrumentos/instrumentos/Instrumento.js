@@ -1,9 +1,9 @@
 class InstrumentoHeader extends React.Component{
     
-    componentWillReceiveProps(nextProps){
-        if(nextProps.id){
+    componentDidMount(){
+        if(this.props.id){
              
-        getInstrumentoById(nextProps.id,(response)=>{
+        getInstrumentoById(this.props.id,(response)=>{
                 if (response && response.data && response.data.d[0]) {
                      
                     var {nombre,prefijo,subtitulo,estado,orden,aplicado,id,estadoId,municipioId,comunidadId,grupoId} = response.data.d[0];
@@ -18,7 +18,7 @@ class InstrumentoHeader extends React.Component{
         const state = this.state;
          
         if(state && state.nombre){
-            return(<div className="headerinstrumento">{state.nombre }</div>)
+            return(<h1>{state.nombre }</h1>)
             
 
         }
@@ -45,8 +45,8 @@ class Instrumento extends React.Component {
 
     
     }
-    componentWillReceiveProps(nextProps){
-        if(nextProps.active && nextProps.item && nextProps.item.id==nextProps.active){
+    componentDidMount(){
+        if(this.props.active && this.props.item && this.props.item.id==this.props.active){
             this.setState({isOpened:true})
         }
 
@@ -204,8 +204,8 @@ class InstrumentoView extends React.Component {
 
     
     }
-    componentWillReceiveProps(nextProps){
-        if(nextProps.active && nextProps.item && nextProps.item.id==nextProps.active){
+    componentDidMount(){
+        if(this.props.active && this.props.item && this.props.item.id==this.props.active){
             this.setState({isOpened:true})
         }
 

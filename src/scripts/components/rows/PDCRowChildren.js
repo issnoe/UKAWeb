@@ -7,7 +7,7 @@ class PDCRowCandidate extends React.Component {
             var popoverTop = (
                 <Popover id="popover-positioned-top" title="Encuestas terminadas">
                     {this.props.candidate.encuestas.map((i, index) =>< li key = {index + "lista_encuestas"} > 
-                    {i.fechaModificacionString} <a href = {"#/" + i.aplicacionId} className = "btn btn-primary btn-xs" > Imprimir </a>
+                    {i.fechaModificacionString} <a href = {"#/" + i.aplicacionId} className = "btn btn-primary btn-xs" > Ver </a>
                         </li>)}
                 </Popover>
             );
@@ -25,6 +25,16 @@ class PDCRowCandidate extends React.Component {
         return (
             <label>Sin encuestas</label>
         )
+    }
+    locationRef(e){
+        e.preventDefault()
+        if(this.props.candidate.StatusUltimoInstrumento=="No Terminada"){
+        window.location.href = "#/pdc/instrumentos/imprimir/"+this.props.candidate.aplicacionIdCurrentEncuesta;
+        
+        }else{
+            alert("No se ha aplicado")
+        }
+
     }
     render() {
       
@@ -73,20 +83,20 @@ class PDCRowCandidate extends React.Component {
                 <div className="col-md-5 col-sm-5">
 
                     <div className="row">
-                        <div className="col-md-12">
-                           
-                              
-                           
-                            
+                        <div className="col-md-6 col-sm-6">
                             <a  href={"#/pdc/instrumentos/aplicar/" + this.props._instrumentoId+"/"+this.props.candidate.aplicacionIdCurrentEncuesta+"/"+this.props.candidate.IdNinio}>
                                 <img src="/images/apply.svg" alt="Capturar ficha" height="18"/>
                                 {(this.props.candidate.StatusUltimoInstrumento=="No Terminada")?"Continuar  ":"Aplicar  "}
                             </a>
-                            <strong>
-                                    {this.props.candidate.NombreInstrumento}
-                                </strong>
-
+                
                         </div>
+                        <div className="col-md-6 col-sm-6">
+                      
+                         <button className={(this.props.candidate.StatusUltimoInstrumento=="No Terminada")?"btn btn-primary btn-xs":"hh"} onClick={this.locationRef.bind(this)}>Ver respuestas</button>
+                        <span className="txt-sm"></span><br/>
+                            
+                        </div>
+
                        
                         <div className="col-md-3 col-sm-3 nino-inf">
                             <span className="txt-sm">Estatus</span><br/>
@@ -116,7 +126,7 @@ class PDCRowChildren extends React.Component {
             var popoverTop = (
                 <Popover id="popover-positioned-top" title="Encuestas terminadas">
                     {this.props.child.listaSomatometrias.map((i, index) =>< li key = {index + "lista_encuestas"} > 
-                    {i.date} <a href = {"#/" + i.id} className = "btn btn-primary btn-xs" > Imprimir </a>
+                    {i.date} <a href = {"#/" + i.id} className = "btn btn-primary btn-xs" > Ver </a>
                         </li>)}
                 </Popover>
             );

@@ -471,7 +471,7 @@ class Question extends React.Component {
 
         if(this.state.tipopregunta == 5){
             return(
-                <HandleJsonCreate preguntaJson={...this.state.preguntaJson}/>
+                <HandleJsonCreate preguntaJson={this.state.preguntaJson}/>
 
               
             )

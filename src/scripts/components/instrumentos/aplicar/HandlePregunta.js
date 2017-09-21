@@ -30,7 +30,6 @@ class HandlePregunta extends React.Component {
         if(newProps.aplicacionReactivoInstrumento=="END"){
             alert("Confirme la fecha de aplicación");
             getAplicacionInstrumento({aplicacionId:this.props._aplicacionId}, (response)=>{
-                debugger
                 this.setState({spinerLoad:false})
             })
             

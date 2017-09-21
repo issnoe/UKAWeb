@@ -110,10 +110,15 @@ class App extends React.Component {
                     '/candidatos': {
                         '/:id': (id) => {
                             var i = parseInt(id);
-                            this.setState({ _instrumentoId: i, listaModulos: undefined, controller: "candidatosEncuesta" })
+                            this.setState({ _instrumentoId: i,_aplicacionId:undefined, listaModulos: undefined, controller: "candidatosId" })
                         },
 
 
+                    },
+                    '/imprimir/:idaplicacion': (idaplicacion) => {
+                    
+                        this.setState({ _aplicacionId: idaplicacion, controller: "imprimirIdAplicacion" })
+                        // this.setState({ _instrumentoId: i,_aplicacionId:undefined, controller: "aplicarEncuesta" })
                     },
                     '/aplicar/:id/:idaplicacion/:idCandidate': (id, idaplicacion, idCandidate) => {
                         var idInstrumento = parseInt(id);
@@ -258,6 +263,11 @@ class App extends React.Component {
                 name: "Simulación instrumento",
                 routing: "#/pdc/instrumentos/simulacion/" + this.state._instrumentoId
             },
+            {
+                //10
+                name: "Respuestas",
+                routing: "#/pdc/instrumentos/imprimir/" + this.state._aplicacionId
+            },
         ]
         var navigatorHistory = []
         switch (this.state.controller) {
@@ -310,20 +320,13 @@ class App extends React.Component {
                 );
                 break;
 
-            case "candidatosEncuesta":
+            case "candidatosId":
                 navigatorHistory = _.concat(navigatorState[0], navigatorState[1], navigatorState[5], navigatorState[6])
-                /*
-                switch (key) {
-                    case value:
-
-                        break;
-
-                    default:
-                        break;
-                }*/
-
+                
                 renderConteiner = (
                     <div>
+
+                        <InstrumentoHeader id={this.state._instrumentoId} />
                         <PDCManagerFilters />
                         <PDCListChildrens {...this.state} />
                     </div>
@@ -413,16 +416,30 @@ class App extends React.Component {
                     </div>
                 );
                 break;
-
+            case "imprimirIdAplicacion":
+            navigatorHistory = _.concat(navigatorState[0], navigatorState[1], navigatorState[5], navigatorState[6], navigatorState[10])
+            renderConteiner = (
+                <div>
+                <div className="row">
+                        <InstrumentoHeader id={this.state._instrumentoId} />
+                        <PrintAnswers _aplicacionId={this.state._aplicacionId}/>
+                </div>
+                   
+                </div>
+            );
+            
+            break;
 
             case "aplicacionOnebyOne":
             navigatorHistory = _.concat(navigatorState[0], navigatorState[1], navigatorState[5], navigatorState[6], navigatorState[7])
             renderConteiner = (
                 <div>
                 <div className="row">
+                <DatosEncuestaCandidato _aplicacionId={this.state._aplicacionId} />
                  <Tree _aplicacionId={this.state._aplicacionId} _aplicacionReactivoInstrumento={this.state._aplicacionReactivoInstrumento} setReactivoId={this.setReactivoId}>
                  <InstrumentoHeader id={this.state._instrumentoId} />
-                 <HandlePregunta _aplicacionId={this.state._aplicacionId}  aplicacionReactivoInstrumento={this.state._aplicacionReactivoInstrumento}/>
+               
+                 <HandlePregunta _aplicacionId={this.state._aplicacionId}  aplicacionReactivoInstrumento={this.state._aplicacionReactivoInstrumento} setReactivoId={this.setReactivoId}/>
                  </Tree>
                 </div>
                    

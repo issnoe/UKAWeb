@@ -72,74 +72,78 @@
 
     <div id="appUnkiloDeAyuda" ></div>
     <script type="text/javascript">
-        if ('serviceWorker' in navigator) {
+        // if ('serviceWorker' in navigator) {
             
-            navigator.serviceWorker.register('service-worker.js').then(reg => {
-                reg.installing; // the installing worker, or undefined
-                reg.waiting; // the waiting worker, or undefined
-                reg.active; // the active worker, or undefined
+        //     navigator.serviceWorker.register('service-worker.js').then(reg => {
+        //         reg.installing; // the installing worker, or undefined
+        //         reg.waiting; // the waiting worker, or undefined
+        //         reg.active; // the active worker, or undefined
               
-                reg.addEventListener('updatefound', () => {
-                  // A wild service worker has appeared in reg.installing!
-                  const newWorker = reg.installing;
+        //         reg.addEventListener('updatefound', () => {
+        //           // A wild service worker has appeared in reg.installing!
+        //           const newWorker = reg.installing;
               
-                  newWorker.state;
-                  // "installing" - the install event has fired, but not yet complete
-                  // "installed"  - install complete
-                  // "activating" - the activate event has fired, but not yet complete
-                  // "activated"  - fully active
-                  // "redundant"  - discarded. Either failed install, or it's been
-                  //                replaced by a newer version
+        //           newWorker.state;
+        //           // "installing" - the install event has fired, but not yet complete
+        //           // "installed"  - install complete
+        //           // "activating" - the activate event has fired, but not yet complete
+        //           // "activated"  - fully active
+        //           // "redundant"  - discarded. Either failed install, or it's been
+        //           //                replaced by a newer version
               
-                  newWorker.addEventListener('statechange', () => {
-                    // newWorker.state has changed
-                  });
-                });
-              });
-          }
+        //           newWorker.addEventListener('statechange', () => {
+        //             // newWorker.state has changed
+        //           });
+        //         });
+        //       });
+        //   }
           
-        //   document.querySelector('#show').addEventListener('click', () => {
-        //     const iconUrl = document.querySelector('select').selectedOptions[0].value;
-        //     let imgElement = document.createElement('img');
-        //     imgElement.src = iconUrl;
-        //     document.querySelector('#container').appendChild(imgElement);
-        //   });
+        // //   document.querySelector('#show').addEventListener('click', () => {
+        // //     const iconUrl = document.querySelector('select').selectedOptions[0].value;
+        // //     let imgElement = document.createElement('img');
+        // //     imgElement.src = iconUrl;
+        // //     document.querySelector('#container').appendChild(imgElement);
+        // //   });
     </script>
 
-    <script type="text/babel"  src="./src/scripts/containers/const.js"></script>
-     <script type="text/babel"  src="./src/scripts/containers/user.js"></script>
-     <script type="text/babel"  src="./src/scripts/containers/instrumentos.js"></script>
-    <script type="text/babel"  src="./src/scripts/components/instrumentos/instrumentos/ModalCondition.js"></script>
-    <script type="text/babel"  src="./src/scripts/components/instrumentos/modulos/PopupMsg.js"></script>
-    <script type="text/babel" src="./src/scripts/components/instrumentos/modulos/PopupItem.js"></script>
-   <script type="text/babel"  src="./src/scripts/components/instrumentos/modulos/Modulos.js"></script>
-     <script type="text/babel"  src="./src/scripts/components/instrumentos/modulos/PanelPreguntas.js"></script>
-    <script type="text/babel"  src="./src/scripts/components/instrumentos/modulos/Pregunta.js"></script>
-    <script type="text/babel"  src="./src/scripts/components/instrumentos/modulos/Reactivos.js"></script>
-    <script type="text/babel"  src="./src/scripts/components/instrumentos/modulos/Answer.js"></script>
-    <script type="text/babel"  src="./src/scripts/components/instrumentos/modulos/LinkedPanelQuestion.js"></script>
-    <script type="text/babel"  src="./src/scripts/components/instrumentos/modulos/HandleJsonCreate.js"></script>
+    <script type="text/babel"  src="./src/scripts/containers/const.js" defer></script>
+    <script type="text/babel"  src="./src/scripts/helpers/castJson.js" defer ></script>
+     <script type="text/babel"  src="./src/scripts/containers/user.js" defer ></script>
+     <script type="text/babel"  src="./src/scripts/containers/instrumentos.js" defer ></script>
+    <script type="text/babel"  src="./src/scripts/components/instrumentos/instrumentos/ModalCondition.js" defer ></script>
+    <script type="text/babel"  src="./src/scripts/components/instrumentos/modulos/PopupMsg.js" defer ></script>
+    <script type="text/babel" src="./src/scripts/components/instrumentos/modulos/PopupItem.js" defer ></script>
+   <script type="text/babel"  src="./src/scripts/components/instrumentos/modulos/Modulos.js" defer ></script>
+     <script type="text/babel"  src="./src/scripts/components/instrumentos/modulos/PanelPreguntas.js" defer ></script>
+    <script type="text/babel"  src="./src/scripts/components/instrumentos/modulos/Pregunta.js" defer ></script>
+    <script type="text/babel"  src="./src/scripts/components/instrumentos/modulos/Reactivos.js" defer ></script>
+    <script type="text/babel"  src="./src/scripts/components/instrumentos/modulos/Answer.js" defer ></script>
+    <script type="text/babel"  src="./src/scripts/components/instrumentos/modulos/LinkedPanelQuestion.js" defer ></script>
+    <script type="text/babel"  src="./src/scripts/components/instrumentos/modulos/HandleJsonCreate.js" defer ></script>
     
-    <script type="text/babel"  src="./src/scripts/components/instrumentos/modulos/LinkedQuestion.js"></script>
-    <script type="text/babel"  src="./src/scripts/components/instrumentos/modulos/Q.js"></script>
-    <script type="text/babel"  src="./src/scripts/components/instrumentos/modulos/Q.js"></script>
-    <script type="text/babel"  src="./src/scripts/components/instrumentos/modulos/Modulo.js"></script>
-    <script type="text/babel"  src="./src/scripts/components/instrumentos/instrumentos/ModalModulo.js"></script>
-    <script type="text/babel"  src="./src/scripts/components/instrumentos/instrumentos/ModalInstrumento.js"></script>
-    <script type="text/babel"  src="./src/scripts/components/instrumentos/instrumentos/Instrumentos.js"></script>
-    <script type="text/babel"  src="./src/scripts/components/instrumentos/instrumentos/RowModulo.js"></script>
-     <script type="text/babel"  src="./src/scripts/components/instrumentos/instrumentos/Instrumento.js"></script>
-     <script type="text/babel"  src="./src/scripts/components/rows/PDCRowChildren.js"></script>
-     <script type="text/babel"  src="./src/scripts/components/rows/PDCListChildrens.js"></script>
-    <script type="text/babel"  src="./src/scripts/components/rows/FSChildrenNar.js"></script>
-    <script type="text/babel"  src="./src/scripts/components/rows/ManagerFilters.js"></script>
-    <script type="text/babel"  src="./src/scripts/components/NavigationState.js"></script>
-    <script type="text/babel"  src="./src/scripts/components/rows/FSRowChildren.js"></script>
-    <script type="text/babel"  src="./src/scripts/components/rows/FSListChildrens.js"></script>
-    <script type="text/babel"  src="./src/scripts/components/instrumentos/aplicar/Tree.js"></script>
-    <script type="text/babel"  src="./src/scripts/components/instrumentos/aplicar/AnswerWithOptions.js"></script>
-    <script type="text/babel"  src="./src/scripts/components/instrumentos/aplicar/HandleSubPregunta.js"></script>
-    <script type="text/babel"  src="./src/scripts/components/instrumentos/aplicar/HandlePregunta.js"></script>
+    <script type="text/babel"  src="./src/scripts/components/instrumentos/modulos/LinkedQuestion.js" defer ></script>
+    <script type="text/babel"  src="./src/scripts/components/instrumentos/modulos/Q.js" defer ></script>
+    <!-- <script type="text/babel"  src="./src/scripts/components/instrumentos/modulos/Q.js" defer ></script> -->
+    <script type="text/babel"  src="./src/scripts/components/instrumentos/modulos/Modulo.js" defer ></script>
+    <script type="text/babel"  src="./src/scripts/components/instrumentos/instrumentos/ModalModulo.js" defer ></script>
+    <script type="text/babel"  src="./src/scripts/components/instrumentos/instrumentos/ModalInstrumento.js" defer ></script>
+    <script type="text/babel"  src="./src/scripts/components/instrumentos/instrumentos/Instrumentos.js" defer ></script>
+    <script type="text/babel"  src="./src/scripts/components/instrumentos/instrumentos/RowModulo.js" defer ></script>
+     <script type="text/babel"  src="./src/scripts/components/instrumentos/instrumentos/Instrumento.js" defer ></script>
+     <script type="text/babel"  src="./src/scripts/components/rows/PDCRowChildren.js" defer ></script>
+     <script type="text/babel"  src="./src/scripts/components/rows/PDCListChildrens.js" defer ></script>
+    <script type="text/babel"  src="./src/scripts/components/rows/FSChildrenNar.js" defer ></script>
+    <script type="text/babel"  src="./src/scripts/components/rows/ManagerFilters.js" defer ></script>
+    <script type="text/babel"  src="./src/scripts/components/NavigationState.js" defer ></script>
+    <script type="text/babel"  src="./src/scripts/components/rows/FSRowChildren.js" defer ></script>
+    <script type="text/babel"  src="./src/scripts/components/rows/FSListChildrens.js" defer ></script>
+    <script type="text/babel"  src="./src/scripts/components/instrumentos/aplicar/DatosEncuestaCandidato.js" defer ></script>
+    
+    <script type="text/babel"  src="./src/scripts/components/instrumentos/aplicar/Tree.js" defer ></script>
+    <script type="text/babel"  src="./src/scripts/components/instrumentos/aplicar/PrintAnswers.js" defer ></script>
+    <script type="text/babel"  src="./src/scripts/components/instrumentos/aplicar/AnswerWithOptions.js" defer ></script>
+    <script type="text/babel"  src="./src/scripts/components/instrumentos/aplicar/HandleSubPregunta.js" defer ></script>
+    <script type="text/babel"  src="./src/scripts/components/instrumentos/aplicar/HandlePregunta.js" defer ></script>
     
   
     

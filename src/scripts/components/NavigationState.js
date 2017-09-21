@@ -63,7 +63,7 @@ class NavigationState extends React.Component {
                     </div>
 
                 </header>
-                <div className="container">
+                <div className="container no-print">
                     <div className="row">
                         <div className="col-md-12 col-sm-12">
                             <ol className="breadcrumb">
@@ -81,7 +81,7 @@ class NavigationState extends React.Component {
 
                 </div>
 
-                <footer>
+                <footer className="no-print">
                     &nbsp;
                 </footer>
 

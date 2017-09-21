@@ -31,8 +31,10 @@ margin-left: 1.42857%;
   position:relative;
 }
 .headerinstrumento{
-    
-    font-stretch: border;
+    font-size: 12px;
+ 
+    font-stretch: border!important;
+    padding-bottom: 10px;
 }
 .answerInput{
     width: 100%!important;
@@ -159,3 +161,36 @@ border-radius: 5px 0px 0px 5px;
   0% {transform:rotate(0deg);}
   100% {transform:rotate(360deg);} 
 }
+.answerPrint{
+    background-color: blanchedalmond;
+}
+
+.contentFull, .modalFull {
+    position: absolute;
+    top:0;
+    left:0;
+    height:100%;
+    width: 100%;
+  }
+  
+  .contentFull {
+   
+    z-index:100;
+  }
+  
+  .modalFull {
+    z-index:101;
+   
+    visibility: hidden;
+    opacity: 0;
+      transition: opacity 0.5s, visibility 0s 0.5s;
+  }
+  
+  .modalFull.active {
+        opacity: 1;
+        visibility: visible;
+        transition: opacity 0.5s;
+  }
+  .hh{
+    visibility: hidden;
+  }

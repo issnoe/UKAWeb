@@ -309,6 +309,20 @@ namespace InfoKilo.WebApp.Miembros.WS
             
         }
 
+        [System.Web.Services.WebMethod]
+        public static AplicacionEncuestaEncuestador getAplicacionEncuestaEncuestadorById(string aplicacionId)
+            {
+            List<string> listaTablas = new List<string>
+            {
+                "NinioEnPrograma",
+                "Cuidador",
+                "ExpedienteMadre",
+            };
+            Repository<AplicacionInstrumento> handle = new Repository<AplicacionInstrumento>();
+            AplicacionInstrumento aplicada = handle.Retrieve(u => u.aplicacionId.ToString() == aplicacionId, listaTablas.Count, listaTablas);
+
+            return new AplicacionEncuestaEncuestador(aplicada);
+        }
 
         [System.Web.Services.WebMethod]
         public static IQueryable<dynamic> getCandidatos(int instrumentoId, string idGrupo, string textoBusqueda,string fechaAplicacion, bool isActivo,  string orden)

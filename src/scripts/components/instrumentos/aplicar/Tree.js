@@ -47,11 +47,15 @@ class Tree extends React.Component {
         }
 
     }
+    locationRef(){
+        window.location.href="#/pdc/instrumentos/imprimir/"+ this.props._aplicacionId
+    }
         render() {
             var lista  = this.state.listaReactivos;
             //Falta evaluar datos de Visita con Somatometria
             return (
                 <div className="row">
+                  
                    <div className="col-md-2 col-sm-2">
                    No. preguntas: {(lista)?lista.length:"?"}
                    {this.renderTree()}
