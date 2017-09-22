@@ -40,19 +40,13 @@ namespace InfoKilo.WebApp.Miembros
                 this.Clave = "";
             }
             this.aplicacionId = aplicada.aplicacionId.ToString();
-            this.fechaInicio = (aplicada.fechaInicio != null) ? Convert.ToDateTime(aplicada.fechaInicio).ToString("dd/MM/yyyy") : "";
-            this.fechaModificacion = (aplicada.fechaModificacion != null) ? Convert.ToDateTime(aplicada.fechaModificacion).ToString("dd/MM/yyyy") : "";
-            this.fechaTermina = (aplicada.fechaTermina!=null)?Convert.ToDateTime(aplicada.fechaTermina).ToString("dd/MM/yyyy"):"";
-            try 
-	        {	        
-            this.domicilio = aplicada.NinioEnPrograma.domicilio;
+            this.fechaInicio = (aplicada.fechaInicio != null) ? Convert.ToDateTime(aplicada.fechaInicio).ToString("yyyy/MM/dd") : "";
+            this.fechaModificacion = (aplicada.fechaModificacion != null) ? Convert.ToDateTime(aplicada.fechaModificacion).ToString("yyyy/MM/dd") : "";
+            this.fechaTermina = (aplicada.fechaTermina != null) ? Convert.ToDateTime(aplicada.fechaTermina).ToString("yyyy/MM/dd") : "";
+          	        
+            this.domicilio = aplicada.domicilio;
 		
-	        }
-	        catch (Exception)
-	        {
-                this.domicilio = "";
-		       
-	        }
+	      
            
 
 

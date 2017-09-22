@@ -84,6 +84,10 @@ class PrintAnswers extends React.Component {
         }
 
     }
+    print(e){
+        e.preventDefault()
+        window.print()
+    }
    
         render() {
             //Falta evaluar datos de Visita con Somatometria
@@ -91,7 +95,10 @@ class PrintAnswers extends React.Component {
                 // className="modalFull    "
                <div >
                 <div className="row">
-                    <div className="col-md-12 col-sm-12">
+                <div className="col-md-12 col-sm-12 text-center">
+                <button className="btn btn-primary  no-print " onClick={this.print.bind(this)}>Imprimir </button>
+                </div>
+                   <div className="col-md-12 col-sm-12">
                     {this.renderReactivos()}
                     </div>
                     <div className="col-md-12">

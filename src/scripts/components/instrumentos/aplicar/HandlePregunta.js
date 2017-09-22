@@ -28,7 +28,7 @@ class HandlePregunta extends React.Component {
             })
         }
         if(newProps.aplicacionReactivoInstrumento=="END"){
-            alert("Confirme la fecha de aplicación");
+            // alert("Confirme la fecha de aplicación");
             getAplicacionInstrumento({aplicacionId:this.props._aplicacionId}, (response)=>{
                 this.setState({spinerLoad:false})
             })
@@ -148,6 +148,12 @@ class HandlePregunta extends React.Component {
    
       
         render() {
+            
+            if (this.props.aplicacionReactivoInstrumento=="END") {
+                return (
+                    <div className="emptyContainer"><img src="./src/img/flag.png"/><p className="">INSTRUMENTO TERMINADO</p><p>Confirme la fecha de aplicación</p></div>
+                )
+            }
             if (this.state.spinerLoad == true) {
                 return (
                     <div className="spinner" key={"spinnerInstrumento_panedl_"}></div>

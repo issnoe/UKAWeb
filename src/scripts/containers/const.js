@@ -15,7 +15,7 @@ const Collapse = ReactCollapse.Collapse;
 moment.locale('es');
 
 const TIPOREACTIVO = [  
-    {
+    {   
         id: 0,
         data: "Pregunta"
     }, {

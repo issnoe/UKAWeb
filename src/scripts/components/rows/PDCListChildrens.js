@@ -5,33 +5,48 @@ class PDCListChildrens extends React.Component {
             rows: [],
             countList: 0,
             loading: true,
-            dev:false, 
+            dev:false,
+            filters:{}
         }
     }
-    
+    handleFilters=(params)=>{
+        params._instrumentoId= this.props._instrumentoId
+         this.setState({rows:[],loading:true})
+        getCandidatos(params,  function (response) {
+            if (response && response.data && response.data.d && response.data.d.length>0) {
+                this.setState({rows: response.data.d, loading: false})
+            }
+            else if(response && response.data && response.data.d ){
+                this.setState({loading: false})
+            }
+        }.bind(this));
+    }
     componentDidMount(){
-        
         getCandidatos(this.props,  function (response) {
             if (response && response.data && response.data.d && response.data.d.length>0) {
                 this.setState({rows: response.data.d, loading: false})
             }
             else if(response && response.data && response.data.d ){
-                this.setState({dev:true,loading: false})
+                 this.setState({dev:true,loading: false})
+                //this.setState({loading: false})
+                
             }
         }.bind(this));
 
     }
     renderRowsCandidate() {
-        
         var rows = this.state.rows;
+        if(this.state.dev==true){
+            return (
+                <div className="enMantenimento"> <img src="./src/img/construccion.jpg"/></div>
+            )
+        }
         if (rows.length>0) {
-
             var renderList = [];
             var countList = 0;
             rows.map((candidate, index) => {
                 countList++;
                     renderList.push(<PDCRowCandidate {...this.props} key={"candidatos" + index} candidate={candidate} />)
-               
             })
             return (
                 <div>
@@ -54,13 +69,11 @@ class PDCListChildrens extends React.Component {
                     </div>
                     {renderList}</div>
             )
+        }else{
+           return ( <div className="emptyContainer"><img src="./src/img/looking.png"/><p className="">Sin registro</p></div>)
+            
         }
-        if(this.state.dev
-        ){
-            return (
-                <div className="enMantenimento"> <img src="./src/img/construccion.jpg"/></div>
-            )
-        }
+         
     }
     render() {
         if (this.state.loading == true) {
@@ -70,6 +83,7 @@ class PDCListChildrens extends React.Component {
         }
         return (
             <div>
+                 <PDCManagerFilters handleFilters={this.handleFilters}/>
                 {this.renderRowsCandidate()}
               
             </div>

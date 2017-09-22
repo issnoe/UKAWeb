@@ -68,11 +68,10 @@ var getReactivosrespuestasbyModuloId=function(id, callback){
 }
 
 var getModuloById=function(id, callback){
-    
-    var idd= parseInt(id)
+    var idint= parseInt(id)
     var url = URLUKA + "/Miembros/IN/Admin/AdminIN.aspx/getReactivosbyModuloId";
     var params = {
-        id: idd
+        id: idint
     };
     axios
         .post(url, params)
@@ -82,20 +81,20 @@ var getModuloById=function(id, callback){
         .catch(function (error) {
             // alert("No se pudo obtener datos de somatometria")
         });
-
 }
 //
 var getCandidatos = function(filters,callback) {
     if(filters._instrumentoId){
     var url = "APP.aspx/getCandidatos";
     var idGrupo = localStorage.getItem("UKAidGrupo")
+    debugger
     var params = {
         instrumentoId:filters._instrumentoId,
         idGrupo: idGrupo,
-        textoBusqueda: "",
+        textoBusqueda: (filters.fsTexto)?filters.fsTexto:"",
         fechaAplicacion:"",
-        isActivo:true,
-        orden: "Familia"
+        isActivo:(filters.fsEstado =="false" )?false:true,
+        orden: (filters.fsOrden)?filters.fsOrden:"Familias.NumFamilia"
     };
     axios
     .post(url, params)
@@ -108,7 +107,6 @@ var getCandidatos = function(filters,callback) {
     });
     }
 }
-
 var setReactivo = function (params,callback){
     var url = "APP.aspx/setReactivo";
     var params = {
@@ -116,6 +114,24 @@ var setReactivo = function (params,callback){
         aplicacionReactivoInstrumento:params.aplicacionReactivoInstrumento,
         dataJson:params.dataJson,
         respuesta:params.respuesta
+    };
+    axios
+    .post(url, params)
+    .then(function (response) {
+        callback(response)
+    })
+    .catch(function (error) {
+        var s = error;
+        // alert("No se pudo obtener datos de la localidad")
+    });
+}
+var saveAplicacionEncuestaEncuestador = function (params,callback){
+    var url = "APP.aspx/saveAplicacionEncuestaEncuestador";
+    var params = {
+        domicilio:params.domicilio, 
+        fechaTermina:params.fechaTermina, 
+        fechaInicio:params.fechaInicio, 
+        aplicacionId:params.aplicacionId
     };
     axios
     .post(url, params)

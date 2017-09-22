@@ -110,47 +110,47 @@ class App extends React.Component {
                     '/candidatos': {
                         '/:id': (id) => {
                             var i = parseInt(id);
-                            this.setState({ _instrumentoId: i,_aplicacionId:undefined, listaModulos: undefined, controller: "candidatosId" })
+                            this.setState({ _instrumentoId: i, _aplicacionId: undefined, listaModulos: undefined, controller: "instrumentosCandidatos" })
                         },
 
 
                     },
                     '/imprimir/:idaplicacion': (idaplicacion) => {
-                    
+
                         this.setState({ _aplicacionId: idaplicacion, controller: "imprimirIdAplicacion" })
                         // this.setState({ _instrumentoId: i,_aplicacionId:undefined, controller: "aplicarEncuesta" })
                     },
                     '/aplicar/:id/:idaplicacion/:idCandidate': (id, idaplicacion, idCandidate) => {
                         var idInstrumento = parseInt(id);
-                        
-                            handleGenerateAplicacionInstrumento({
-                                aplicacionIdCurrentEncuesta: idaplicacion,
-                                candidato: idCandidate,
-                                instrumentoId: idInstrumento
-                            }, (response) => { 
-                                var aplicacionId = response.data.d[0];
-                                var reactivoId =  response.data.d[1];
-                                window.location.href = "#/pdc/instrumentos/aplicar/"+ idInstrumento+"/" +aplicacionId +"/"+reactivoId
-                             
-                                
-                                //this.setState({ _aplicacionId: response.data.d[0],_aplicacionReactivoInstrumento:response.data.d[1], controller: "aplicacionOnebyOne" })
-                             //this.setState({ _aplicacionId:  response.data.d[0],_aplicacionReactivoInstrumento:response.data.d[1],  controller: "aplicacionOnebyOne" });
-                            })
 
-                        
-                        
+                        handleGenerateAplicacionInstrumento({
+                            aplicacionIdCurrentEncuesta: idaplicacion,
+                            candidato: idCandidate,
+                            instrumentoId: idInstrumento
+                        }, (response) => {
+                            var aplicacionId = response.data.d[0];
+                            var reactivoId = response.data.d[1];
+                            window.location.href = "#/pdc/instrumentos/aplicar/" + idInstrumento + "/" + aplicacionId + "/" + reactivoId
+
+
+                            //this.setState({ _aplicacionId: response.data.d[0],_aplicacionReactivoInstrumento:response.data.d[1], controller: "aplicacionOnebyOne" })
+                            //this.setState({ _aplicacionId:  response.data.d[0],_aplicacionReactivoInstrumento:response.data.d[1],  controller: "aplicacionOnebyOne" });
+                        })
+
+
+
                         // this.setState({ _instrumentoId: i,_aplicacionId:undefined, controller: "aplicarEncuesta" })
                     },
-                    '/aplicar/:instrumento/:aplicacion/:reactivo': (instrumento,aplicacion,reactivo) => {
+                    '/aplicar/:instrumento/:aplicacion/:reactivo': (instrumento, aplicacion, reactivo) => {
                         var instrumentoInt = parseInt(instrumento);
-                        if(reactivo=="END"){
+                        if (reactivo == "END") {
                             alert("Ha terminado la aplicación del instrumento");
-                            this.setState({ _aplicacionId: aplicacion,_aplicacionReactivoInstrumento:reactivo,_instrumentoId:instrumentoInt, controller: "aplicacionOnebyOne" })
-                          //  window.location.href = "#/pdc/instrumentos/candidatos/"+instrumentoInt;
-                           
-                        }else{
-                        // getTreeReactivos({aplicacionIdCurrentEncuesta:idaplicacion},(response)=>{})
-                         this.setState({ _aplicacionId: aplicacion,_aplicacionReactivoInstrumento:reactivo,_instrumentoId:instrumentoInt, controller: "aplicacionOnebyOne" })
+                            this.setState({ _aplicacionId: aplicacion, _aplicacionReactivoInstrumento: reactivo, _instrumentoId: instrumentoInt, controller: "aplicacionOnebyOne" })
+                            //  window.location.href = "#/pdc/instrumentos/candidatos/"+instrumentoInt;
+
+                        } else {
+                            // getTreeReactivos({aplicacionIdCurrentEncuesta:idaplicacion},(response)=>{})
+                            this.setState({ _aplicacionId: aplicacion, _aplicacionReactivoInstrumento: reactivo, _instrumentoId: instrumentoInt, controller: "aplicacionOnebyOne" })
                         }
                     },
                     on: () => {
@@ -210,8 +210,8 @@ class App extends React.Component {
         //this.setState({_instrumentoId:undefined})
         window.location.href = "#/admin/instrumentos";
     }
-    setReactivoId = (id)=>{
-        this.setState({_aplicacionReactivoInstrumento:id})
+    setReactivoId = (id) => {
+        this.setState({ _aplicacionReactivoInstrumento: id })
     }
     render() {
         var renderConteiner;
@@ -320,14 +320,12 @@ class App extends React.Component {
                 );
                 break;
 
-            case "candidatosId":
+            case "instrumentosCandidatos":
                 navigatorHistory = _.concat(navigatorState[0], navigatorState[1], navigatorState[5], navigatorState[6])
-                
                 renderConteiner = (
                     <div>
-
                         <InstrumentoHeader id={this.state._instrumentoId} />
-                        <PDCManagerFilters />
+                        {/* <PDCManagerFilters /> */}
                         <PDCListChildrens {...this.state} />
                     </div>
                 );
@@ -417,34 +415,35 @@ class App extends React.Component {
                 );
                 break;
             case "imprimirIdAplicacion":
-            navigatorHistory = _.concat(navigatorState[0], navigatorState[1], navigatorState[5], navigatorState[6], navigatorState[10])
-            renderConteiner = (
-                <div>
-                <div className="row">
-                        <InstrumentoHeader id={this.state._instrumentoId} />
-                        <PrintAnswers _aplicacionId={this.state._aplicacionId}/>
-                </div>
-                   
-                </div>
-            );
-            
-            break;
+                navigatorHistory = _.concat(navigatorState[0], navigatorState[1], navigatorState[5], navigatorState[6], navigatorState[10])
+                renderConteiner = (
+                    <div>
+                        <div className="row">
+                            <InstrumentoHeader id={this.state._instrumentoId} />
+                            <DatosEncuestaCandidato _aplicacionId={this.state._aplicacionId} onlyRead={true} />
+                            <PrintAnswers _aplicacionId={this.state._aplicacionId} />
+                        </div>
+
+                    </div>
+                );
+
+                break;
 
             case "aplicacionOnebyOne":
-            navigatorHistory = _.concat(navigatorState[0], navigatorState[1], navigatorState[5], navigatorState[6], navigatorState[7])
-            renderConteiner = (
-                <div>
-                <div className="row">
-                <DatosEncuestaCandidato _aplicacionId={this.state._aplicacionId} />
-                 <Tree _aplicacionId={this.state._aplicacionId} _aplicacionReactivoInstrumento={this.state._aplicacionReactivoInstrumento} setReactivoId={this.setReactivoId}>
-                 <InstrumentoHeader id={this.state._instrumentoId} />
-               
-                 <HandlePregunta _aplicacionId={this.state._aplicacionId}  aplicacionReactivoInstrumento={this.state._aplicacionReactivoInstrumento} setReactivoId={this.setReactivoId}/>
-                 </Tree>
-                </div>
-                   
-                </div>
-            );
+                navigatorHistory = _.concat(navigatorState[0], navigatorState[1], navigatorState[5], navigatorState[6], navigatorState[7])
+                renderConteiner = (
+                    <div>
+                        <div className="row">
+                            <DatosEncuestaCandidato _aplicacionId={this.state._aplicacionId} onlyRead={false} />
+                            <Tree _aplicacionId={this.state._aplicacionId} _aplicacionReactivoInstrumento={this.state._aplicacionReactivoInstrumento} setReactivoId={this.setReactivoId}>
+                                <InstrumentoHeader id={this.state._instrumentoId} />
+
+                                <HandlePregunta _aplicacionId={this.state._aplicacionId} aplicacionReactivoInstrumento={this.state._aplicacionReactivoInstrumento} setReactivoId={this.setReactivoId} />
+                            </Tree>
+                        </div>
+
+                    </div>
+                );
                 break;
 
             case "modulos":

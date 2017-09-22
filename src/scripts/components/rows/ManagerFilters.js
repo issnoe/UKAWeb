@@ -84,11 +84,22 @@ class PDCManagerFilters extends React.Component {
         super(props);
         this.state ={
         fsOrden:"NumFamilia",
-        fsEstado:"0",
+        fsEstado:"true",
         fsTexto:""}
     }
     sendFilters(e){
         e.preventDefault();
+        this.props.handleFilters(this.state)
+    }
+    handleUpdateFilter=(e)=>{
+        var valor = e.target.value;
+        var attribute = e.target.name;
+        this.setState({[attribute]:valor},()=>{
+            if(attribute!="fsTexto"){
+                this.props.handleFilters(this.state)
+                
+            }
+        })
     }
     render() {
         return (
@@ -97,15 +108,15 @@ class PDCManagerFilters extends React.Component {
                 <div className="col-md-2 col-sm-2">
                     <div className="form-group">
                         <select
+                            onChange={this.handleUpdateFilter}
                             name="fsOrden"
                             className="form-control"
                             placeholder="Selecciona el orden">
-                            <option value="NumFamilia">No. Familia</option>
+                            <option value="Familias.NumFamilia">No. Familia</option>
                             <option value="NombreCuidador">Nombre socia</option>
                             <option value="NombreNinio">Nombre ninio</option>
                             <option value="FechaNacimiento">Fecha de nacimiento</option>
                             <option value="Genero">Sexo</option>
-                            <option value="DiagnosticoPesoEdad">Dx P/E</option>
 
                         </select>
                     </div>
@@ -113,12 +124,12 @@ class PDCManagerFilters extends React.Component {
                 <div className="col-md-2  col-sm-2">
                     <div className="form-group">
                         <select
+                            onChange={this.handleUpdateFilter}
                             name="fsEstado"
                             className="form-control"
                             placeholder="Selecciona el orden">
-                            <option  value="0">Activo</option>
-                            <option value="1">Inactivo</option>
-                            <option value="2">Todos</option>
+                            <option  value="true">Activo</option>
+                            <option value="false">Inactivo</option>
 
                         </select>
                     </div>
@@ -128,6 +139,7 @@ class PDCManagerFilters extends React.Component {
                     <div className="form-group">
                         <div className="input-group">
                             <input
+                                onChange={this.handleUpdateFilter}
                                 name="fsTexto"
                                 type="text"
                                 className="form-control"

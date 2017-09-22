@@ -309,6 +309,30 @@ namespace InfoKilo.WebApp.Miembros.WS
             
         }
 
+
+        [System.Web.Services.WebMethod]
+        public static void saveAplicacionEncuestaEncuestador(string domicilio, string fechaTermina, string fechaInicio, string aplicacionId)
+        {
+            try
+            {
+                Repository<AplicacionInstrumento> handle = new Repository<AplicacionInstrumento>();
+                using (TransactionScope tran = new TransactionScope())
+                {
+                    AplicacionInstrumento aplicada = handle.Retrieve(u => u.aplicacionId.ToString() == aplicacionId);
+                    aplicada.fechaInicio = Convert.ToDateTime(fechaInicio);
+                    aplicada.fechaTermina = Convert.ToDateTime(fechaTermina);
+                    aplicada.domicilio = domicilio;
+                    handle.Update(aplicada);
+
+                    tran.Complete();
+                }
+            }
+            catch (Exception)
+            {
+                
+            }
+        }
+
         [System.Web.Services.WebMethod]
         public static AplicacionEncuestaEncuestador getAplicacionEncuestaEncuestadorById(string aplicacionId)
             {
@@ -343,7 +367,14 @@ namespace InfoKilo.WebApp.Miembros.WS
             switch(instrumento.aplicado)   {
                 case 1:
                     // "Niños/as menores de cinco años ";
-                    var listaIterResponse = handle.Filter(n => n.Familias.IdGrupo.ToString() == idGrupo   && n.Borrado == !isActivo, listaTablas.Count, listaTablas).OrderBy(m=>m.Familias.NumFamilia).ToList();
+                    var listaIterResponse = handle.Filter(n => n.Familias.IdGrupo.ToString() == idGrupo && n.Borrado == !isActivo && (
+                                      (
+                                      n.Nombre.Contains(textoBusqueda) ||
+                                      n.ApMaterno.Contains(textoBusqueda) ||
+                                      n.ApPaterno.Contains(textoBusqueda) ||
+                                      n.Familias.NumFamilia.ToString() == textoBusqueda
+                                      )
+                        ), listaTablas.Count, listaTablas).OrderBy(o => orden).ToList();
                     List<CandidatosNinio> listRender = new List<CandidatosNinio>();
                     foreach (var item in listaIterResponse)
                     {
@@ -369,7 +400,15 @@ namespace InfoKilo.WebApp.Miembros.WS
                    break;
                 case 2:
                     // "Niños/as y adolecentes (5 a 17 )";
-                    var listaIterResponse2 = handle.Filter(n => n.Familias.IdGrupo.ToString() == idGrupo   && n.Borrado == !isActivo, listaTablas.Count, listaTablas).OrderBy(m=>m.Familias.NumFamilia).ToList();
+                   var listaIterResponse2 = handle.Filter(n => n.Familias.IdGrupo.ToString() == idGrupo && n.Borrado == !isActivo && (
+                                      (
+                                      n.Nombre.Contains(textoBusqueda) ||
+                                      n.ApMaterno.Contains(textoBusqueda) ||
+                                      n.ApPaterno.Contains(textoBusqueda) ||
+                                      n.Familias.NumFamilia.ToString() == textoBusqueda
+                                      )
+                        )
+                                      , listaTablas.Count, listaTablas).OrderBy(o => orden).ToList();
                     List<CandidatosNinio> listRender2 = new List<CandidatosNinio>();
                     foreach (var item in listaIterResponse2)
                     {
